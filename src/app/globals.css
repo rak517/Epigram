@@ -1,0 +1,79 @@
+@import 'tailwindcss';
+
+@theme {
+  --text-4xl: 40px;
+  --text-4xl-line-height: 52px;
+
+  --text-3xl: 32px;
+  --text-3xl--line-height: 42px;
+
+  --text-2xl: 24px;
+  --text-2xl--line-height: 32px;
+
+  --text-xl: 20px;
+  --text-xl--line-height: 32px;
+
+  --text-2lg: 18px;
+  --text-2lg--line-height: 26px;
+
+  --text-lg: 16px;
+  --text-lg--line-height: 26px;
+
+  --text-md: 14px;
+  --text-md--line-height: 24px;
+
+  --text-sm: 13px;
+  --text-sm--line-height: 22px;
+
+  --text-xs: 12px;
+  --text-xs--line-height: 20px;
+
+  --color-black-100: hsl(0, 0%, 47%);
+  --color-black-200: hsl(0, 0%, 42%);
+  --color-black-300: hsl(0, 0%, 37%);
+  --color-black-400: hsl(0, 0%, 32%);
+  --color-black-500: hsl(0, 0%, 27%);
+  --color-black-600: hsl(0, 0%, 22%);
+  --color-black-700: hsl(0, 0%, 17%);
+  --color-black-800: hsl(0, 0%, 12%);
+  --color-black-900: hsl(0, 0%, 7%);
+  --color-black-950: hsl(0, 0%, 2%);
+
+  --color-blue-100: hsl(0, 0%, 100%);
+  --color-blue-200: hsl(218, 27%, 94%);
+  --color-blue-300: hsl(218, 27%, 84%);
+  --color-blue-400: hsl(218, 27%, 74%);
+  --color-blue-500: hsl(218, 27%, 64%);
+  --color-blue-600: hsl(218, 27%, 54%);
+  --color-blue-700: hsl(218, 27%, 44%);
+  --color-blue-800: hsl(218, 27%, 34%);
+  --color-blue-900: hsl(218, 27%, 23%);
+  --color-blue-950: hsl(218, 27%, 14%);
+
+  --color-gray-100: hsl(0, 0%, 87%);
+  --color-gray-200: hsl(0, 0%, 77%);
+  --color-gray-300: hsl(0, 0%, 67%);
+  --color-gray-400: hsl(0, 0%, 57%);
+
+  --color-background-100: hsl(216, 33%, 97%);
+
+  --color-error: hsl(353, 100%, 70%);
+
+  --color-line-100: hsl(0, 0%, 95%);
+  --color-line-200: hsl(213, 39%, 86%);
+
+  --color-illust-yellow: hsl(41, 95%, 67%);
+  --color-illust-green: hsl(41, 95%, 67%);
+  --color-illust-purple: hsl(248, 64%, 70%);
+  --color-illust-blue: hsl(214, 82%, 63%);
+  --color-illust-red: hsl(351, 69%, 66%);
+  --color-illust-brown: hsl(351, 69%, 66%);
+
+  --color-sub-yellow: hsl(41, 81%, 53%, 1);
+  --color-sub-blue-1: hsl(0, 0%, 24%, 1);
+  --color-sub-blue-2: hsl(228, 11%, 27%, 1);
+  --color-sub-blue-3: hsl(225, 10%, 32%, 1);
+  --color-sub-gray-1: hsl(216, 29%, 83%, 1);
+  --color-sub-gray-2: hsl(214, 33%, 92%, 1);
+  --color-sub-gray-3: hsl(213, 39%, 95%, 1);
+}

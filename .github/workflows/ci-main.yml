@@ -1,0 +1,55 @@
+name: CI Pipeline (Main)
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. 코드 체크아웃
+      - uses: actions/checkout@v3
+
+      # 2. Node.js 환경 설정 (노드 20, npm 캐시 사용)
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      # 3. 의존성 설치
+      - name: Install dependencies
+        run: npm install
+
+      # 4. 린트 실행
+      - name: Run Lint
+        run: npm run lint
+
+      # 5. 유닛/통합 테스트 실행 (Jest)
+      - name: Run Jest tests
+        run: npm run test
+
+      # 6. 캐시 단계: Playwright 브라우저 바이너리 캐싱
+      - name: Cache Playwright Browsers
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-playwright-
+
+      # 7. Playwright 브라우저 설치 (E2E 테스트용)
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps
+
+      # 8. E2E 테스트 실행 (Playwright)
+      - name: Run Playwright tests
+        run: npx playwright test
+
+      # 9. Next.js 빌드
+      - name: Build Next.js app
+        run: npm run build

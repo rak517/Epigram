@@ -1,0 +1,80 @@
+name: "Team-managed Jira Issue Automation"
+
+on:
+  issues:
+    types: [opened]
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  create-jira-issue:
+    runs-on: ubuntu-latest
+    steps:
+      # 1. Jira 로그인
+      - name: Login to Jira
+        uses: atlassian/gajira-login@v3
+        env:
+          JIRA_BASE_URL: ${{ secrets.JIRA_BASE_URL }}
+          JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
+          JIRA_USER_EMAIL: ${{ secrets.JIRA_USER_EMAIL }}
+
+      # 2. GitHub Issue 본문을 Jira 형식으로 변환
+      - name: Convert Markdown to Jira Syntax
+        uses: peter-evans/jira2md@v1
+        id: md2jira
+        with:
+          input-text: |
+            ### Github Issue Link
+            - ${{ github.event.issue.html_url }}
+
+            ${{ github.event.issue.body }}
+          mode: md2jira
+
+      # 3. 에픽 키 파싱 (예: EP-1)
+      - name: Parse Epic Key
+        id: parse-epic
+        shell: bash
+        run: |
+          EPIC_KEY_RAW=$(echo "${{ github.event.issue.body }}" | grep -oP '(?<=EP-)\d+' || true)
+          if [ -z "$EPIC_KEY_RAW" ]; then
+            echo "HAS_EPIC=false" >> $GITHUB_ENV
+          else
+            echo "HAS_EPIC=true" >> $GITHUB_ENV
+            echo "EPIC_KEY=EP-$EPIC_KEY_RAW" >> $GITHUB_ENV
+          fi
+
+      # 4. 팀 관리 프로젝트에서 parent 필드 설정
+      - name: Set Fields for Team-managed Project
+        id: set-fields
+        shell: bash
+        run: |
+          if [ "$HAS_EPIC" = "true" ]; then
+            echo "FIELDS={ \"parent\": { \"key\": \"${EPIC_KEY}\" } }" >> $GITHUB_ENV
+          else
+            echo "FIELDS={}" >> $GITHUB_ENV
+          fi
+
+      # 5. Jira 이슈 생성 (issuetype: Task)
+      - name: Create Jira Issue
+        id: create
+        uses: atlassian/gajira-create@v3
+        with:
+          project: EP               # 실제 Jira 프로젝트 키
+          issuetype: "Task"         # 항상 태스크로 생성
+          summary: "${{ github.event.issue.title }}"
+          description: "${{ steps.md2jira.outputs.output-text }}"
+          fields: ${{ env.FIELDS }}
+        env:
+          JIRA_BASE_URL: ${{ secrets.JIRA_BASE_URL }}
+          JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
+          JIRA_USER_EMAIL: ${{ secrets.JIRA_USER_EMAIL }}
+
+      # 6. 생성된 티켓 번호를 GitHub 이슈 제목에 반영
+      - name: Update GitHub Issue title with Jira Ticket Number
+        uses: actions-cool/issues-helper@v3
+        with:
+          actions: "update-issue"
+          token: ${{ secrets.GITHUB_TOKEN }}
+          title: "[${{ steps.create.outputs.issue }}] ${{ github.event.issue.title }}"

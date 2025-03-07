@@ -1,0 +1,40 @@
+name: '이슈 생성 (기존 에픽 연결 or 독립 태스크)'
+description: 'Repo에 이슈를 생성하며, 생성된 이슈는 Jira와 연동됩니다.'
+labels: [feat]
+title: '이슈 이름을 작성해주세요'
+body:
+  - type: input
+    id: epicKey
+    attributes:
+      label: '🎟️ 상위 작업 (에픽 키)'
+      description: '이미 존재하는 에픽에 하위 태스크로 연결하고 싶다면 에픽 키(예: EP-1)를 입력하세요. 미입력 시 독립적인 태스크를 만듭니다.'
+      placeholder: 'EP-1'
+    validations:
+      required: false
+
+  - type: input
+    id: description
+    attributes:
+      label: '📝 상세 내용 (Description)'
+      description: '이슈에 대해서 간략히 설명해주세요'
+    validations:
+      required: true
+
+  - type: textarea
+    id: tasks
+    attributes:
+      label: '✅ 체크리스트 (Tasks)'
+      description: '해당 이슈에 대해 필요한 작업목록을 작성해주세요'
+      value: |
+        - [ ] Task1
+        - [ ] Task2
+    validations:
+      required: true
+
+  - type: textarea
+    id: references
+    attributes:
+      label: '📄 참고 자료'
+      description: '참고 자료가 있다면 작성해 주세요.'
+    validations:
+      required: false
