@@ -67,6 +67,58 @@
 
 <markdown-accessiblity-table>
  <table align="center">
+   <tbody>
+   <tr height="150px">
+    <td align="center" width="150px">
+     <a href="https://github.com/ToKyun02">
+     <img src="https://avatars.githubusercontent.com/Tokyun02" style="max-width: 100%;"></a>
+    </td>
+    <td align="center" width="150px">
+     <a href="https://github.com/sang-seok">
+     <img src="https://avatars.githubusercontent.com/sang-seok" style="max-width: 100%;"></a>
+    </td>
+    <td align="center" width="150px">
+     <a href="https://github.com/sori4606">
+     <img src="https://avatars.githubusercontent.com/sori4606" style="max-width: 100%;"></a>
+    </td>
+   </tr>
+   <tr height="50px">
+    <td align="center" width="150px">
+     <a href="https://github.com/Tokyun02">김도균</a>
+    </td>
+    <td align="center" width="150px">
+     <a href="https://github.com/sang-seok">박상석</a>
+    </td>
+    <td align="center" width="150px">
+     <a href="https://github.com/sori4606">송형진</a>
+    </td>
+   </tr>
+      <tr height="150px">
+    <td align="center" width="150px">
+     <a href="https://github.com/jaehyeongjung">
+     <img src="https://avatars.githubusercontent.com/jaehyeongjung" style="max-width: 100%;"></a>
+    </td>
+    <td align="center" width="150px">
+     <a href="https://github.com/rak517">
+     <img src="https://avatars.githubusercontent.com/rak517" style="max-width: 100%;"></a>
+    </td>
+    <td align="center" width="150px">
+     <a href="https://github.com/CJewon">
+     <img src="https://avatars.githubusercontent.com/CJewon" style="max-width: 100%;"></a>
+    </td>
+   </tr>
+      <tr height="50px">
+    <td align="center" width="150px">
+     <a href="https://github.com/jaehyeongjung">정재형</a>
+    </td>
+    <td align="center" width="150px">
+     <a href="https://github.com/rak517">최성락</a>
+    </td>
+    <td align="center" width="150px">
+     <a href="https://github.com/CJewon">최제원</a>
+    </td>
+   </tr>
+  </tbody>
  </table>
 </markdown-accessiblity-table>
 
