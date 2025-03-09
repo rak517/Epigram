@@ -39,6 +39,8 @@
 
 <h2 id="진행과정">🔥 Epigram 팀의 경험</h2>
 
+### 📜 Epigram 팀의 이슈 관리
+
 ### ✏️ Epigram 팀의 기록
 
 <div align="center">
@@ -62,6 +64,23 @@
 ```
 
 ### 💎 주요 기술 스택
+
+|기술 이름|선정 이유|
+|---|---|
+|![Static Badge](https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white) |컴포넌트 기반 설계 방식인 리액트 라이브러리를 활용하여 SSR과 CSR를 혼합해서 사용하기 위해 선정한 프레임워크입니다.|
+|![Static Badge](https://shields.io/badge/TypeScript-3178C6?logo=TypeScript&logoColor=FFF&style=flat-square)|Props 타입 지정으로 인한 런타임 오류 감소, vscode 자동 완성 기능 등 타입 안정성을 통한 코드 품질 개선을 위해 선정했습니다.|
+|![Static Badge](https://img.shields.io/badge/React--Query-FF4154?style=for-the-badge&logo=react-query&logoColor=white)|UI 상태와 서버 상태를 분리하고, api 데이터에 대한 Promise를 집약적으로 관리하기 위해 선정했습니다.|
+|![Static Badge](https://img.shields.io/badge/State%20Management-Zustand-FF9900?logo=zustand)|전역 UI 상태를 관리하기 위해 선정했습니다. 현재 프로젝트에서는 모달의 상태를 zustand로 관리합니다.|
+|![Static Badge](https://img.shields.io/static/v1?style=for-the-badge&message=Axios&color=5A29E4&logo=Axios&logoColor=FFFFFF&label=)|axios instance의 interceptor 기능을 통한 중복 코드 최소화 등을 위해 선정했습니다.|
+|![Static Badge](https://img.shields.io/badge/react--hook--form-EC5990?style=for-the-badge&logo=reacthookform&logoColor=white)|폼의 상태를 집약적으로 관리하기 위해 선정했습니다.|
+|![Static Badge](https://img.shields.io/badge/-Zod-3E67B1?style=flat&logo=zod&logoColor=white)|폼의 유효성 정의 및 타입 추출이 용이하고, API request 타입정의 및 safeParse()메소드를 통한 API 응답 데이터 타입 검증을 하기 위해 선정했습니다.|
+|![Static Badge](https://img.shields.io/badge/es_toolkit-0080FF?style=flat-square&logo=es_toolkit&logoColor=blue&style=for-the-badge)|유틸리티 기능을 선언형으로 작성함으로써 코드 가독성을 향상시키기 위해 선정했습니다.|
+|![Static Badge](https://img.shields.io/badge/Tailwind_CSS-grey?style=for-the-badge&logo=tailwind-css&logoColor=38B2AC)|유틸리티 클래스 사용으로 클래스 네이밍 고민 감소, 디자인 시스템이 미흡 시 유연한 대응이 가능하기에 선정했습니다.|
+|![Static Badge](https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)|Next.js와의 완벽한 통합 및 소규모 웹 애플리케이션에서 무료 플랜을 제공해주기 때문에 선정했습니다.|
+|![Static Badge](https://img.shields.io/badge/framer_motion-ffca28?style=for-the-badge&logo=framer&logoColor=%23ffffff&color=%237178f6)|FRAMER MOTION 기반 애니메이션 라이브러리를 사용함으로써 손 쉽게 애니메이션을 적용하고, 보다 풍부한 UX를 제공하기 위해 사용했습니다.|
+|![Static Badge](https://img.shields.io/badge/Jest-323330?style=for-the-badge&logo=Jest&logoColor=white)|단위 및 통합 테스트를 시행하기 위해 선정한 라이브러리입니다.|
+|![Static Badge](https://img.shields.io/badge/Storybook-FF4785?logo=Storybook&logoColor=white)|UI 컴포넌트들을 시각화 문서로 관리하기 위해 선정한 라이브러리입니다.|
+|![Static Badge](https://img.shields.io/badge/Playwright-end_to_end_tests-blue)|E2E 테스트를 빠르게 수행하고, 크로스 브라우징 및 디바이스 기기의 테스트를 자동화하기 위해 선정한 라이브러리입니다.|
 
 <h2 id="팀원소개">🧑 팀원 소개</h2>
 
