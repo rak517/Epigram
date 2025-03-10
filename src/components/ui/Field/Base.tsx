@@ -1,3 +1,4 @@
+import { cn } from '@/utils/cn';
 import { cva } from 'class-variance-authority';
 import { LabelHTMLAttributes, PropsWithChildren } from 'react';
 
@@ -5,9 +6,9 @@ export function BaseItem({ children }: PropsWithChildren) {
   return <div className='grid gap-1'>{children}</div>;
 }
 
-export function BaseLabel({ required, children, ...props }: PropsWithChildren<LabelHTMLAttributes<HTMLLabelElement> & { required?: boolean }>) {
+export function BaseLabel({ required, children, className, ...props }: PropsWithChildren<LabelHTMLAttributes<HTMLLabelElement> & { required?: boolean; className?: string }>) {
   return (
-    <label className='text-black-600 text-md lg:gap1.5 inline-flex items-center gap-1 font-semibold md:text-lg lg:text-xl' {...props}>
+    <label className={cn('text-black-600 text-md inline-flex items-center gap-1 font-semibold md:text-lg lg:gap-1.5 lg:text-xl', className)} {...props}>
       {children}
       {required && <span className='text-error flex items-center pt-1.5 text-lg font-medium lg:text-2xl'>*</span>}
     </label>

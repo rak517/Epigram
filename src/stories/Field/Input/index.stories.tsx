@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
+import { cn } from '@/utils/cn';
 import Input from '@/components/ui/Field/Input';
 import { Pretendard } from '@/fonts';
-import { cn } from '@/utils/cn';
 
 const meta: Meta<typeof Input> = {
   title: 'Field/Input',
@@ -12,7 +12,7 @@ const meta: Meta<typeof Input> = {
   },
   decorators: [
     (Story) => (
-      <div className={cn('flex h-[300px] w-[500px] items-center justify-center rounded-2xl', Pretendard.className)}>
+      <div className={cn('flex items-center justify-center rounded-2xl bg-white', Pretendard.className)}>
         <Story />
       </div>
     ),
@@ -36,7 +36,7 @@ export const Default: Story = {
   args: {
     label: '이메일',
     placeholder: '이메일을 입력해주세요.',
-    className: '',
+    className: 'w-full',
   },
 };
 
