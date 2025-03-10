@@ -58,3 +58,21 @@ export const Outline: Story = {
     className: '',
   },
 };
+
+export const WFull: Story = {
+  args: {
+    children: '시작하기',
+    disabled: false,
+    onClick: action('outline variant 클릭'),
+    className: 'w-full',
+  },
+};
+
+export const CustomClass: Story = {
+  args: {
+    children: '시작하기',
+    disabled: false,
+    onClick: action('outline variant 클릭'),
+    className: 'bg-red-200',
+  },
+};
