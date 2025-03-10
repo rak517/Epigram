@@ -4,7 +4,7 @@ import { BaseError, BaseItem, BaseLabel, baseErrorClassName, baseFieldClassName 
 import { BaseField } from './types';
 import { VariantProps } from 'class-variance-authority';
 
-type InputProps = BaseField &
+export type InputProps = BaseField &
   InputHTMLAttributes<HTMLInputElement> &
   VariantProps<typeof baseFieldClassName> & {
     ref?: Ref<HTMLInputElement>;
