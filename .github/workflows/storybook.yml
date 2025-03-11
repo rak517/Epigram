@@ -3,8 +3,7 @@ on:
   push:
     branches: [ main ]
     paths: 
-      - '.storybook/**'
-      - 'src/**/*.stories.@(ts|tsx)'
+      - '**/*.stories.@(ts|tsx|mdx)'
   pull_request:
     branches: [ main ]
     paths: 
