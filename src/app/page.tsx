@@ -1,3 +1,9 @@
+import MainHeader from '@/components/ui/header/MainHeader';
+
 export default function Home() {
-  return <div>landing Page</div>;
+  return (
+    <div>
+      <MainHeader></MainHeader>
+    </div>
+  );
 }
