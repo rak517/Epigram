@@ -1,0 +1,36 @@
+name: Deploy Chromatic Storybook
+on:
+  push:
+    branches: [ main ]
+    paths: 
+      - '.storybook/**'
+      - 'src/**/*.stories.@(ts|tsx)'
+  pull_request:
+    branches: [ main ]
+    paths: 
+      - '**/*.stories.@(ts|tsx|mdx)'
+  
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with: 
+          fetch-depth: 0
+
+      - name: Cache npm dependencies
+        uses: actions/cache@v3
+        with:
+            path: ~/.npm
+            key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+            restore-keys: |
+              ${{ runner.os }}-node-
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Deploy to Chromatic
+        uses: chromaui/action@latest
+        with:
+            projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
