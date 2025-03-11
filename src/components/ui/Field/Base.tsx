@@ -6,7 +6,7 @@ export function BaseItem({ children }: PropsWithChildren) {
   return <div className='grid gap-1'>{children}</div>;
 }
 
-export function BaseLabel({ required, children, className, ...props }: PropsWithChildren<LabelHTMLAttributes<HTMLLabelElement> & { required?: boolean; className?: string }>) {
+export function BaseLabel({ required, children, className, ...props }: PropsWithChildren<LabelHTMLAttributes<HTMLLabelElement> & { required?: boolean }>) {
   return (
     <label className={cn('text-black-600 text-md inline-flex items-center gap-1 font-semibold md:text-lg lg:gap-1.5 lg:text-xl', className)} {...props}>
       {children}
@@ -30,4 +30,4 @@ export const baseFieldClassName = cva(
     },
   },
 );
-export const baseErrorClassName = 'border border-error';
+export const BASE_ERROR_CLASSNAME = 'border border-error';

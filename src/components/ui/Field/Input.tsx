@@ -1,6 +1,6 @@
 import { cn } from '@/utils/cn';
 import { InputHTMLAttributes, Ref, useId } from 'react';
-import { BaseError, BaseItem, BaseLabel, baseErrorClassName, baseFieldClassName } from './Base';
+import { BaseError, BaseItem, BaseLabel, BASE_ERROR_CLASSNAME, baseFieldClassName } from './Base';
 import { BaseField } from './types';
 import { VariantProps } from 'class-variance-authority';
 
@@ -8,7 +8,6 @@ export type InputProps = BaseField &
   InputHTMLAttributes<HTMLInputElement> &
   VariantProps<typeof baseFieldClassName> & {
     ref?: Ref<HTMLInputElement>;
-    variant?: 'default' | 'outlined';
   };
 
 export default function Input({ label, error, variant = 'default', className, ref, ...props }: InputProps) {
@@ -21,7 +20,7 @@ export default function Input({ label, error, variant = 'default', className, re
           {label}
         </BaseLabel>
       )}
-      <input id={id} className={cn(baseFieldClassName({ variant, className }), error && baseErrorClassName)} ref={ref} {...props} />
+      <input id={id} className={cn(baseFieldClassName({ variant, className }), error && BASE_ERROR_CLASSNAME)} ref={ref} {...props} />
       {error && <BaseError>{error}</BaseError>}
     </BaseItem>
   );
