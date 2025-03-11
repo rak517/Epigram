@@ -5,7 +5,7 @@ import { cn } from '@/utils/cn';
 import { Pretendard } from '@/fonts';
 
 const meta: Meta<typeof Button> = {
-  title: 'Button',
+  title: 'Button/Button',
   component: Button,
   tags: ['autodocs'],
   parameters: {

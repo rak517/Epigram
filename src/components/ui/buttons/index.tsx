@@ -2,7 +2,7 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import { ButtonHTMLAttributes, ReactNode } from 'react';
 import { cn } from '@/utils/cn';
 
-const ButtonVariants = cva('flex items-center justify-center font-semibold disabled:cursor-not-allowed text-blue-100', {
+const buttonVariants = cva('flex items-center justify-center font-semibold disabled:cursor-not-allowed text-blue-100', {
   variants: {
     variant: {
       default: 'bg-black-500 hover:bg-black-600 active:bg-black-700 disabled:bg-blue-400',
@@ -22,13 +22,13 @@ const ButtonVariants = cva('flex items-center justify-center font-semibold disab
   },
 });
 
-interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement>, VariantProps<typeof ButtonVariants> {
+interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement>, VariantProps<typeof buttonVariants> {
   children?: ReactNode;
 }
 
 export default function Button({ variant, size, className, children, ...props }: ButtonProps) {
   return (
-    <button className={cn(ButtonVariants({ variant, size, className }))} {...props}>
+    <button className={cn(buttonVariants({ variant, size, className }))} {...props}>
       {children}
     </button>
   );
