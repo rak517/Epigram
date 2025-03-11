@@ -1,0 +1,46 @@
+name: Deploy Chromatic Storybook
+on:
+  push:
+    branches: [ main ]
+    paths: 
+      - '**/*.stories.@(ts|tsx|mdx)'
+  pull_request:
+    branches: [ main ]
+    paths: 
+      - '**/*.stories.@(ts|tsx|mdx)'
+  
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with: 
+          fetch-depth: 0
+
+      - name: Cache npm dependencies
+        uses: actions/cache@v3
+        with:
+            path: ~/.npm
+            key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+            restore-keys: |
+              ${{ runner.os }}-node-
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Deploy to Chromatic
+        id: chromatic
+        uses: chromaui/action@latest
+        with:
+            projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+
+      - name: Publish Summary
+        run: echo -e "| Results |  |\n| --- | --- |\n| Build Results | ${{steps.chromatic.outputs.buildUrl}} |\n| Storybook Preview | ${{steps.chromatic.outputs.storybookUrl}} |\n| Component Count | ${{steps.chromatic.outputs.componentCount}} |" >> $GITHUB_STEP_SUMMARY
+
+      - name: Discord Webhook
+        uses: tsickert/discord-webhook@v5.3.0
+        with:
+          webhook-url: ${{ secrets.DISCORD_WEBHOOK }}
+          content: 'StoryBook Link -> ${{ steps.chromatic.outputs.storybookUrl }}'
+        
