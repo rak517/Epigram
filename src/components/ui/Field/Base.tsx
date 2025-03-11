@@ -19,15 +19,12 @@ export function BaseError({ children }: PropsWithChildren) {
   return <div className='text-error md:text-md text-xs lg:text-lg'>{children}</div>;
 }
 
-export const baseFieldClassName = cva(
-  'rounded-lg w-full px-4 h-11 lg:h-[64px] md:w-[384px] lg:w-[640px] text-black-950 placeholder-blue-400 text-lg lg:text-xl focus-visible:outline-none read-only:text-blue-400',
-  {
-    variants: {
-      variant: {
-        default: 'bg-background-100',
-        outlined: 'border border-blue-300 bg-transparent',
-      },
+export const baseFieldClassName = cva('rounded-lg w-full px-4 h-11 lg:h-[64px]  text-black-950 placeholder-blue-400 text-lg lg:text-xl focus-visible:outline-none read-only:text-blue-400', {
+  variants: {
+    variant: {
+      default: 'bg-background-100',
+      outlined: 'border border-blue-300 bg-transparent',
     },
   },
-);
+});
 export const BASE_ERROR_CLASSNAME = 'border border-error';
