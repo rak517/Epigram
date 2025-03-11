@@ -38,6 +38,13 @@ export const LargeSize: Story = {
   },
 };
 
+export const WithChildrenClassName: Story = {
+  args: {
+    className: 'size-20',
+    children: <span className='text-white'>테스트</span>,
+  },
+};
+
 export const CustomPosition: Story = {
   args: {
     size: 'lg',
