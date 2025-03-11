@@ -6,10 +6,12 @@ import Link from 'next/link';
 
 export default function MainHeader() {
   return (
-    <header className='flex items-center justify-between px-6 py-[13px] md:px-[72px] md:py-[17px] xl:px-[120px] xl:py-[22px]'>
+    <header className='border-b-line-100 flex items-center justify-between border-b-[1px] px-6 py-[13px] md:px-[72px] md:py-[17px] xl:px-[120px] xl:py-[22px]'>
       <div className='flex gap-3 md:gap-6 xl:gap-9'>
         <Image src={menuIcon} alt='메뉴 아이콘' className='md:hidden'></Image>
-        <Image src={headerLogo} alt='헤더 로고' className=''></Image>
+        <Link href={'/'}>
+          <Image src={headerLogo} alt='헤더 로고' className='xl:h-9 xl:w-[131px]'></Image>
+        </Link>
         <Link href={'/epigrams'} className='text-black-600 hidden leading-[26px] font-semibold md:block'>
           피드
         </Link>
