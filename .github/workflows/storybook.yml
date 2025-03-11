@@ -31,6 +31,17 @@ jobs:
         run: npm ci
 
       - name: Deploy to Chromatic
+        id: chromatic
         uses: chromaui/action@latest
         with:
             projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+
+      - name: Publish Summary
+        run: echo -e "| Results |  |\n| --- | --- |\n| Build Results | ${{steps.chromatic.outputs.buildUrl}} |\n| Storybook Preview | ${{steps.chromatic.outputs.storybookUrl}} |\n| Component Count | ${{steps.chromatic.outputs.componentCount}} |" >> $GITHUB_STEP_SUMMARY
+
+      - name: Discord Webhook
+        uses: tsickert/discord-webhook@v5.3.0
+        with:
+          webhook-url: ${{ secrets.DISCORD_WEBHOOK }}
+          content: 'StoryBook Link -> ${{ steps.chromatic.outputs.storybookUrl }}'
+        
