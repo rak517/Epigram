@@ -41,8 +41,8 @@ export const useModalStore = create<ModalStore>((set) => ({
   openModal: (modal) => {
     const id = crypto.randomUUID();
     set((state) => {
-      if (modal.type === 'alert') modal.content = <Alert title={modal.title} description={modal.description} />;
-      else if (modal.type === 'confirm') modal.content = <Confirm title={modal.title} description={modal.description} />;
+      if (modal.type === 'alert') modal.content = <Alert title={modal.title} description={modal.description} okMessage={modal.okMessage} />;
+      else if (modal.type === 'confirm') modal.content = <Confirm title={modal.title} description={modal.description} cancelMessage={modal.cancelMessage} okMessage={modal.okMessage} />;
       return { modals: [...state.modals, { id, ...modal }] };
     });
     return id;
