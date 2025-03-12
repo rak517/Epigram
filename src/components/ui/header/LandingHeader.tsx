@@ -5,11 +5,11 @@ import userIconDark from '@/assets/icons/userIconDark.svg';
 import searchIcon from '@/assets/icons/searchIcon.svg';
 import Link from 'next/link';
 
-interface LandingHeaderProps {
+export interface LandingHeaderProps {
   showIcon?: boolean;
 }
 
-export default function LandingHeader({ showIcon = true }: LandingHeaderProps) {
+export default function LandingHeader({ showIcon = false }: LandingHeaderProps) {
   if (showIcon) {
     return (
       <header className='border-b-line-100 flex items-center justify-between border-b-[1px] px-6 py-2 md:px-[72px] md:py-3 xl:px-[120px] xl:py-4'>
