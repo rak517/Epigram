@@ -1,9 +1,9 @@
-import LandingHeader from '@/components/ui/header/LandingHeader';
+import MainHeader from '@/components/ui/header/MainHeader';
 import { Meta, StoryObj } from '@storybook/react';
 
-const meta: Meta<typeof LandingHeader> = {
-  title: 'Header/LandingHeader',
-  component: LandingHeader,
+const meta: Meta<typeof MainHeader> = {
+  title: 'Header/MainHeader',
+  component: MainHeader,
   tags: ['autodocs'],
   parameters: {
     backgrounds: {
@@ -21,19 +21,14 @@ const meta: Meta<typeof LandingHeader> = {
       </div>
     ),
   ],
-  argTypes: {
-    showIcon: {
-      control: { type: 'boolean' },
-    },
-  },
 };
 
 export default meta;
 
-type Story = StoryObj<typeof LandingHeader>;
+type Story = StoryObj<typeof MainHeader>;
 
 export const Default: Story = {
   args: {
-    showIcon: false,
+    title: '메인 헤더',
   },
 };
