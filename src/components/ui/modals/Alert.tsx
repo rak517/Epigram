@@ -1,8 +1,16 @@
+'use client';
+
 import { AlramMessage } from './types';
 import Button from '@/components/ui/buttons';
+import { useState } from 'react';
 
-export default function Alert({ title, description, okMessage = '확인', onClose }: AlramMessage) {
-  const onConfirm = () => {
+export default function Alert({ title, description, okMessage = '확인', onClose, callback }: AlramMessage) {
+  const [isLoading, setIsLoading] = useState(false);
+
+  const onConfirm = async () => {
+    setIsLoading(true);
+    await callback?.();
+    setIsLoading(false);
     onClose();
   };
   return (
@@ -12,7 +20,7 @@ export default function Alert({ title, description, okMessage = '확인', onClos
         <p className='text-md lg:text-2lg text-gray-400 md:text-lg'>{description}</p>
       </div>
       <div className='mt-4 flex w-full gap-4'>
-        <Button className='flex-1' onClick={onConfirm}>
+        <Button className='flex-1' onClick={onConfirm} disabled={isLoading}>
           {okMessage}
         </Button>
       </div>

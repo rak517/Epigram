@@ -1,14 +1,22 @@
+'use client';
+
 import { AlramMessage } from './types';
 import Image from 'next/image';
 import ConfirmIcon from '@/assets/icons/Confirm_Icon.svg';
 import Button from '@/components/ui/buttons';
+import { useState } from 'react';
 
-export default function Confirm({ title, description, cancelMessage = '취소', okMessage = '확인', onClose }: AlramMessage) {
+export default function Confirm({ title, description, cancelMessage = '취소', okMessage = '확인', onClose, callback }: AlramMessage) {
+  const [isLoading, setIsLoading] = useState(false);
+
   const onCancel = () => {
     onClose();
   };
 
-  const onConfirm = () => {
+  const onConfirm = async () => {
+    setIsLoading(true);
+    await callback?.();
+    setIsLoading(false);
     onClose();
   };
   return (
@@ -22,7 +30,7 @@ export default function Confirm({ title, description, cancelMessage = '취소', 
         <Button className='text-black-700 flex-1 bg-blue-200 hover:bg-blue-300 active:bg-blue-400' onClick={onCancel}>
           {cancelMessage}
         </Button>
-        <Button className='flex-1 bg-blue-700 hover:bg-blue-800 active:bg-blue-900' onClick={onConfirm}>
+        <Button className='flex-1 bg-blue-700 hover:bg-blue-800 active:bg-blue-900' onClick={onConfirm} disabled={isLoading}>
           {okMessage}
         </Button>
       </div>

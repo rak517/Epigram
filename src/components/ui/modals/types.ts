@@ -4,4 +4,5 @@ export interface AlramMessage {
   cancelMessage?: string;
   okMessage?: string;
   onClose: () => void;
+  callback?: (() => void) | (() => Promise<void>);
 }
