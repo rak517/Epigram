@@ -2,7 +2,7 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import { ButtonHTMLAttributes, ReactNode } from 'react';
 import { cn } from '@/utils/cn';
 
-const buttonVariants = cva('flex items-center justify-center font-semibold disabled:cursor-not-allowed text-blue-100', {
+const buttonVariants = cva('flex items-center justify-center font-semibold cursor-pointer disabled:cursor-not-allowed text-blue-100', {
   variants: {
     variant: {
       default: 'bg-black-500 hover:bg-black-600 active:bg-black-700 disabled:bg-blue-400',

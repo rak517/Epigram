@@ -62,12 +62,10 @@ export default function ExampleForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className='my-4 flex flex-col gap-4'>
+    <form onSubmit={handleSubmit(onSubmit)} className='mb-4 flex w-full flex-col gap-4'>
       <Input label='이메일' error={errors.email?.message} type='email' placeholder='이메일 입력' required {...register('email')} disabled={isSubmitting} />
       <Input label='비밀번호' error={errors.password?.message} type='password' placeholder='비밀번호 입력' required {...register('password')} disabled={isSubmitting} />
-      <Button disabled={isDisabled} className='w-full'>
-        제출
-      </Button>
+      <Button disabled={isDisabled}>제출</Button>
     </form>
   );
 }

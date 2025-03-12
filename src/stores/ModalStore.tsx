@@ -8,10 +8,10 @@ import { AlramMessage } from '@/components/ui/modals/types';
 export const modalVariants = cva('rounded-lg bg-white px-10 py-6 shadow-lg', {
   variants: {
     size: {
-      sm: 'w-[320px] min-h-[160px] lg:w-[360px] lg:min-h-[180px] xl:w-[400px] xl:min-h-[200px]',
-      md: 'w-[320px] min-h-[240px] md:w-[370px] md:min-h-[280px] lg:w-[450px] lg:min-h-[330px] xl:w-[540px] xl:min-h-[380px]',
-      lg: 'size-3/5',
-      xl: 'size-4/5',
+      sm: 'w-[320px] lg:w-[360px] xl:w-[400px]',
+      md: 'w-[320px] md:w-[370px] lg:w-[450px] xl:w-[540px]',
+      lg: 'w-3/5',
+      xl: 'w-4/5',
     },
   },
   defaultVariants: {
