@@ -3,4 +3,5 @@ export interface AlramMessage {
   description?: string;
   cancelMessage?: string;
   okMessage?: string;
+  onClose: () => void;
 }

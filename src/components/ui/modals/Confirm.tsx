@@ -3,7 +3,14 @@ import Image from 'next/image';
 import ConfirmIcon from '@/assets/icons/Confirm_Icon.svg';
 import Button from '@/components/ui/buttons';
 
-export default function Confirm({ title, description, cancelMessage = '취소', okMessage = '확인' }: AlramMessage) {
+export default function Confirm({ title, description, cancelMessage = '취소', okMessage = '확인', onClose }: AlramMessage) {
+  const onCancel = () => {
+    onClose();
+  };
+
+  const onConfirm = () => {
+    onClose();
+  };
   return (
     <>
       <div className='flex flex-col items-center gap-4'>
@@ -12,8 +19,12 @@ export default function Confirm({ title, description, cancelMessage = '취소', 
         <p className='text-md lg:text-2lg text-gray-400 md:text-lg'>{description}</p>
       </div>
       <div className='mt-4 flex w-full gap-4'>
-        <Button className='text-black-700 flex-1 bg-blue-200 hover:bg-blue-300 active:bg-blue-400'>{cancelMessage}</Button>
-        <Button className='flex-1 bg-blue-700 hover:bg-blue-800 active:bg-blue-900'>{okMessage}</Button>
+        <Button className='text-black-700 flex-1 bg-blue-200 hover:bg-blue-300 active:bg-blue-400' onClick={onCancel}>
+          {cancelMessage}
+        </Button>
+        <Button className='flex-1 bg-blue-700 hover:bg-blue-800 active:bg-blue-900' onClick={onConfirm}>
+          {okMessage}
+        </Button>
       </div>
     </>
   );

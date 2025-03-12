@@ -26,7 +26,7 @@ export type Modal = {
   type: ModalType;
   content?: ReactNode;
 } & VariantProps<typeof modalVariants> &
-  AlramMessage;
+  Omit<AlramMessage, 'onClose'>;
 
 type ModalStore = {
   modals: Modal[];
@@ -35,14 +35,15 @@ type ModalStore = {
   closeAllModals: () => void;
 };
 
-export const useModalStore = create<ModalStore>((set) => ({
+export const useModalStore = create<ModalStore>((set, get) => ({
   modals: [],
 
   openModal: (modal) => {
     const id = crypto.randomUUID();
     set((state) => {
-      if (modal.type === 'alert') modal.content = <Alert title={modal.title} description={modal.description} okMessage={modal.okMessage} />;
-      else if (modal.type === 'confirm') modal.content = <Confirm title={modal.title} description={modal.description} cancelMessage={modal.cancelMessage} okMessage={modal.okMessage} />;
+      if (modal.type === 'alert') modal.content = <Alert title={modal.title} description={modal.description} okMessage={modal.okMessage} onClose={() => get().closeModal(id)} />;
+      else if (modal.type === 'confirm')
+        modal.content = <Confirm title={modal.title} description={modal.description} cancelMessage={modal.cancelMessage} okMessage={modal.okMessage} onClose={() => get().closeModal(id)} />;
       return { modals: [...state.modals, { id, ...modal }] };
     });
     return id;

@@ -1,7 +1,10 @@
 import { AlramMessage } from './types';
 import Button from '@/components/ui/buttons';
 
-export default function Alert({ title, description, okMessage = '확인' }: AlramMessage) {
+export default function Alert({ title, description, okMessage = '확인', onClose }: AlramMessage) {
+  const onConfirm = () => {
+    onClose();
+  };
   return (
     <>
       <div className='flex flex-col items-center gap-4'>
@@ -9,7 +12,9 @@ export default function Alert({ title, description, okMessage = '확인' }: Alra
         <p className='text-md lg:text-2lg text-gray-400 md:text-lg'>{description}</p>
       </div>
       <div className='mt-4 flex w-full gap-4'>
-        <Button className='flex-1'>{okMessage}</Button>
+        <Button className='flex-1' onClick={onConfirm}>
+          {okMessage}
+        </Button>
       </div>
     </>
   );
