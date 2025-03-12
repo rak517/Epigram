@@ -1,13 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
+import sideBarIcon from '@/assets/icons/sideBar.svg';
+import closeIcon from '@/assets/icons/X.svg';
 
-interface SideBarProps {
+export interface SideBarProps {
   onSelectedTab: (tab: 'feed' | 'search') => void;
+  isOpen?: boolean;
 }
 
-export default function SideBar({ onSelectedTab }: SideBarProps) {
-  const [isopen, setIsOpen] = useState(false);
+export default function SideBar({ onSelectedTab, isOpen = false }: SideBarProps) {
+  const [isopen, setIsOpen] = useState(isOpen);
   const toggleSidebar = () => setIsOpen(!isopen);
 
   const handleTabSelect = (tab: 'feed' | 'search') => {
@@ -15,11 +18,15 @@ export default function SideBar({ onSelectedTab }: SideBarProps) {
     setIsOpen(false); // 사이드바 닫기
   };
 
+  useEffect(() => {
+    setIsOpen(isOpen);
+  }, [isOpen]);
+
   return (
     <React.Fragment>
       {/* 햄버거 버튼 */}
       <button className='flex h-6 w-6 items-center justify-center' onClick={toggleSidebar}>
-        <Image src='/sideBar.svg' alt='sideBarIcon' width={18} height={12} />
+        <Image src={sideBarIcon} alt='sideBarIcon' width={18} height={12} />
       </button>
 
       {/* 오버레이 */}
@@ -35,7 +42,7 @@ export default function SideBar({ onSelectedTab }: SideBarProps) {
         <div className='w-55'>
           <div className='flex h-12.5 w-full items-center justify-center border-b border-gray-100'>
             <div className='flex h-6 w-47 justify-end'>
-              <Image src='/X.svg' alt='xIcon' width={24} height={24} onClick={toggleSidebar} />
+              <Image src={closeIcon} alt='xIcon' width={24} height={24} onClick={toggleSidebar} />
             </div>
           </div>
         </div>
