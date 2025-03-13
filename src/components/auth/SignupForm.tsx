@@ -10,6 +10,8 @@ import Input from '@/components/ui/Field/Input';
 import Button from '@/components/ui/buttons';
 import OpendEye from '@/assets/icons/opend_eye.svg';
 import ClosedEye from '@/assets/icons/closed_eye.svg';
+import Logo from '@/assets/images/logo.png';
+import Link from 'next/link';
 
 export default function SignupForm() {
   const {
@@ -32,7 +34,10 @@ export default function SignupForm() {
   const isDisabled = !isDirty || !isValid || isSubmitting;
 
   return (
-    <form>
+    <form className='flex w-full max-w-96 flex-col gap-2'>
+      <Link className='flex w-full items-center justify-center' href='/'>
+        <Image src={Logo} alt='로고' width={172} height={48} className='cursor-pointer' />
+      </Link>
       <Input label='이메일' error={errors.email?.message} type='email' placeholder='이메일' required {...register('email')} data-testid='email-input' disabled={isSubmitting} />
       <div className='relative'>
         <Input
@@ -50,7 +55,7 @@ export default function SignupForm() {
           alt='비밀번호 토글 이미지'
           width={24}
           height={24}
-          className='absolute top-5 right-3'
+          className='absolute top-11 right-3'
           onClick={() => setIsShowPassword((prev) => !prev)}
           data-testid='password-toggle'
         />
@@ -71,7 +76,7 @@ export default function SignupForm() {
           alt='비밀번호 토글 이미지'
           width={24}
           height={24}
-          className='absolute top-5 right-3'
+          className='absolute top-11 right-3'
           onClick={() => setIsShowPasswordConfirm((prev) => !prev)}
           data-testid='password-confirm-toggle'
         />
