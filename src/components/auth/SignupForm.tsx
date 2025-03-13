@@ -1,18 +1,20 @@
 'use client';
+
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import Image from 'next/image';
 import { signupSchema } from '@/schemas';
 import { SignupForm as SignupFormType } from '@/types';
 import Input from '@/components/ui/Field/Input';
-import Image from 'next/image';
+import Button from '@/components/ui/buttons';
 import OpendEye from '@/assets/icons/opend_eye.svg';
 import ClosedEye from '@/assets/icons/closed_eye.svg';
-import { useState } from 'react';
 
 export default function SignupForm() {
   const {
     register,
-    formState: { errors },
+    formState: { errors, isDirty, isValid, isSubmitting },
   } = useForm<SignupFormType>({
     resolver: zodResolver(signupSchema),
     mode: 'onBlur',
@@ -27,11 +29,22 @@ export default function SignupForm() {
   const [isShowPassword, setIsShowPassword] = useState(true);
   const [isShowPasswordConfirm, setIsShowPasswordConfirm] = useState(true);
 
+  const isDisabled = !isDirty || !isValid || isSubmitting;
+
   return (
     <form>
-      <Input label='이메일' error={errors.email?.message} type='email' placeholder='이메일' required {...register('email')} data-testid='email-input' />
+      <Input label='이메일' error={errors.email?.message} type='email' placeholder='이메일' required {...register('email')} data-testid='email-input' disabled={isSubmitting} />
       <div className='relative'>
-        <Input label='비멀번호' error={errors.password?.message} type={isShowPassword ? 'password' : 'text'} placeholder='비밀번호' required {...register('password')} data-testid='password-input' />
+        <Input
+          label='비멀번호'
+          error={errors.password?.message}
+          type={isShowPassword ? 'password' : 'text'}
+          placeholder='비밀번호'
+          required
+          {...register('password')}
+          data-testid='password-input'
+          disabled={isSubmitting}
+        />
         <Image
           src={isShowPassword ? ClosedEye : OpendEye}
           alt='비밀번호 토글 이미지'
@@ -51,6 +64,7 @@ export default function SignupForm() {
           required
           {...register('passwordConfirm')}
           data-testid='password-confirm-input'
+          disabled={isSubmitting}
         />
         <Image
           src={isShowPasswordConfirm ? ClosedEye : OpendEye}
@@ -62,8 +76,10 @@ export default function SignupForm() {
           data-testid='password-confirm-toggle'
         />
       </div>
-
-      <Input label='닉네임' error={errors.nickname?.message} type='text' placeholder='닉네임' required {...register('nickname')} data-testid='nickname-input' />
+      <Input label='닉네임' error={errors.nickname?.message} type='text' placeholder='닉네임' required {...register('nickname')} data-testid='nickname-input' disabled={isSubmitting} />
+      <Button disabled={isDisabled} className='w-full' data-testid='signup-button'>
+        가입하기
+      </Button>
     </form>
   );
 }
