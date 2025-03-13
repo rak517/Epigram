@@ -100,6 +100,34 @@ describe('SignupForm', () => {
     expect(await screen.findByText('비밀번호가 일치하지 않습니다.')).toBeInTheDocument();
   });
 
+  test('비밀번호 토글 버튼을 누르면 password의 타입이 text로 변한다', async () => {
+    render(<SignupForm />);
+
+    const passwordInput = screen.getByTestId('password-input');
+    expect(passwordInput).toHaveAttribute('type', 'password');
+
+    const passwordToggle = screen.getByTestId('password-toggle');
+    await userEvent.click(passwordToggle);
+    expect(passwordInput).toHaveAttribute('type', 'text');
+
+    await userEvent.click(passwordToggle);
+    expect(passwordInput).toHaveAttribute('type', 'password');
+  });
+
+  test('비밀번호 확인 토글 버튼을 누르면 password-confirm의 타입이 text로 변한다', async () => {
+    render(<SignupForm />);
+
+    const passwordConfirmInput = screen.getByTestId('password-confirm-input');
+    expect(passwordConfirmInput).toHaveAttribute('type', 'password');
+
+    const passwordConfirmToggle = screen.getByTestId('password-confirm-toggle');
+    await userEvent.click(passwordConfirmToggle);
+    expect(passwordConfirmInput).toHaveAttribute('type', 'text');
+
+    await userEvent.click(passwordConfirmToggle);
+    expect(passwordConfirmInput).toHaveAttribute('type', 'password');
+  });
+
   test('중복된 닉네임을 입력하고 제출할 때 중복 오류 메시지를 표시한다', async () => {
     render(<SignupForm />);
 
