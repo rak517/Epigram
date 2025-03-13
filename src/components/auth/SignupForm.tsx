@@ -25,6 +25,7 @@ export default function SignupForm() {
   });
 
   const [isShowPassword, setIsShowPassword] = useState(true);
+  const [isShowPasswordConfirm, setIsShowPasswordConfirm] = useState(true);
 
   return (
     <form>
@@ -41,7 +42,27 @@ export default function SignupForm() {
           data-testid='password-toggle'
         />
       </div>
-      <Input label='비멀번호 확인' error={errors.passwordConfirm?.message} type='password' placeholder='비밀번호 확인' required {...register('passwordConfirm')} data-testid='password-confirm-input' />
+      <div className='relative'>
+        <Input
+          label='비멀번호 확인'
+          error={errors.passwordConfirm?.message}
+          type={isShowPasswordConfirm ? 'password' : 'text'}
+          placeholder='비밀번호 확인'
+          required
+          {...register('passwordConfirm')}
+          data-testid='password-confirm-input'
+        />
+        <Image
+          src={isShowPasswordConfirm ? ClosedEye : OpendEye}
+          alt='비밀번호 토글 이미지'
+          width={24}
+          height={24}
+          className='absolute top-5 right-3'
+          onClick={() => setIsShowPasswordConfirm((prev) => !prev)}
+          data-testid='password-confirm-toggle'
+        />
+      </div>
+
       <Input label='닉네임' error={errors.nickname?.message} type='text' placeholder='닉네임' required {...register('nickname')} data-testid='nickname-input' />
     </form>
   );
