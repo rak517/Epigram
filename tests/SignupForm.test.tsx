@@ -128,6 +128,32 @@ describe('SignupForm', () => {
     expect(passwordConfirmInput).toHaveAttribute('type', 'password');
   });
 
+  test('모든 유효성 검사가 통과하면 제출 버튼이 활성화된다', async () => {
+    render(<SignupForm />);
+
+    const submitButton = screen.getByTestId('signup-button');
+    expect(submitButton).toBeDisabled();
+
+    const emailInput = screen.getByTestId('email-input');
+    const nicknameInput = screen.getByTestId('nickname-input');
+    const passwordInput = screen.getByTestId('password-input');
+    const passwordConfirmInput = screen.getByTestId('password-confirm-input');
+
+    await userEvent.type(emailInput, 'valid@example.com');
+    await userEvent.type(nicknameInput, 'validuser');
+    await userEvent.type(passwordInput, 'Password123!');
+    await userEvent.type(passwordConfirmInput, 'Password123!');
+
+    fireEvent.blur(emailInput);
+    fireEvent.blur(nicknameInput);
+    fireEvent.blur(passwordInput);
+    fireEvent.blur(passwordConfirmInput);
+
+    await waitFor(() => {
+      expect(submitButton).not.toBeDisabled();
+    });
+  });
+
   test('중복된 닉네임을 입력하고 제출할 때 중복 오류 메시지를 표시한다', async () => {
     render(<SignupForm />);
 
@@ -182,31 +208,5 @@ describe('SignupForm', () => {
     await userEvent.click(submitButton);
 
     expect(await screen.findByText('중복된 이메일입니다.')).toBeInTheDocument();
-  });
-
-  test('모든 유효성 검사가 통과하면 제출 버튼이 활성화된다', async () => {
-    render(<SignupForm />);
-
-    const submitButton = screen.getByTestId('signup-button');
-    expect(submitButton).toBeDisabled();
-
-    const emailInput = screen.getByTestId('email-input');
-    const nicknameInput = screen.getByTestId('nickname-input');
-    const passwordInput = screen.getByTestId('password-input');
-    const passwordConfirmInput = screen.getByTestId('password-confirm-input');
-
-    await userEvent.type(emailInput, 'valid@example.com');
-    await userEvent.type(nicknameInput, 'validuser');
-    await userEvent.type(passwordInput, 'Password123!');
-    await userEvent.type(passwordConfirmInput, 'Password123!');
-
-    fireEvent.blur(emailInput);
-    fireEvent.blur(nicknameInput);
-    fireEvent.blur(passwordInput);
-    fireEvent.blur(passwordConfirmInput);
-
-    await waitFor(() => {
-      expect(submitButton).not.toBeDisabled();
-    });
   });
 });
