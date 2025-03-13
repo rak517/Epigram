@@ -25,3 +25,12 @@ export const signupSchema = z
     message: '비밀번호가 일치하지 않습니다.',
     path: ['passwordConfirm'],
   });
+
+export const userSchema = z.object({
+  image: z.union([z.string(), z.null()]),
+  updatedAt: z.string(),
+  createdAt: z.string(),
+  nickname: z.string(),
+  id: z.number(),
+  email: z.string(),
+});
