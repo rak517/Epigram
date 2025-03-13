@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import ToggleBtn from '@/components/ui/toggleBtn'; 
+import ToggleBtn from '@/components/ui/toggleBtn';
 import { Meta, StoryFn } from '@storybook/react';
 
 export default {
@@ -32,25 +32,23 @@ const Template: StoryFn = (args) => {
     setIsPublic(args.isPublic);
   }, [args.isPublic]);
 
-  return (
-    <ToggleBtn
-      {...args}
-      isPublic={isPublic}
-      onToggle={handleToggle}
-    />
-  );
+  return <ToggleBtn {...args} isPublic={isPublic} onToggle={handleToggle} />;
 };
 
 export const Default = Template.bind({});
 Default.args = {
   size: 'medium',
   isPublic: false,
-  onToggle: (newState: boolean) => { console.log("New state:", newState); },
+  onToggle: (newState: boolean) => {
+    console.log('New state:', newState);
+  },
 };
 
 export const Small = Template.bind({});
 Small.args = {
   size: 'small',
   isPublic: false,
-  onToggle: (newState: boolean) => { console.log("New state:", newState); },
+  onToggle: (newState: boolean) => {
+    console.log('New state:', newState);
+  },
 };

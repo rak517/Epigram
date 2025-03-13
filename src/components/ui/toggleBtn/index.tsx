@@ -5,9 +5,15 @@ interface ToggleButtonProps {
   isPublic: boolean;
   onToggle: (newState: boolean) => void;
   size?: 'small' | 'medium';
+  label?: string; // label 추가해서 성락님 의견대로 커스텀 가능하게 했습니다.
 }
 
-const ToggleButton: React.FC<ToggleButtonProps> = ({ isPublic, onToggle, size = 'medium' }) => {
+const ToggleButton: React.FC<ToggleButtonProps> = ({
+  isPublic,
+  onToggle,
+  size = 'medium',
+  label = '공개'
+}) => {
   const sizeClasses = {
     small: 'w-8 h-4', 
     medium: 'w-10.5 h-6', 
@@ -23,16 +29,15 @@ const ToggleButton: React.FC<ToggleButtonProps> = ({ isPublic, onToggle, size = 
     medium: 'text-sm', 
   };
 
-
   const togglePosition = {
     small: isPublic ? 'left-[calc(100%-14px)]' : 'left-1',  
     medium: isPublic ? 'left-[calc(100%-20px)]' : 'left-1', 
   };
 
   return (
-    <div className="flex items-center gap-2">
+    <div className="inline-flex items-center gap-2">
       <span className={`${Pretendard.className} text-gray-400 font-semibold ${textSize[size]}`}>
-        공개
+        {label}
       </span>
 
       <button
