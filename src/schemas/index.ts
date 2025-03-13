@@ -18,4 +18,5 @@ export const signupSchema = z.object({
         message: '비밀번호는 숫자, 영문, 특수문자로만 가능합니다.',
       },
     ),
+  passwordConfirm: z.string().min(1, '비밀번호 확인을 입력해주세요.'),
 });
