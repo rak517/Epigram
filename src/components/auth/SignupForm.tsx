@@ -14,11 +14,13 @@ export default function SignupForm() {
     mode: 'onBlur',
     defaultValues: {
       email: '',
+      nickname: '',
     },
   });
   return (
     <form>
       <Input label='이메일' error={errors.email?.message} type='email' placeholder='이메일' required {...register('email')} data-testid='email-input' />
+      <Input label='닉네임' error={errors.nickname?.message} type='text' placeholder='닉네임' required {...register('nickname')} data-testid='nickname-input' />
     </form>
   );
 }
