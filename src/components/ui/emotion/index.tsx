@@ -27,10 +27,10 @@ const emotionVariants = cva('flex items-center justify-center', {
       lg: 'w-9 h-9',
       xl: 'w-12 h-12',
     },
-    defaultVariants: {
-      variant: 'default',
-      size: 'md',
-    },
+  },
+  defaultVariants: {
+    variant: 'default',
+    size: 'md',
   },
 });
 
