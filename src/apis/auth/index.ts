@@ -3,6 +3,10 @@ import { safeResponse } from '@/utils/network/safeResponse';
 import { userResponseSchema } from '@/schemas';
 import { SignupForm, User } from '@/types';
 
+/**
+ * 회원가입
+ * https://fe-project-epigram-api.vercel.app/docs/#/Auth/SignUp
+ */
 export const signup = async (signupForm: SignupForm) => {
   const response = await axiosClientHelper.post<{ user: User }>('/auth/signUp', signupForm);
   return safeResponse(response.data, userResponseSchema);

@@ -31,8 +31,10 @@ export const userSchema = z.object({
   updatedAt: z.string(),
   createdAt: z.string(),
   nickname: z.string(),
+  teamId: z.union([z.string(), z.undefined()]),
+
   id: z.number(),
-  email: z.string(),
+  email: z.union([z.string(), z.undefined()]),
 });
 
 export const userResponseSchema = z.object({
