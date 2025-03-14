@@ -1,10 +1,16 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import SignupForm from '@/components/auth/SignupForm';
+import QueryClientProvider from '@/apis/QueryProvider';
+import { ReactNode } from 'react';
+
+const renderWithQueryClient = (ui: ReactNode) => {
+  return render(<QueryClientProvider>{ui}</QueryClientProvider>);
+};
 
 describe('SignupForm', () => {
   test('이메일 필드가 비어있을 때 blur 시 필수 입력 오류 메시지를 표시한다', async () => {
-    render(<SignupForm />);
+    renderWithQueryClient(<SignupForm />);
 
     const emailInput = screen.getByTestId('email-input');
     fireEvent.focus(emailInput);
@@ -14,8 +20,7 @@ describe('SignupForm', () => {
   });
 
   test('이메일 형식이 아닌 상태에서 blur 시 형식 오류 메시지를 표시한다', async () => {
-    render(<SignupForm />);
-
+    renderWithQueryClient(<SignupForm />);
     const emailInput = screen.getByTestId('email-input');
     fireEvent.change(emailInput, { target: { value: 'invalid-email' } });
     fireEvent.blur(emailInput);
@@ -24,7 +29,7 @@ describe('SignupForm', () => {
   });
 
   test('닉네임 필드가 비어있을 때 blur 시 필수 입력 오류 메시지를 표시한다', async () => {
-    render(<SignupForm />);
+    renderWithQueryClient(<SignupForm />);
 
     const nicknameInput = screen.getByTestId('nickname-input');
     fireEvent.focus(nicknameInput);
@@ -34,7 +39,7 @@ describe('SignupForm', () => {
   });
 
   test('닉네임이 20자를 초과할 때 blur 시 글자수 제한 오류 메시지를 표시한다', async () => {
-    render(<SignupForm />);
+    renderWithQueryClient(<SignupForm />);
 
     const nicknameInput = screen.getByTestId('nickname-input');
     fireEvent.change(nicknameInput, {
@@ -46,7 +51,7 @@ describe('SignupForm', () => {
   });
 
   test('비밀번호 필드가 비어있을 때 blur 시 필수 입력 오류 메시지를 표시한다', async () => {
-    render(<SignupForm />);
+    renderWithQueryClient(<SignupForm />);
 
     const passwordInput = screen.getByTestId('password-input');
     fireEvent.focus(passwordInput);
@@ -56,7 +61,7 @@ describe('SignupForm', () => {
   });
 
   test('비밀번호가 8자 미만일 때 blur 시 길이 제한 오류 메시지를 표시한다', async () => {
-    render(<SignupForm />);
+    renderWithQueryClient(<SignupForm />);
 
     const passwordInput = screen.getByTestId('password-input');
     fireEvent.change(passwordInput, { target: { value: '1234' } });
@@ -66,7 +71,7 @@ describe('SignupForm', () => {
   });
 
   test('비밀번호가 숫자, 영문, 특수문자 조합이 아닐 때 blur 시 형식 오류 메시지를 표시한다', async () => {
-    render(<SignupForm />);
+    renderWithQueryClient(<SignupForm />);
 
     const passwordInput = screen.getByTestId('password-input');
     fireEvent.change(passwordInput, { target: { value: '12345678가' } });
@@ -76,7 +81,7 @@ describe('SignupForm', () => {
   });
 
   test('비밀번호 확인 필드가 비어있을 때 blur 시 필수 입력 오류 메시지를 표시한다', async () => {
-    render(<SignupForm />);
+    renderWithQueryClient(<SignupForm />);
 
     const passwordConfirmInput = screen.getByTestId('password-confirm-input');
     fireEvent.focus(passwordConfirmInput);
@@ -86,7 +91,7 @@ describe('SignupForm', () => {
   });
 
   test('비밀번호 확인이 비밀번호와 일치하지 않을 때 blur 시 불일치 오류 메시지를 표시한다', async () => {
-    render(<SignupForm />);
+    renderWithQueryClient(<SignupForm />);
 
     const passwordInput = screen.getByTestId('password-input');
     const passwordConfirmInput = screen.getByTestId('password-confirm-input');
@@ -101,7 +106,7 @@ describe('SignupForm', () => {
   });
 
   test('비밀번호 토글 버튼을 누르면 password의 타입이 text로 변한다', async () => {
-    render(<SignupForm />);
+    renderWithQueryClient(<SignupForm />);
 
     const passwordInput = screen.getByTestId('password-input');
     expect(passwordInput).toHaveAttribute('type', 'password');
@@ -115,7 +120,7 @@ describe('SignupForm', () => {
   });
 
   test('비밀번호 확인 토글 버튼을 누르면 password-confirm의 타입이 text로 변한다', async () => {
-    render(<SignupForm />);
+    renderWithQueryClient(<SignupForm />);
 
     const passwordConfirmInput = screen.getByTestId('password-confirm-input');
     expect(passwordConfirmInput).toHaveAttribute('type', 'password');
@@ -129,7 +134,7 @@ describe('SignupForm', () => {
   });
 
   test('모든 유효성 검사가 통과하면 제출 버튼이 활성화된다', async () => {
-    render(<SignupForm />);
+    renderWithQueryClient(<SignupForm />);
 
     const submitButton = screen.getByTestId('signup-button');
     expect(submitButton).toBeDisabled();
