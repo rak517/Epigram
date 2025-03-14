@@ -6,7 +6,7 @@ import Link from 'next/link';
 
 export default function MainHeader() {
   return (
-    <header className='border-b-line-100 fixed flex w-full items-center justify-between border-b-[1px] px-6 py-[13px] md:px-[72px] md:py-[17px] xl:px-[120px] xl:py-[22px]'>
+    <header className='border-b-line-100 fixed flex w-full items-center justify-between border-b-[1px] bg-white px-6 py-[13px] md:px-[72px] md:py-[17px] xl:px-[120px] xl:py-[22px]'>
       <div className='flex items-center justify-center gap-3 md:gap-6 xl:gap-9'>
         <Image src={menuIcon} alt='메뉴 아이콘' className='md:hidden'></Image>
         <Link href={'/'}>
@@ -21,7 +21,7 @@ export default function MainHeader() {
       </div>
       <Link href={'/myapage'} className='flex gap-1.5'>
         <Image src={userIconLight} alt='유저 아이콘'></Image>
-        <p className='text-[13px] leading-[22px] font-medium text-gray-300 xl:text-[14px] xl:leading-3.5'>김코드</p>
+        <p className='xl:text-md text-sm font-medium text-gray-300'>김코드</p>
       </Link>
     </header>
   );

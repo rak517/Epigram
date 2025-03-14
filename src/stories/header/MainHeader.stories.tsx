@@ -16,7 +16,7 @@ const meta: Meta<typeof MainHeader> = {
   },
   decorators: [
     (Story) => (
-      <div className='bg-[#ffffff]'>
+      <div className='bg-white'>
         <Story></Story>
       </div>
     ),
