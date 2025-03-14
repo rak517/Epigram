@@ -2,7 +2,7 @@
 
 import { cn } from '@/utils/cn';
 import { cva, VariantProps } from 'class-variance-authority';
-import { TextareaHTMLAttributes, useState, ChangeEvent } from 'react';
+import { TextareaHTMLAttributes, useState, ChangeEvent, Ref } from 'react';
 
 const textAreaVariants = cva('bg-white placeholder-blue-300', {
   variants: {
@@ -42,16 +42,26 @@ const textAreaVariants = cva('bg-white placeholder-blue-300', {
 
 const charCountContainerStyle = 'absolute -bottom-4 right-0 text-xs flex items-center';
 
-interface TextAreaProps extends TextareaHTMLAttributes<HTMLTextAreaElement>, VariantProps<typeof textAreaVariants> {
+export interface TextAreaProps extends TextareaHTMLAttributes<HTMLTextAreaElement>, VariantProps<typeof textAreaVariants> {
   maxLength?: number;
+  ref?: Ref<HTMLTextAreaElement>;
 }
 
-export default function TextArea({ variant, size, fontSize, border, borderRadius, maxLength, onChange, value, defaultValue, ...props }: TextAreaProps) {
+export default function TextArea({ variant, size, fontSize, border, borderRadius, maxLength, onChange, value, defaultValue, ref, ...props }: TextAreaProps) {
   const initialValue = value?.toString() || defaultValue?.toString() || '';
 
   const [charCount, setCharCount] = useState(initialValue.length);
 
-  const charLimit = variant === 'limit100' ? 100 : variant === 'limit500' ? 500 : null;
+  let charLimit = variant === 'limit100' ? 100 : variant === 'limit500' ? 500 : null;
+
+  if (variant === 'limit100') {
+    charLimit = 100;
+  } else if (variant === 'limit500') {
+    charLimit = 500;
+  } else {
+    charLimit = null;
+  }
+
   const effectiveMaxLength = maxLength || charLimit || undefined;
 
   const handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
@@ -77,6 +87,7 @@ export default function TextArea({ variant, size, fontSize, border, borderRadius
         maxLength={effectiveMaxLength}
         value={value}
         defaultValue={defaultValue}
+        ref={ref}
         {...props}
       />
 
