@@ -29,13 +29,13 @@ const emotionVariants = cva('flex items-center justify-center', {
     },
     defaultVariants: {
       variant: 'default',
-      size: 'sm',
+      size: 'md',
     },
   },
 });
 
 const emotionPaths: EmotionVarients = {
-  기쁨: {
+  감동: {
     path: (
       <>
         <g clipPath='url(#clip0_0_9798)'>
@@ -78,7 +78,7 @@ const emotionPaths: EmotionVarients = {
             d='M20.125 14.5C21.0915 14.5 21.875 13.7165 21.875 12.75C21.875 11.7835 21.0915 11 20.125 11C19.1585 11 18.375 11.7835 18.375 12.75C18.375 13.7165 19.1585 14.5 20.125 14.5Z'
             fill='#3E414D'
           />
-          <path d='M20.5 23.375C19.3291 22.2893 17.7581 21.625 16.0312 21.625C15.6804 21.625 15.3359 21.6524 15 21.7052' stroke='#9A695E' strokeWidth='2.15054' stroke-linecap='round' />
+          <path d='M20.5 23.375C19.3291 22.2893 17.7581 21.625 16.0312 21.625C15.6804 21.625 15.3359 21.6524 15 21.7052' stroke='#9A695E' strokeWidth='2.15054' strokeLinecap='round' />
         </g>
         <defs>
           <clipPath id='clip0_0_9852'>
@@ -88,7 +88,7 @@ const emotionPaths: EmotionVarients = {
       </>
     ),
   },
-  웃음: {
+  기쁨: {
     path: (
       <>
         <g clipPath='url(#clip0_0_9814)'>
@@ -101,7 +101,7 @@ const emotionPaths: EmotionVarients = {
             d='M20.125 14.5C21.0915 14.5 21.875 13.7165 21.875 12.75C21.875 11.7835 21.0915 11 20.125 11C19.1585 11 18.375 11.7835 18.375 12.75C18.375 13.7165 19.1585 14.5 20.125 14.5Z'
             fill='#3E414D'
           />
-          <path d='M23 19.9375C21.6756 22.3914 19.0518 24.0625 16.0312 24.0625C13.0107 24.0625 10.3869 22.3914 9.0625 19.9375' stroke='#9A695E' strokeWidth='2.15054' stroke-linecap='round' />
+          <path d='M23 19.9375C21.6756 22.3914 19.0518 24.0625 16.0312 24.0625C13.0107 24.0625 10.3869 22.3914 9.0625 19.9375' stroke='#9A695E' strokeWidth='2.15054' strokeLinecap='round' />
         </g>
         <defs>
           <clipPath id='clip0_0_9814'>
@@ -111,7 +111,7 @@ const emotionPaths: EmotionVarients = {
       </>
     ),
   },
-  생각: {
+  고민: {
     path: (
       <>
         <path d='M16 32C24.8366 32 32 24.8366 32 16C32 7.16344 24.8366 0 16 0C7.16344 0 0 7.16344 0 16C0 24.8366 7.16344 32 16 32Z' fill='#FBC85B' />
@@ -123,19 +123,19 @@ const emotionPaths: EmotionVarients = {
           d='M22.0234 8.5002C22.0234 8.5002 20.9334 8.70078 19.6546 9.47807C18.3759 10.2553 17.5626 10.9766 17.5626 10.9766'
           stroke='#3E414D'
           strokeWidth='1.79211'
-          stroke-linecap='round'
+          strokeLinecap='round'
           strokeLinejoin='round'
         />
         <path
           d='M8.93741 12.5069C8.93741 12.5069 9.99721 12.2652 11.4921 12.1978C12.0193 12.1741 12.4915 12.2019 12.8819 12.248'
           stroke='#3E414D'
           strokeWidth='1.79211'
-          stroke-linecap='round'
+          strokeLinecap='round'
           strokeLinejoin='round'
         />
         <path d='M11.375 17C12.3415 17 13.125 16.2165 13.125 15.25C13.125 14.2835 12.3415 13.5 11.375 13.5C10.4085 13.5 9.625 14.2835 9.625 15.25C9.625 16.2165 10.4085 17 11.375 17Z' fill='#3E414D' />
         <rect x='19.3125' y='12' width='2.6875' height='4.6875' rx='1.34375' fill='#494D59' />
-        <path d='M19.9136 22.0098C18.5912 21.1146 16.9376 20.6969 15.2307 20.9594C14.884 21.0127 14.5477 21.0922 14.2237 21.1954' stroke='#9A695E' strokeWidth='2.15054' stroke-linecap='round' />
+        <path d='M19.9136 22.0098C18.5912 21.1146 16.9376 20.6969 15.2307 20.9594C14.884 21.0127 14.5477 21.0922 14.2237 21.1954' stroke='#9A695E' strokeWidth='2.15054' strokeLinecap='round' />
       </>
     ),
   },
