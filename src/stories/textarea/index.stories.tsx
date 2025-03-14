@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { cn } from '@/utils/cn';
-import TextArea from '@/components/ui/textarea';
+import TextArea, { TextAreaProps } from '@/components/ui/textarea';
 import { Pretendard } from '@/fonts';
 
 const meta: Meta<typeof TextArea> = {
@@ -43,9 +43,15 @@ const meta: Meta<typeof TextArea> = {
   },
 };
 
-export default meta;
-
 type Story = StoryObj<typeof TextArea>;
+
+const render = (args: TextAreaProps) => {
+  const placeholder = args.variant === 'limit100' ? '100자 이내로 입력해주세요' : '500자 이내로 입력해주세요';
+
+  return <TextArea {...args} placeholder={placeholder} />;
+};
+
+export default meta;
 
 export const Small100: Story = {
   args: {
@@ -56,6 +62,7 @@ export const Small100: Story = {
     borderRadius: 'lg',
     placeholder: '100자 이내로 입력해주세요.',
   },
+  render,
 };
 
 export const Medium100: Story = {
@@ -67,6 +74,7 @@ export const Medium100: Story = {
     borderRadius: 'lg',
     placeholder: '100자 이내로 입력해주세요.',
   },
+  render,
 };
 
 export const Large100: Story = {
@@ -78,6 +86,7 @@ export const Large100: Story = {
     borderRadius: 'lg',
     placeholder: '100자 이내로 입력해주세요.',
   },
+  render,
 };
 
 export const Small500: Story = {
@@ -89,6 +98,7 @@ export const Small500: Story = {
     borderRadius: 'xl',
     placeholder: '500자 이내로 입력해주세요.',
   },
+  render,
 };
 
 export const Medium500: Story = {
@@ -100,6 +110,7 @@ export const Medium500: Story = {
     borderRadius: 'xl',
     placeholder: '500자 이내로 입력해주세요.',
   },
+  render,
 };
 
 export const Large500: Story = {
@@ -111,4 +122,5 @@ export const Large500: Story = {
     borderRadius: 'xl',
     placeholder: '500자 이내로 입력해주세요.',
   },
+  render,
 };
