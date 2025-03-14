@@ -52,3 +52,4 @@ node_modules/
 # custom
 .swc
 /storybook-static
+.vscode
