@@ -12,10 +12,17 @@ import OpendEye from '@/assets/icons/opend_eye.svg';
 import ClosedEye from '@/assets/icons/closed_eye.svg';
 import Logo from '@/assets/images/logo.png';
 import Link from 'next/link';
+import { useSignup } from '@/apis/auth/queries';
+import { useModalStore } from '@/stores/ModalStore';
+import { useRouter } from 'next/navigation';
+import { getErrorMessage } from '@/utils/network/getErrorMessage';
+import { isAxiosError } from 'axios';
 
 export default function SignupForm() {
   const {
     register,
+    handleSubmit,
+    reset,
     formState: { errors, isDirty, isValid, isSubmitting },
   } = useForm<SignupFormType>({
     resolver: zodResolver(signupSchema),
@@ -24,17 +31,44 @@ export default function SignupForm() {
       email: '',
       nickname: '',
       password: '',
-      passwordConfirm: '',
+      passwordConfirmation: '',
     },
   });
+  const { mutateAsync: signup } = useSignup();
+  const { openModal } = useModalStore();
+  const router = useRouter();
 
   const [isShowPassword, setIsShowPassword] = useState(true);
   const [isShowPasswordConfirm, setIsShowPasswordConfirm] = useState(true);
 
   const isDisabled = !isDirty || !isValid || isSubmitting;
 
+  const onSubmit = async (signupForm: SignupFormType) => {
+    try {
+      await signup(signupForm);
+      reset();
+      openModal({
+        type: 'alert',
+        title: '회원가입이 완료되었습니다!',
+        description: '확인 버튼을 누르시면 홈페이지로 이동합니다.',
+        callback: () => {
+          router.push('/');
+        },
+      });
+    } catch (error) {
+      let errorMessage = '';
+      if (isAxiosError(error) && error.status === 500) errorMessage = '중복된 닉네임입니다.';
+      else errorMessage = getErrorMessage(error);
+      openModal({
+        type: 'alert',
+        title: '회원가입에 실패했습니다.',
+        description: errorMessage,
+      });
+    }
+  };
+
   return (
-    <form className='flex w-full max-w-96 flex-col gap-2'>
+    <form className='flex w-full max-w-96 flex-col gap-2' onSubmit={handleSubmit(onSubmit)}>
       <Link className='flex w-full items-center justify-center' href='/'>
         <Image src={Logo} alt='로고' width={172} height={48} className='cursor-pointer' />
       </Link>
@@ -63,11 +97,11 @@ export default function SignupForm() {
       <div className='relative'>
         <Input
           label='비멀번호 확인'
-          error={errors.passwordConfirm?.message}
+          error={errors.passwordConfirmation?.message}
           type={isShowPasswordConfirm ? 'password' : 'text'}
           placeholder='비밀번호 확인'
           required
-          {...register('passwordConfirm')}
+          {...register('passwordConfirmation')}
           data-testid='password-confirm-input'
           disabled={isSubmitting}
         />

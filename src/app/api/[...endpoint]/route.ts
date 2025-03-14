@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { isEmpty, omit } from 'es-toolkit/compat';
 import axiosServerHelper from '@/utils/network/axiosServerHelper';
 import errorResponse from '@/utils/network/errorResponse';
+import { getExpirationDate } from '@/utils/network/getExpirationDate';
 
 export const GET = async (request: NextRequest) => {
   const url = new URL(request.url);
@@ -33,14 +34,26 @@ export const POST = async (request: NextRequest) => {
         'Content-Type': request.headers.get('Content-Type'),
       },
     });
-    const response = NextResponse.json(omit(apiResponse.data, ['accessToken']), { status: apiResponse.status });
-    if (endPoint === '/auth/login')
+    const response = NextResponse.json(omit(apiResponse.data, ['accessToken', 'refreshToken']), { status: apiResponse.status });
+    if (endPoint === '/auth/signIn') {
+      const accessTokenExp = getExpirationDate(apiResponse.data.accessToken);
+      const refreshTokenExp = getExpirationDate(apiResponse.data.refreshToken);
+
       response.cookies.set('accessToken', apiResponse.data.accessToken, {
         httpOnly: true,
         sameSite: 'lax',
         secure: process.env.NODE_ENV === 'production',
         path: '/',
+        expires: accessTokenExp || undefined,
       });
+      response.cookies.set('refreshToken', apiResponse.data.refreshToken, {
+        httpOnly: true,
+        sameSite: 'lax',
+        secure: process.env.NODE_ENV === 'production',
+        path: '/',
+        expires: refreshTokenExp || undefined,
+      });
+    }
     return response;
   } catch (error) {
     return errorResponse(error);

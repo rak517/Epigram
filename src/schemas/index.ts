@@ -19,11 +19,11 @@ export const signupSchema = z
           message: '비밀번호는 숫자, 영문, 특수문자로만 가능합니다.',
         },
       ),
-    passwordConfirm: z.string().min(1, '비밀번호 확인을 입력해주세요.'),
+    passwordConfirmation: z.string().min(1, '비밀번호 확인을 입력해주세요.'),
   })
-  .refine((data) => data.password === data.passwordConfirm, {
+  .refine((data) => data.password === data.passwordConfirmation, {
     message: '비밀번호가 일치하지 않습니다.',
-    path: ['passwordConfirm'],
+    path: ['passwordConfirmation'],
   });
 
 export const userSchema = z.object({
@@ -33,4 +33,8 @@ export const userSchema = z.object({
   nickname: z.string(),
   id: z.number(),
   email: z.string(),
+});
+
+export const userResponseSchema = z.object({
+  user: userSchema,
 });
