@@ -100,7 +100,7 @@ export default function SignupForm() {
           alt='비밀번호 토글 이미지'
           width={24}
           height={24}
-          className='absolute top-11 right-3 lg:top-15'
+          className='absolute top-[46px] right-3 cursor-pointer lg:top-[60px]'
           onClick={() => setIsShowPassword((prev) => !prev)}
           data-testid='password-toggle'
         />
@@ -122,7 +122,7 @@ export default function SignupForm() {
           alt='비밀번호 토글 이미지'
           width={24}
           height={24}
-          className='absolute top-11 right-3 lg:top-15'
+          className='absolute top-[46px] right-3 cursor-pointer lg:top-[60px]'
           onClick={() => setIsShowPasswordConfirm((prev) => !prev)}
           data-testid='password-confirm-toggle'
         />
