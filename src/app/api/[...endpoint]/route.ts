@@ -75,6 +75,21 @@ export const PUT = async (request: NextRequest) => {
   }
 };
 
+export const PATCH = async (request: NextRequest) => {
+  const url = new URL(request.url);
+  const endPoint = url.pathname.replace(/^\/api/, '');
+  try {
+    const apiResponse = await axiosServerHelper.patch(endPoint, await request.json());
+    if (isEmpty(apiResponse.data))
+      return new NextResponse(null, {
+        status: apiResponse.status,
+      });
+    return NextResponse.json(apiResponse.data, { status: apiResponse.status });
+  } catch (error) {
+    return errorResponse(error);
+  }
+};
+
 export const DELETE = async (request: NextRequest) => {
   const url = new URL(request.url);
   const endPoint = url.pathname.replace(/^\/api/, '');
