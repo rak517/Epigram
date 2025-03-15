@@ -87,7 +87,7 @@ const RoundedButton: React.FC<RoundedButtonProps> = ({
     <button
       onClick={onClick}
       className={cn(
-        "flex items-center justify-center rounded-full border transition hover:opacity-100 hover:scale-105",
+        "flex items-center justify-center rounded-full border transition hover:opacity-100 hover:scale-105 whitespace-nowrap",
         {
           "bg-opacity-60 bg-black": type === "좋아요버튼",
           "bg-black": buttonStyle.backgroundColor === "black",

@@ -1,10 +1,17 @@
 import React from 'react';
 import { Meta, StoryFn } from '@storybook/react';
-import RoundedButton, { RoundedButtonProps } from '@/components/ui/roundedButton'; 
+import RoundedButton, { RoundedButtonProps } from '@/components/ui/roundedButton';
 
 export default {
   title: 'Components/RoundedButton',
   component: RoundedButton,
+  decorators: [
+    (Story) => (
+      <div className="whitespace-nowrap">
+        <Story />
+      </div>
+    ),
+  ],
   argTypes: {
     type: {
       control: 'select',
