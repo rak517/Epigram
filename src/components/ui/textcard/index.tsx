@@ -135,7 +135,7 @@ export default function TextCard({ isDropdown, cardContent, author, tags = [], m
     >
       <div>
         <div className='p-[22px]'>
-          <div className='mb-4'>{cardContent}</div>
+          <div className='mb-4 line-clamp-4'>{cardContent}</div>
 
           {author && <div className='text-right text-blue-400'>- {author} -</div>}
         </div>
