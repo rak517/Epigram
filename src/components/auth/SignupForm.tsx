@@ -72,10 +72,20 @@ export default function SignupForm() {
       <Link className='flex w-full items-center justify-center' href='/'>
         <Image src={Logo} alt='로고' width={172} height={48} className='cursor-pointer' />
       </Link>
-      <Input label='이메일' error={errors.email?.message} type='email' placeholder='이메일' required {...register('email')} data-testid='email-input' disabled={isSubmitting} />
+      <Input
+        label='이메일'
+        error={errors.email?.message}
+        type='email'
+        placeholder='이메일'
+        required
+        {...register('email')}
+        data-testid='email-input'
+        disabled={isSubmitting}
+        className='text-md md:text-lg lg:text-xl'
+      />
       <div className='relative'>
         <Input
-          label='비멀번호'
+          label='비밀번호'
           error={errors.password?.message}
           type={isShowPassword ? 'password' : 'text'}
           placeholder='비밀번호'
@@ -83,6 +93,7 @@ export default function SignupForm() {
           {...register('password')}
           data-testid='password-input'
           disabled={isSubmitting}
+          className='text-md md:text-lg lg:text-xl'
         />
         <Image
           src={isShowPassword ? ClosedEye : OpendEye}
@@ -96,7 +107,7 @@ export default function SignupForm() {
       </div>
       <div className='relative'>
         <Input
-          label='비멀번호 확인'
+          label='비밀번호 확인'
           error={errors.passwordConfirmation?.message}
           type={isShowPasswordConfirm ? 'password' : 'text'}
           placeholder='비밀번호 확인'
@@ -104,6 +115,7 @@ export default function SignupForm() {
           {...register('passwordConfirmation')}
           data-testid='password-confirm-input'
           disabled={isSubmitting}
+          className='text-md md:text-lg lg:text-xl'
         />
         <Image
           src={isShowPasswordConfirm ? ClosedEye : OpendEye}
@@ -115,7 +127,17 @@ export default function SignupForm() {
           data-testid='password-confirm-toggle'
         />
       </div>
-      <Input label='닉네임' error={errors.nickname?.message} type='text' placeholder='닉네임' required {...register('nickname')} data-testid='nickname-input' disabled={isSubmitting} />
+      <Input
+        label='닉네임'
+        error={errors.nickname?.message}
+        type='text'
+        placeholder='닉네임'
+        required
+        {...register('nickname')}
+        data-testid='nickname-input'
+        disabled={isSubmitting}
+        className='text-md md:text-lg lg:text-xl'
+      />
       <Button disabled={isDisabled} className='w-full' data-testid='signup-button'>
         가입하기
       </Button>
