@@ -6,14 +6,12 @@ import { NextResponse } from 'next/server';
 const getAccessToken = async () => {
   const cookieStore = await cookies();
   const refreshToken = cookieStore.get('refreshToken')?.value;
-
   try {
-    const response = await axios.post<{ accessToken: string }>(`${process.env.NEXT_PUBLIC_API_URL}/auth/refresh-token`, {
-      headers: { Authorization: `Bearer ${refreshToken}` },
-    });
+    const response = await axios.post<{ accessToken: string }>(`${process.env.NEXT_PUBLIC_API_URL}/auth/refresh-token`, { refreshToken });
 
     const newAccessToken = response.data.accessToken;
     if (!newAccessToken) return null;
+    return newAccessToken;
   } catch {
     return null;
   }
