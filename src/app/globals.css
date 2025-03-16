@@ -76,4 +76,6 @@
   --color-sub-gray-1: hsl(216, 29%, 83%, 1);
   --color-sub-gray-2: hsl(214, 33%, 92%, 1);
   --color-sub-gray-3: hsl(213, 39%, 95%, 1);
+
+  --color-blue-gray-100: hsla(220, 20%, 75%, 0.15)
 }

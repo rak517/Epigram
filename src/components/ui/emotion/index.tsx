@@ -10,7 +10,7 @@ interface EmotionVarients {
   [key: string]: EmotionPaths;
 }
 
-interface EmotionProps extends VariantProps<typeof emotionVariants> {
+export interface EmotionProps extends VariantProps<typeof emotionVariants> {
   emotion: keyof typeof emotionPaths;
   className?: string;
 }
