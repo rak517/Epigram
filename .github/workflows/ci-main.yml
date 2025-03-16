@@ -46,10 +46,31 @@ jobs:
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
 
-      # 8. E2E 테스트 실행 (Playwright)
-      - name: Run Playwright tests
-        run: npx playwright test
-
+      # 8. env 파일 생성
+      - name: Create to .env file
+        run: |
+          echo "NEXT_PUBLIC_DEFAULT_IMAGE_URL=${{ secrets.NEXT_PUBLIC_DEFAULT_IMAGE_URL }}" >> .env
+          echo "NEXT_PUBLIC_API_URL=${{ secrets.NEXT_PUBLIC_API_URL }}" >> .env
+          echo "NEXT_PUBLIC_KAKAO_API_KEY=${{ secrets.NEXT_PUBLIC_KAKAO_API_KEY }}" >> .env
+          echo "NEXT_PUBLIC_KAKAO_REDIRECT_URI=${{ secrets.NEXT_PUBLIC_KAKAO_REDIRECT_URI }}" >> .env
+          echo "NEXT_PUBLIC_GOOGLE_API_KEY=${{ secrets.NEXT_PUBLIC_GOOGLE_API_KEY }}" >> .env
+          echo "NEXT_PUBLIC_GOOGLE_REDIRECT_URI=${{ secrets.NEXT_PUBLIC_GOOGLE_REDIRECT_URI }}" >> .env
+          echo "GOOGLE_SECRET_KEY=${{ secrets.GOOGLE_SECRET_KEY }}" >> .env
+          echo "NEXT_PUBLIC_PRODUCTION_DOMAIN=${{ secrets.NEXT_PUBLIC_PRODUCTION_DOMAIN }}" >> .env
+          echo "NEXT_PUBLIC_LOCAL_DOMAIN=${{ secrets.NEXT_PUBLIC_LOCAL_DOMAIN }}" >> .env
+      
       # 9. Next.js 빌드
       - name: Build Next.js app
         run: npm run build
+
+      # 10. E2E 테스트 실행 (Playwright)
+      - name: Run Playwright tests
+        run: npx playwright test
+
+      # 11. E2E 레포트 업로드
+      - uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 30
