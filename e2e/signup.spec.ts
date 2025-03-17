@@ -12,6 +12,12 @@ test.describe('회원가입 페이지', () => {
     await expect(page).toHaveURL('http://localhost:3000');
   });
 
+  test('로그인하기 텍스트 클릭 시 로그인 페이지로 이동한다.', async ({ page }) => {
+    await page.goto('/signup');
+    await page.getByRole('link', { name: '로그인하기' }).click();
+    await expect(page).toHaveURL('http://localhost:3000/login');
+  });
+
   test('중복된 이메일을 제출하면, alert 창으로 메시지를 표시하며, 확인 버튼을 누르면 모달이 닫힌다.', async ({ page }) => {
     await page.goto('/signup');
     await page.getByTestId('email-input').fill('test@email.com');
