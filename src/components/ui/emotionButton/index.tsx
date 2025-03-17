@@ -5,10 +5,12 @@ import { cn } from '@/utils/cn';
 import { cva } from 'class-variance-authority';
 import { useState } from 'react';
 
+type EmotionType = '감동' | '기쁨' | '슬픔' | '고민' | '분노';
+
 interface EmotionButtonProps {
   buttonVariant?: 'default' | 'onSelect';
   size?: 'sm' | 'md' | 'lg' | 'xl';
-  emotion: EmotionProps['emotion'];
+  emotion: EmotionType;
   emotionVariant?: EmotionProps['variant'];
 
   onClick?: () => void;
@@ -33,13 +35,13 @@ const buttonStyles = cva('flex justify-center items-center rounded-2xl cursor-po
   },
 });
 
-const buttonBorderMap: Record<string, string> = {
+const buttonBorderMap = {
   감동: 'border-illust-yellow',
   기쁨: 'border-illust-green',
   슬픔: 'border-illust-purple',
   고민: 'border-illust-blue',
   분노: 'border-illust-red',
-};
+} as const;
 
 export default function EmotionButton({ buttonVariant, emotion, emotionVariant, size, onClick }: EmotionButtonProps) {
   const [currentButtonVariant, setCurrentButtonVariant] = useState(buttonVariant || 'default');
