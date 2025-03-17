@@ -12,7 +12,7 @@ export default function Login() {
           가입하기
         </Link>
       </span>
-      <SocialButtonGroup />
+      <SocialButtonGroup endPoint='/login' />
     </div>
   );
 }
