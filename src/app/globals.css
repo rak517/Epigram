@@ -63,7 +63,7 @@
   --color-line-200: hsl(213, 39%, 86%);
 
   --color-illust-yellow: hsl(41, 95%, 67%);
-  --color-illust-green: hsl(41, 95%, 67%);
+  --color-illust-green: hsl(162, 46%, 51%);
   --color-illust-purple: hsl(248, 64%, 70%);
   --color-illust-blue: hsl(214, 82%, 63%);
   --color-illust-red: hsl(351, 69%, 66%);
@@ -76,4 +76,6 @@
   --color-sub-gray-1: hsl(216, 29%, 83%, 1);
   --color-sub-gray-2: hsl(214, 33%, 92%, 1);
   --color-sub-gray-3: hsl(213, 39%, 95%, 1);
+
+  --color-blue-gray-100: hsla(220, 20%, 75%, 0.15)
 }
