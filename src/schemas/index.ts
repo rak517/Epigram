@@ -40,3 +40,7 @@ export const userSchema = z.object({
 export const userResponseSchema = z.object({
   user: userSchema,
 });
+
+export const loginSchema = z.object({
+  email: z.string().min(1, '이메일은 필수 입력입니다.'),
+});
