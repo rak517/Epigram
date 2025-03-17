@@ -1,9 +1,9 @@
 import React from 'react';
 import { Meta, StoryFn } from '@storybook/react';
-import RoundedButton, { RoundedButtonProps } from '@/components/ui/roundedButton';
+import RoundedButton, { RoundedButtonProps } from '@/components/ui/buttons/roundedButton';
 
 export default {
-  title: 'Components/RoundedButton',
+  title: 'Button/RoundedButton',
   component: RoundedButton,
   decorators: [
     (Story) => (
