@@ -1,8 +1,8 @@
-import EmotionButton from '@/app/mypage/components/EmotionButton';
+import EmotionButton from '@/components/ui/emotionButton';
 import { Meta, StoryObj } from '@storybook/react';
 
 const meta: Meta<typeof EmotionButton> = {
-  title: 'Emotion/EmotionButton',
+  title: 'Button/EmotionButton',
   component: EmotionButton,
   tags: ['autodocs'],
   parameters: {
