@@ -13,11 +13,13 @@ export default function LoginForm() {
     mode: 'onBlur',
     defaultValues: {
       email: '',
+      password: '',
     },
   });
   return (
     <form>
       <Input label='이메일' error={errors.email?.message} type='email' placeholder='이메일' required {...register('email')} data-testid='email-input-login' />
+      <Input label='비밀번호' error={errors.password?.message} type='password' placeholder='비밀번호' required {...register('password')} data-testid='password-input-login' />
     </form>
   );
 }
