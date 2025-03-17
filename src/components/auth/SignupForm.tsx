@@ -138,7 +138,7 @@ export default function SignupForm() {
         disabled={isSubmitting}
         className='text-md md:text-lg lg:text-xl'
       />
-      <Button disabled={isDisabled} className='w-full' data-testid='signup-button'>
+      <Button disabled={isDisabled} className='text-md w-full' data-testid='signup-button' size='sm'>
         가입하기
       </Button>
     </form>
