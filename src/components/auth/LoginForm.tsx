@@ -1,6 +1,9 @@
+'use client';
+
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import Image from 'next/image';
+import Link from 'next/link';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { loginSchema } from '@/schemas';
 import { LoginForm as LoginFormType } from '@/types';
@@ -8,6 +11,7 @@ import Input from '@/components/ui/Field/Input';
 import Button from '@/components/ui/buttons';
 import OpendEye from '@/assets/icons/opend_eye.svg';
 import ClosedEye from '@/assets/icons/closed_eye.svg';
+import Logo from '@/assets/images/logo.png';
 
 export default function LoginForm() {
   const {
@@ -26,8 +30,21 @@ export default function LoginForm() {
   const isDisabled = !isDirty || !isValid || isSubmitting;
 
   return (
-    <form>
-      <Input label='이메일' error={errors.email?.message} type='email' placeholder='이메일' required {...register('email')} data-testid='email-input-login' />
+    <form className='flex w-full max-w-96 flex-col gap-2'>
+      <Link className='flex w-full items-center justify-center' href='/'>
+        <Image src={Logo} alt='로고' width={172} height={48} className='cursor-pointer' />
+      </Link>
+      <Input
+        label='이메일'
+        error={errors.email?.message}
+        type='email'
+        placeholder='이메일'
+        required
+        {...register('email')}
+        data-testid='email-input-login'
+        disabled={isSubmitting}
+        className='text-md md:text-lg lg:text-xl'
+      />
       <div className='relative'>
         <Input
           label='비밀번호'
@@ -37,6 +54,8 @@ export default function LoginForm() {
           required
           {...register('password')}
           data-testid='password-input-login'
+          disabled={isSubmitting}
+          className='text-md md:text-lg lg:text-xl'
         />
         <Image
           src={isShowPassword ? ClosedEye : OpendEye}
