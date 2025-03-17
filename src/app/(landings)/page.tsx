@@ -6,7 +6,7 @@ import Footer from '@/components/landing/Footer';
 import Hero from '@/components/landing/Hero';
 import { useRef } from 'react';
 
-export default function Home() {
+export default function Page() {
   const targetRef = useRef<HTMLDivElement | null>(null);
 
   const handleScroll = () => {

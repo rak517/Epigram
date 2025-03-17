@@ -3,8 +3,6 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import Modal from '@/components/ui/modals';
 import { Pretendard } from '@/fonts';
 import './globals.css';
-import LandingHeader from '@/components/ui/header/LandingHeader';
-import SmoothScroll from '@/components/landing/SmoothScroll';
 
 export default function RootLayout({
   children,
@@ -15,12 +13,9 @@ export default function RootLayout({
     <html lang='ko'>
       <body className={Pretendard.className}>
         <QueryClientProvider>
-          <SmoothScroll>
-            <LandingHeader showIcon />
-            {children}
-            <ReactQueryDevtools />
-            <Modal />
-          </SmoothScroll>
+          {children}
+          <ReactQueryDevtools />
+          <Modal />
         </QueryClientProvider>
       </body>
     </html>
