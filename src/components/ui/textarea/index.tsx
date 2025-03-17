@@ -52,14 +52,16 @@ export default function TextArea({ variant, size, fontSize, border, borderRadius
 
   const [charCount, setCharCount] = useState(initialValue.length);
 
-  let charLimit = variant === 'limit100' ? 100 : variant === 'limit500' ? 500 : null;
+  let charLimit = 0;
 
   if (variant === 'limit100') {
     charLimit = 100;
   } else if (variant === 'limit500') {
     charLimit = 500;
-  } else {
-    charLimit = null;
+  }
+
+  if (isNaN(charLimit)) {
+    charLimit = 0;
   }
 
   const effectiveMaxLength = maxLength || charLimit || undefined;
@@ -91,7 +93,7 @@ export default function TextArea({ variant, size, fontSize, border, borderRadius
         {...props}
       />
 
-      {charLimit && (
+      {charLimit > 0 && (
         <div className={charCountContainerStyle}>
           <span className={charCount >= charLimit ? 'text-red-500' : 'text-gray-500'}>{charCount}</span>
           <span className='text-gray-500'>/{charLimit}</span>
