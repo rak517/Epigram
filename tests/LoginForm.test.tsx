@@ -37,6 +37,20 @@ describe('LoginForm', () => {
     expect(await screen.findByText('비밀번호는 필수 입력입니다.')).toBeInTheDocument();
   });
 
+  test('비밀번호 토글 버튼을 누르면 password의 타입이 text로 변한다', async () => {
+    renderWithQueryClient(<LoginForm />);
+
+    const passwordInput = screen.getByTestId('password-input-login');
+    expect(passwordInput).toHaveAttribute('type', 'password');
+
+    const passwordToggle = screen.getByTestId('password-toggle-login');
+    await userEvent.click(passwordToggle);
+    expect(passwordInput).toHaveAttribute('type', 'text');
+
+    await userEvent.click(passwordToggle);
+    expect(passwordInput).toHaveAttribute('type', 'password');
+  });
+
   test('모든 유효성 검사가 통과하면 제출 버튼이 활성화된다', async () => {
     renderWithQueryClient(<LoginForm />);
 
