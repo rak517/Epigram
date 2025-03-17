@@ -10,7 +10,7 @@ export const GET = async (req: NextRequest) => {
 
   try {
     const apiResponse = await axios.post<{ user: User; accessToken: string; refreshToken: string }>(`${process.env.NEXT_PUBLIC_API_URL}/auth/signIn/${provider}`, {
-      redirectUri: process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI,
+      redirectUri: provider === 'KAKAO' ? process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI : process.env.NEXT_PUBLIC_GOOGLE_RDIRECT_URI,
       token: code,
     });
 

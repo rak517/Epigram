@@ -4,7 +4,7 @@ import Image from 'next/image';
 import GoogleLogo from '@/assets/images/logo_google.svg';
 import KakaoLogo from '@/assets/images/logo_kakao.svg';
 
-export default function SocialButtonGroup() {
+export default function SocialButtonGroup({ endPoint }: { endPoint: '/login' | '/signup' }) {
   const handleSocialLogin = (provider: 'google' | 'kakao') => {
     if (provider === 'kakao') {
       const KAKAO_OAUTH_URL =
@@ -26,7 +26,10 @@ export default function SocialButtonGroup() {
     <div className='w-full max-w-96 space-y-2'>
       <div className='flex w-full items-center'>
         <hr className='flex-grow border-t border-gray-200' />
-        <span className='px-4 text-xs text-blue-400'>SNS 계정으로 간편 가입하기</span>
+        <span className='px-4 text-xs text-blue-400'>
+          {endPoint === '/login' && 'SNS 계정으로 간편 가입하기'}
+          {endPoint === '/signup' && 'SNS 계정으로 로그인하기'}
+        </span>
         <hr className='flex-grow border-t border-gray-200' />
       </div>
       <div className='flex w-full items-center justify-center gap-2'>
