@@ -62,7 +62,7 @@ export default function Feature({ ref }: FeatureProps) {
   const yValues = [useTransform(scrollYProgress, [0, 0.33], [0, 0]), useTransform(scrollYProgress, [0.33, 0.66], [0, 0]), useTransform(scrollYProgress, [0.66, 1], [0, 0])];
 
   return (
-    <section ref={containerRef} className='relative grid place-items-center px-5 py-5 md:px-15 lg:px-20'>
+    <section ref={containerRef} className='relative mt-20 grid place-items-center px-5 py-5 md:px-15 lg:px-20'>
       <div className='relative flex w-full max-w-[1200px] flex-col gap-10' ref={ref}>
         {FEATURE_CONTENTS.map((item, index) => (
           <motion.div

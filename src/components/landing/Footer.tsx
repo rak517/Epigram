@@ -27,7 +27,7 @@ export default function Footer() {
       initial='initial'
       whileInView='animate'
       variants={containerVariants}
-      className='after:zigzag-top relative mt-25 flex h-[600px] items-center justify-center bg-[repeating-linear-gradient(to_bottom,white_0px,white_24px,#f2f2f2_25px)] md:h-[528px] lg:h-[1040px]'
+      className='after:zigzag-top relative mt-25 flex h-[600px] items-center justify-center bg-[repeating-linear-gradient(to_bottom,white_0px,white_24px,#f2f2f2_25px)] md:h-[528px] lg:h-[960px]'
     >
       <div className='flex flex-col items-center justify-center gap-12'>
         <Image src={landing_logo} alt='로고' />

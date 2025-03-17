@@ -37,7 +37,7 @@ export default function Hero({ handleScroll }: HeroProps) {
       initial='initial'
       whileInView='animate'
       variants={containerVariants}
-      className='after:zigzag px relative flex h-[672px] flex-col items-center justify-center bg-[repeating-linear-gradient(to_bottom,white_0px,white_24px,#f2f2f2_25px)] md:h-[674px] lg:h-[1040px]'
+      className='after:zigzag px relative flex h-[672px] flex-col items-center justify-center bg-[repeating-linear-gradient(to_bottom,white_0px,white_24px,#f2f2f2_25px)] md:h-[674px] lg:h-[960px]'
     >
       <div className='flex flex-col items-center gap-6 md:gap-8 lg:gap-12'>
         <div className={cn('flex flex-col items-center gap-2 md:gap-6 lg:gap-10', Iropke.className)}>

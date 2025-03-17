@@ -47,7 +47,7 @@ const cardVariants = {
 
 export default function Epigrams() {
   return (
-    <section className='relative mx-auto flex flex-col items-center gap-10 px-5 text-center'>
+    <section className='relative mx-auto mt-20 flex flex-col items-center gap-10 px-5 text-center'>
       <h3 className='text-black-950 text-2xl font-bold lg:text-3xl'>
         사용자들이 직접
         <br /> 인용한 에피그램들
