@@ -99,7 +99,7 @@ export default function LoginForm() {
           data-testid='password-toggle-login'
         />
       </div>
-      <Button disabled={isDisabled} className='w-full' data-testid='login-button'>
+      <Button disabled={isDisabled} className='text-md w-full' data-testid='login-button' size='xs'>
         로그인
       </Button>
     </form>
