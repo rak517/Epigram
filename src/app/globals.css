@@ -79,3 +79,43 @@
 
   --color-blue-gray-100: hsla(220, 20%, 75%, 0.15)
 }
+
+@layer utilities {
+  .after\:zigzag::after {
+    content: "";
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    width: 100%;
+    height: 24px;
+    background-image: linear-gradient(-20deg,
+        var(--color-background-100) 18px,
+        transparent 0),
+      linear-gradient(20deg,
+        var(--color-background-100) 18px,
+        transparent 0);
+    background-size: 32px 32px;
+    background-position: left bottom;
+    background-repeat: repeat-x;
+  }
+}
+
+@layer utilities {
+  .after\:zigzag-top::after {
+    content: "";
+    position: absolute;
+    top: -24px;
+    left: 0;
+    width: 100%;
+    height: 24px;
+    background-image: linear-gradient(-20deg,
+        white 18px,
+        transparent 0),
+      linear-gradient(20deg,
+        white 18px,
+        transparent 0);
+    background-size: 32px 32px;
+    background-position: left top;
+    background-repeat: repeat-x;
+  }
+}

@@ -12,7 +12,7 @@ export interface LandingHeaderProps {
 export default function LandingHeader({ showIcon = false }: LandingHeaderProps) {
   if (showIcon) {
     return (
-      <header className='border-b-line-100 fixed flex w-full items-center justify-between border-b bg-white px-6 py-2 md:h-[60px] md:px-[72px] md:py-3 xl:h-20 xl:px-[120px] xl:py-4'>
+      <header className='border-b-line-100 fixed z-100 flex w-full items-center justify-between border-b bg-white px-6 py-2 md:h-[60px] md:px-[72px] md:py-3 xl:h-20 xl:px-[120px] xl:py-4'>
         <Link href={'/search'}>
           <Image src={searchIcon} alt='검색 아이콘' className='xl:w-9' />
         </Link>
