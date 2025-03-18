@@ -53,10 +53,8 @@ export default function Hero({ handleScroll }: HeroProps) {
         </MotionLink>
       </div>
 
-      <div className='absolute bottom-18 flex flex-col items-center gap-1'>
-        <span className='cursor-pointer text-xs font-semibold text-blue-400 md:text-lg' onClick={handleScroll}>
-          더 알아보기{' '}
-        </span>
+      <div className='absolute bottom-18 flex cursor-pointer flex-col items-center gap-1' onClick={handleScroll}>
+        <span className='text-xs font-semibold text-blue-400 md:text-lg'>더 알아보기 </span>
         <Image src={arrow} width={24} height={24} alt='더 알아보기' />
       </div>
     </motion.div>
