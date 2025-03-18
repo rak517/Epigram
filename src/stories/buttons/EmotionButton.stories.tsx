@@ -17,15 +17,14 @@ const meta: Meta<typeof EmotionButton> = {
   ],
   argTypes: {
     buttonVariant: {
-      options: ['default', 'onSelect'],
-      control: { type: 'select' },
+      control: { type: 'boolean' },
     },
     size: {
       options: ['sm', 'md', 'lg', 'xl'],
       control: { type: 'select' },
     },
     emotion: {
-      options: ['기쁨', '슬픔', '감동', '고민', '분노'],
+      options: ['HAPPY', 'SAD', 'MOVED', 'WORRIED', 'ANGRY'],
       control: { type: 'select' },
     },
   },
@@ -36,8 +35,8 @@ type Story = StoryObj<typeof EmotionButton>;
 
 export const Default: Story = {
   args: {
-    buttonVariant: 'default',
+    buttonVariant: false,
     size: 'sm',
-    emotion: '기쁨',
+    emotion: 'HAPPY',
   },
 };
