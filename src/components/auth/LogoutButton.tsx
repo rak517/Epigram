@@ -6,28 +6,28 @@ import { useActionState, useEffect } from 'react';
 import { useModalStore } from '@/stores/ModalStore';
 import { useRouter } from 'next/navigation';
 
-export default function LoggoutButton({ className }: { className?: string }) {
+export default function LogoutButton({ className }: { className?: string }) {
   const [state, formAction, pending] = useActionState(logout, null);
   const router = useRouter();
   const { openModal } = useModalStore();
 
   useEffect(() => {
-    if (state) {
-      if (state.status) {
-        openModal({
-          type: 'alert',
-          title: '로그아웃이 완료되었습니다.',
-          callback: () => {
-            router.replace('/login');
-          },
-        });
-      } else {
-        openModal({
-          type: 'alert',
-          title: '로그아웃에 실패했습니다.',
-          description: '나중에 다시 시도해주세요.',
-        });
-      }
+    if (!state) return;
+
+    if (state.status) {
+      openModal({
+        type: 'alert',
+        title: '로그아웃이 완료되었습니다.',
+        callback: () => {
+          router.replace('/login');
+        },
+      });
+    } else {
+      openModal({
+        type: 'alert',
+        title: '로그아웃에 실패했습니다.',
+        description: '나중에 다시 시도해주세요.',
+      });
     }
   }, [state, openModal, router]);
 
