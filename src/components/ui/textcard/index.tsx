@@ -90,14 +90,14 @@ export default function TextCard({ isDropdown, cardContent, author, tags = [], m
         </div>
         {tags.length > 0 && (
           <div
-            className={`${tagPosition === 'topLeft' ? 'absolute left-0' : 'absolute right-0 text-right'} flex flex-row flex-wrap text-blue-400`}
+            className={`${tagPosition === 'topLeft' ? 'absolute left-0' : 'absolute right-0 text-right'} flex flex-row flex-wrap space-x-2 text-blue-400`}
             style={{
               top: tagPosition === 'topLeft' ? `calc(-1.5em - 12px)` : undefined,
               bottom: tagPosition === 'bottomRight' ? `calc(-1.5em - 12px)` : undefined,
             }}
           >
             {displayTags.map((tag) => (
-              <span key={tag.id} className='space-x-2 py-1 text-blue-400'>
+              <span key={tag.id} className='py-1 text-blue-400'>
                 {tag.name === '...' ? tag.name : `#${tag.name}`}
               </span>
             ))}
@@ -133,14 +133,14 @@ export default function TextCard({ isDropdown, cardContent, author, tags = [], m
       </div>
       {tags.length > 0 && (
         <div
-          className={`${tagPosition === 'topLeft' ? 'absolute left-0' : 'absolute right-0 text-right'} text-blue-400`}
+          className={`${tagPosition === 'topLeft' ? 'absolute left-0' : 'absolute right-0 text-right'} space-x-2 text-blue-400`}
           style={{
             top: tagPosition === 'topLeft' ? `calc(-1.5em - 12px)` : undefined,
             bottom: tagPosition === 'bottomRight' ? `calc(-1.5em - 12px)` : undefined,
           }}
         >
           {displayTags.map((tag) => (
-            <span key={tag.id} className='space-x-2 py-1 text-blue-400'>
+            <span key={tag.id} className='py-1 text-blue-400'>
               {tag.name === '...' ? tag.name : `#${tag.name}`}
             </span>
           ))}
