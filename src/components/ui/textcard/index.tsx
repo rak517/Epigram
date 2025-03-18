@@ -23,6 +23,7 @@ const textCardVariants = cva(`border border-line-100 border-solid rounded-xl fon
       w744: 'w-[744px]',
     },
 
+    //높이가 변하지 않는 text card
     fixedSize: {
       w294h180: 'w-[294px] h-[180px]',
       w312h140: 'w-[312px] h-[140px]',
@@ -34,31 +35,38 @@ const textCardVariants = cva(`border border-line-100 border-solid rounded-xl fon
       bottomRight: '',
     },
 
-    fontSize: {
-      xs: 'text-xs',
-      sm: 'text-sm',
-      base: 'text-base',
-      xl: 'text-xl',
-      '2xl': 'text-2xl',
+    isBackground: {
+      true: 'bg-[linear-gradient(white_90%,#f2f2f2)] bg-[length:100%_20px] bg-repeat shadow-[0px_3px_12px_0px_rgba(0,0,0,0.04)]',
+      false: '',
     },
   },
+  defaultVariants: {
+    variant: 'fixedHeight',
+    tagPosition: 'bottomRight',
+    isBackground: true,
+  },
 });
+
+interface Tag {
+  id: number | string;
+  name: string;
+}
 
 interface TextCardProps extends HTMLAttributes<HTMLDivElement>, VariantProps<typeof textCardVariants> {
   isDropdown?: boolean;
   cardContent?: string;
   author?: string;
-  tags?: string[];
+  tags?: Tag[];
   maxTags?: number; // 최대 표시할 태그 수
 }
 
-export default function TextCard({ isDropdown, cardContent, author, tags = [], maxTags = 2, variant, width, fixedSize, fontSize, tagPosition, className, ...props }: TextCardProps) {
+export default function TextCard({ isDropdown, cardContent, author, tags = [], maxTags = 2, variant, width, fixedSize, tagPosition, isBackground, className, ...props }: TextCardProps) {
   let fixedSizeClass = '';
   if (fixedSize === 'w294h180') fixedSizeClass = 'w-[294px] h-[180px]';
   else if (fixedSize === 'w312h140') fixedSizeClass = 'w-[312px] h-[140px]';
   else if (fixedSize === 'w585h259') fixedSizeClass = 'w-[585px] h-[259px]';
 
-  const displayTags = tags.length > maxTags ? [...tags.slice(0, maxTags), '...'] : tags;
+  const displayTags = tags.length > maxTags ? [...tags.slice(0, maxTags), { id: 'ellipsis', name: '...' }] : tags;
 
   if (fixedSize) {
     return (
@@ -66,10 +74,10 @@ export default function TextCard({ isDropdown, cardContent, author, tags = [], m
         className={`${textCardVariants({
           variant,
           width,
-          fontSize,
           tagPosition,
+          isBackground,
           className,
-        })} relative mx-auto`}
+        })} relative`}
         {...props}
       >
         <div className={`${fixedSizeClass} relative`}>
@@ -92,9 +100,9 @@ export default function TextCard({ isDropdown, cardContent, author, tags = [], m
               bottom: tagPosition === 'bottomRight' ? `calc(-1.5em - 12px)` : undefined,
             }}
           >
-            {displayTags.map((tag, index) => (
-              <span key={index} className='px-2 py-1 text-blue-400'>
-                {tag === '...' ? tag : `#${tag}`}
+            {displayTags.map((tag) => (
+              <span key={tag.id} className='px-2 py-1 text-blue-400'>
+                {tag.name === '...' ? tag.name : `#${tag.name}`}
               </span>
             ))}
           </div>
@@ -109,10 +117,10 @@ export default function TextCard({ isDropdown, cardContent, author, tags = [], m
         variant,
         width,
         fixedSize,
-        fontSize,
         tagPosition,
+        isBackground,
         className,
-      })} relative mx-auto`}
+      })} relative`}
       {...props}
     >
       <div>
@@ -135,9 +143,9 @@ export default function TextCard({ isDropdown, cardContent, author, tags = [], m
             bottom: tagPosition === 'bottomRight' ? `calc(-1.5em - 12px)` : undefined,
           }}
         >
-          {displayTags.map((tag, index) => (
-            <span key={index} className='px-2 py-1 text-blue-400'>
-              {tag === '...' ? tag : `#${tag}`}
+          {displayTags.map((tag) => (
+            <span key={tag.id} className='px-2 py-1 text-blue-400'>
+              {tag.name === '...' ? tag.name : `#${tag.name}`}
             </span>
           ))}
         </div>
