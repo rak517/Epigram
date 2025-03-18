@@ -2,6 +2,7 @@ import { cva, VariantProps } from 'class-variance-authority';
 import { HTMLAttributes } from 'react';
 import { Iropke } from '@/fonts';
 import DropdownMenu from '../DropdownMenu';
+import { Tag } from '@/types';
 
 const textCardVariants = cva(`border border-line-100 border-solid rounded-xl font-normal ${Iropke.className}`, {
   variants: {
@@ -47,11 +48,6 @@ const textCardVariants = cva(`border border-line-100 border-solid rounded-xl fon
   },
 });
 
-interface Tag {
-  id: number | string;
-  name: string;
-}
-
 interface TextCardProps extends HTMLAttributes<HTMLDivElement>, VariantProps<typeof textCardVariants> {
   isDropdown?: boolean;
   cardContent?: string;
@@ -66,7 +62,7 @@ export default function TextCard({ isDropdown, cardContent, author, tags = [], m
   else if (fixedSize === 'w312h140') fixedSizeClass = 'w-[312px] h-[140px]';
   else if (fixedSize === 'w585h259') fixedSizeClass = 'w-[585px] h-[259px]';
 
-  const displayTags = tags.length > maxTags ? [...tags.slice(0, maxTags), { id: 'ellipsis', name: '...' }] : tags;
+  const displayTags = tags.length > maxTags ? [...tags.slice(0, maxTags), { id: -1, name: '...' }] : tags;
 
   if (fixedSize) {
     return (
@@ -101,7 +97,7 @@ export default function TextCard({ isDropdown, cardContent, author, tags = [], m
             }}
           >
             {displayTags.map((tag) => (
-              <span key={tag.id} className='px-2 py-1 text-blue-400'>
+              <span key={tag.id} className='space-x-2 py-1 text-blue-400'>
                 {tag.name === '...' ? tag.name : `#${tag.name}`}
               </span>
             ))}
@@ -144,7 +140,7 @@ export default function TextCard({ isDropdown, cardContent, author, tags = [], m
           }}
         >
           {displayTags.map((tag) => (
-            <span key={tag.id} className='px-2 py-1 text-blue-400'>
+            <span key={tag.id} className='space-x-2 py-1 text-blue-400'>
               {tag.name === '...' ? tag.name : `#${tag.name}`}
             </span>
           ))}
