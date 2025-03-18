@@ -4,11 +4,11 @@ import Emotion, { EmotionProps } from '@/components/ui/emotion';
 import { cn } from '@/utils/cn';
 import { cva } from 'class-variance-authority';
 import { useState } from 'react';
-import { EmotionType } from '@/types';
+import { Emotion as EmotionType } from '@/types';
 
 const buttonStyles = cva('flex justify-center items-center rounded-2xl cursor-pointer', {
   variants: {
-    buttonVariant: {
+    isActive: {
       false: 'bg-blue-gray-100',
       true: 'border-3',
     },
@@ -20,7 +20,7 @@ const buttonStyles = cva('flex justify-center items-center rounded-2xl cursor-po
     },
   },
   defaultVariants: {
-    buttonVariant: false,
+    isActive: false,
     size: 'sm',
   },
 });
@@ -51,7 +51,7 @@ export default function EmotionButton({ buttonVariant, emotion, emotionVariant, 
     onClick?.();
   };
   return (
-    <button className={cn(buttonStyles({ buttonVariant: currentButtonVariant, size }), buttonBorderColor)} onClick={handleClick}>
+    <button className={cn(buttonStyles({ isActive: currentButtonVariant, size }), buttonBorderColor)} onClick={handleClick}>
       <Emotion variant={emotionVariant} emotion={emotion} size={size} />
     </button>
   );
