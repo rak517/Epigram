@@ -76,7 +76,7 @@ export const deleteEpigramFavorite = async (epigramId: number) => {
  * https://fe-project-epigram-api.vercel.app/docs/#/Epigram/ListEpigramComments
  */
 export const getComments = async (epigramId: number, commentsParams: GetCommentsParams) => {
-  const response = await axiosClientHelper.get<CommentsResponse>(`/epigrams/${epigramId}/like`, {
+  const response = await axiosClientHelper.get<CommentsResponse>(`/epigrams/${epigramId}/comments`, {
     params: {
       ...commentsParams,
     },

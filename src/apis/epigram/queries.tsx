@@ -19,7 +19,7 @@ export const useGetEpigrams = (epigramsParams: GetEpigramsParams) => {
   return useInfiniteQuery({
     queryKey: ['epigrams', epigramsParams],
     queryFn: ({ pageParam }) => getEpigrams({ ...epigramsParams, cursor: pageParam }),
-    getNextPageParam: (lastPage) => lastPage.nextCursor || 0,
+    getNextPageParam: (lastPage) => lastPage.nextCursor,
     initialPageParam: 0,
   });
 };
@@ -88,7 +88,7 @@ export const useGetComments = (epigramId: Epigram['id'], commentsParams: GetComm
   return useInfiniteQuery({
     queryKey: ['epigramComments'],
     queryFn: ({ pageParam }) => getComments(epigramId, { ...commentsParams, cursor: pageParam }),
-    getNextPageParam: (lastPage) => lastPage.nextCursor || 0,
+    getNextPageParam: (lastPage) => lastPage.nextCursor,
     initialPageParam: 0,
   });
 };

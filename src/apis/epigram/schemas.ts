@@ -10,17 +10,17 @@ export const epigramSchema = z.object({
   id: z.number(),
   content: z.string(),
   author: z.string(),
-  referenceTitle: z.string(),
-  referenceUrl: z.string(),
+  referenceTitle: z.string().nullable(),
+  referenceUrl: z.string().nullable(),
   writerId: z.number(),
   tags: z.array(tagSchema),
   isLiked: z.boolean().optional(),
 });
 
 export const epigramFormSchema = z.object({
-  tags: z.array(tagSchema).max(3, '태그는 최대 3개입니다.'),
-  referenceUrl: z.string().trim(),
-  referenceTitile: z.string().trim(),
+  tags: z.array(z.string().max(10, '태그는 최대 10글자까지 가능합니다.')).max(3, '태그는 최대 3개입니다.'),
+  referenceUrl: z.string().trim().optional(),
+  referenceTitile: z.string().trim().optional(),
   author: z.string().trim().max(50, '50자 이내로 입력해주세요.'),
   content: z.string().trim().min(1, '내용을 입력해주세요.'),
 });
