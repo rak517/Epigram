@@ -28,8 +28,15 @@ export const POST = async (request: NextRequest) => {
   const endPoint = url.pathname.replace(/^\/api/, '');
   const contentType = request.headers.get('Content-Type')?.split(';')[0];
 
+  let data;
   try {
-    const apiResponse = await axiosServerHelper.post(endPoint, contentType === 'application/json' ? await request.json() : await request.formData(), {
+    data = contentType === 'application/json' ? await request.json() : await request.formData();
+  } catch {
+    data = null;
+  }
+
+  try {
+    const apiResponse = await axiosServerHelper.post(endPoint, data, {
       headers: {
         'Content-Type': request.headers.get('Content-Type'),
       },
