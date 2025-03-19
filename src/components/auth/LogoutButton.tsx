@@ -19,7 +19,7 @@ export default function LogoutButton({ className }: { className?: string }) {
         type: 'alert',
         title: '로그아웃이 완료되었습니다.',
         callback: () => {
-          router.replace('/login');
+          window.location.href = '/login';
         },
       });
     } else {
