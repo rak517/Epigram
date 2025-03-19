@@ -1,8 +1,8 @@
 import axiosClientHelper from '@/utils/network/axiosClientHelper';
 import { safeResponse } from '@/utils/network/safeResponse';
-import { userResponseSchema } from '@/schemas';
-import { LoginForm, SignupForm, User } from '@/types';
-
+import { userResponseSchema } from '@/apis/user/schemas';
+import { LoginForm, SignupForm } from './types';
+import { User } from '@/apis/user/types';
 /**
  * 회원가입
  * https://fe-project-epigram-api.vercel.app/docs/#/Auth/SignUp

@@ -1,4 +1,4 @@
-import { User } from '@/types';
+import { User } from '@/apis/user/types';
 import { getErrorMessage } from '@/utils/network/getErrorMessage';
 import { extractProviderAndCode } from '@/utils/network/extractProviderAndCode';
 import { getExpirationDate } from '@/utils/network/getExpirationDate';

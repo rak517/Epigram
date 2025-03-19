@@ -4,7 +4,7 @@ import Emotion, { EmotionProps } from '@/components/ui/emotion';
 import { cn } from '@/utils/cn';
 import { cva } from 'class-variance-authority';
 import { useState } from 'react';
-import { Emotion as EmotionType } from '@/types';
+import { Emotion as EmotionType } from '@/apis/emotion-log/types';
 
 const buttonStyles = cva('flex justify-center items-center rounded-2xl cursor-pointer', {
   variants: {

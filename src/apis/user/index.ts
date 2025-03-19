@@ -1,7 +1,7 @@
 import axiosClientHelper from '@/utils/network/axiosClientHelper';
 import { safeResponse } from '@/utils/network/safeResponse';
-import { userSchema } from '@/schemas';
-import { User } from '@/types';
+import { userSchema } from './schemas';
+import { User } from './types';
 
 /**
  * 사용자 조회
