@@ -10,7 +10,7 @@ export const commentSchema = z.object({
   updatedAt: z.string(),
   createdAt: z.string(),
   isPrivate: z.boolean(),
-  content: z.string().min(1),
+  content: z.string(),
   id: z.number(),
 });
 
@@ -20,13 +20,10 @@ export const commentFormSchema = z.object({
   content: z.string().trim().min(1),
 });
 
-export const getCommentsParamsSchema = z.object({
+export const commentsResponseSchema = z.object({
   totalCount: z.number(),
   nextCursor: z.number().nullable(),
   list: z.array(commentSchema),
 });
 
-export const patchCommentSchema = z.object({
-  isPrivate: z.boolean(),
-  content: z.string().trim().min(1),
-});
+export const patchCommentSchema = commentFormSchema.omit({ epigramId: true }).partial();
