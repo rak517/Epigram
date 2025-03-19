@@ -6,7 +6,7 @@ import Link from 'next/link';
 
 export default function MainHeader() {
   return (
-    <header className='border-b-line-100 fixed flex w-full items-center justify-between border-b-[1px] bg-white px-6 py-[13px] md:px-[72px] md:py-[17px] xl:px-[120px] xl:py-[22px]'>
+    <header className='border-b-line-100 fixed flex w-full items-center justify-between border-b-[1px] bg-white px-6 py-[13px] md:px-[72px] md:py-[17px] xl:px-[120px] xl:py-[22px] z-50'>
       <div className='flex items-center justify-center gap-3 md:gap-6 xl:gap-9'>
         <Image src={menuIcon} alt='메뉴 아이콘' className='md:hidden'></Image>
         <Link href={'/'}>

@@ -17,7 +17,8 @@ const textAreaVariants = cva('bg-white placeholder-blue-300', {
       sm: 'w-[312px] h-[132px] pt-[10px] pb-[96px] px-[16px]',
       md: 'w-sm h-[132px] pt-[10px] pb-[96px] px-[16px]',
       lg: 'w-[640px] h-[148px] pt-[10px] pb-[106px] px-[16px]',
-      //full: 'w-full h-[132px] xl:h-[148px]', //full 추가했어요 
+      text: 'w-full h-[132px] xl:h-[148px]', // 우선 사이즈 디폴트가 사라지지 않아서 반응형 작업에 문제가 생기더라구요 일단 이렇게 작업하고 추후에 수정하겠습니다<div className=""></div>
+      source: 'w-full h-[44px] xl:h-[64px]',
     },
     fontSize: {
       base: 'text-base',
@@ -48,9 +49,7 @@ export interface TextAreaProps extends TextareaHTMLAttributes<HTMLTextAreaElemen
   ref?: Ref<HTMLTextAreaElement>;
 }
 
-
-export default function TextArea({ variant, size, fontSize, border, borderRadius, maxLength, onChange, value, defaultValue, ref, ...props }: TextAreaProps) {
-
+export default function TextArea({ variant, size, fontSize, border, borderRadius, maxLength, onChange, value, defaultValue, ref, className, placeholder, ...props }: TextAreaProps) {
   const initialValue = value?.toString() || defaultValue?.toString() || '';
 
   const [charCount, setCharCount] = useState(initialValue.length);
@@ -87,12 +86,16 @@ export default function TextArea({ variant, size, fontSize, border, borderRadius
   return (
     <div className='relative'>
       <textarea
-        className={cn(textAreaVariants({ variant, size, fontSize, border, borderRadius,className  }))}
+        className={cn(textAreaVariants({ variant, size, fontSize, border, borderRadius, className }))}
         onChange={handleChange}
         maxLength={effectiveMaxLength}
         value={value}
         defaultValue={defaultValue}
         ref={ref}
+        placeholder={placeholder}
+        style={{
+          padding: '10px 16px', // 플레이스홀더가 들어갈 안쪽 패딩 설정
+        }}
         {...props}
       />
 
