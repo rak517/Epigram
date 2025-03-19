@@ -46,7 +46,7 @@ export default function Tags({ tags, onTagsChange }: TagsProps) {
               {tags.map((tag, index) => (
                 <span key={index} className='relative flex h-full items-center justify-center rounded-full bg-gray-100 px-4 py-1 text-lg md:text-xl xl:text-2xl'>
                   {tag}
-                  <button type='button' className='text-md absolute top-[5px] right-[4px] text-red-500 hover:text-red-700 md:top-[8px] xl:top-[11px]' onClick={() => handleRemoveTag(tag)}>
+                  <button type='button' className='text-md absolute top-[5px] md:top-[8px] right-[4px] xl:top-[11px]  text-red-500 hover:text-red-700 ' onClick={() => handleRemoveTag(tag)}>
                     &times;
                   </button>
                 </span>
