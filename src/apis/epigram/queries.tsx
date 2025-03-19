@@ -1,6 +1,6 @@
 import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Epigram, EpigramForm, GetCommentsParams, GetEpigramsParams, PatchEpigram } from './types';
-import { deleteEpigram, deleteEpigramFavorite, getEpigram, getEpigrams, patchEpigram, postEpigram, postEpigramFavorite } from '.';
+import { deleteEpigram, deleteEpigramFavorite, getComments, getEpigram, getEpigrams, patchEpigram, postEpigram, postEpigramFavorite } from '.';
 
 export const usePostEpigram = () => {
   const queryClient = useQueryClient();
@@ -68,7 +68,6 @@ export const usePostEpigramFavorite = () => {
     },
     onSuccess: (epigram) => {
       queryClient.invalidateQueries({ queryKey: ['epigram', epigram.id] });
-      queryClient.invalidateQueries({ queryKey: ['epigrams'] });
     },
   });
 };
@@ -81,15 +80,14 @@ export const useDeleteEpigramFavorite = () => {
     },
     onSuccess: (epigram) => {
       queryClient.invalidateQueries({ queryKey: ['epigram', epigram.id] });
-      queryClient.invalidateQueries({ queryKey: ['epigrams'] });
     },
   });
 };
 
 export const useGetComments = (epigramId: Epigram['id'], commentsParams: GetCommentsParams) => {
   return useInfiniteQuery({
-    queryKey: ['epigrams', 'epigram', epigramId, 'epigramComments'],
-    queryFn: ({ pageParam }) => getEpigrams({ ...commentsParams, cursor: pageParam }),
+    queryKey: ['epigramComments'],
+    queryFn: ({ pageParam }) => getComments(epigramId, { ...commentsParams, cursor: pageParam }),
     getNextPageParam: (lastPage) => lastPage.nextCursor || 0,
     initialPageParam: 0,
   });
