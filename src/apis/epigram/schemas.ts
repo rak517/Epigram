@@ -32,6 +32,12 @@ export const getEpigramsParamsSchema = z.object({
   writerId: z.number().optional(),
 });
 
+export const epigramsResponseSchema = z.object({
+  totalCount: z.number(),
+  nextCursor: z.number().nullable(),
+  list: z.array(epigramSchema),
+});
+
 export const patchEpigramSchema = epigramFormSchema.partial();
 
 export const getCommentsParamsSchema = z.object({
