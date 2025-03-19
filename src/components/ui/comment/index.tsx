@@ -28,7 +28,8 @@ export default function Comment({
     >
       {/* 왼쪽: 이미지 박스 */}
       <div className="w-12 h-12 mr-4 rounded-full overflow-hidden">
-        <Avatar src={profileImage} alt="프로필 이미지" size="default" />
+        <Avatar src={profileImage} alt={`${nickname}님의 프로필 이미지`}
+          size="default" />
       </div>
 
       {/* 오른쪽: 텍스트 박스 */}
