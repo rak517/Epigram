@@ -1,7 +1,7 @@
 'use client';
 
 import { HTMLAttributes, ReactNode } from 'react';
-import { cn } from '@/utils/cn';
+import { cn } from '@/utils/cn'; 
 
 export interface RadioLabelProps extends HTMLAttributes<HTMLLabelElement> {
   htmlFor: string;
