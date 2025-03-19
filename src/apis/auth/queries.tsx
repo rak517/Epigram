@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
-import { LoginForm, SignupForm } from '@/types';
 import { login, signup } from '.';
+import { LoginForm, SignupForm } from './types';
 
 export const useSignup = () => {
   return useMutation({

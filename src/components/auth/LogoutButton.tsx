@@ -1,7 +1,7 @@
 'use client';
 
 import { cn } from '@/utils/cn';
-import logout from './logoutAction';
+import logout from '@/actions/logoutAction';
 import { useActionState, useEffect } from 'react';
 import { useModalStore } from '@/stores/ModalStore';
 import { useRouter } from 'next/navigation';

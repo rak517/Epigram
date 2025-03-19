@@ -2,7 +2,7 @@ import { cva, VariantProps } from 'class-variance-authority';
 import { HTMLAttributes } from 'react';
 import { Iropke } from '@/fonts';
 import DropdownMenu from '../DropdownMenu';
-import { Tag } from '@/types';
+import { Tag } from '@/apis/epigram/types';
 
 const textCardVariants = cva(`border border-line-100 border-solid rounded-xl font-normal ${Iropke.className}`, {
   variants: {
