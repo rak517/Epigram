@@ -3,7 +3,7 @@ import TextCard from '@/components/ui/textcard';
 
 const REVALIDATE_TIME = 60 * 10;
 
-export default async function DailyEpgiram() {
+export default async function DailyEpigram() {
   const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/epigrams/today`, {
     next: {
       revalidate: REVALIDATE_TIME,
