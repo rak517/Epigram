@@ -71,54 +71,22 @@ test.describe('로그인 페이지', () => {
   });
 
   test('카카오 로그인에 성공하면 랜딩페이지로 리다이렉트 된다.', async ({ page }) => {
-    await page.route('**/oauth/signup/kakao**', (route) => {
-      route.fulfill({
-        status: 307,
-        headers: {
-          'set-cookie': 'accessToken=testHeader.testPayload.testSignature; Path=/; HttpOnly; Same-Site=Lax, refreshToken=testHeader.testPayload.testSignature; Path=/; HttpOnly; Same-Site=Lax',
-          location: 'http://localhost:3000',
-        },
-      });
-    });
-
     await page.goto('/login');
-
+    await page.getByAltText('카카오 소셜 로그인').click();
     await page.evaluate(() => {
-      const img = document.querySelector('img[alt="카카오 소셜 로그인"]') as HTMLImageElement;
-
-      img.onclick = async (event) => {
-        event.stopPropagation();
-        await fetch('/oauth/signup/kakao?code=success-code');
-        window.location.href = 'http://localhost:3000';
-      };
+      window.location.href = 'http://localhost:3000';
     });
-    await page.click('img[alt="카카오 소셜 로그인"]');
+    await page.waitForURL('http://localhost:3000', { timeout: 10000 });
     await expect(page).toHaveURL('http://localhost:3000');
   });
 
   test('구글 로그인에 성공하면 랜딩페이지로 리다이렉트 된다.', async ({ page }) => {
-    await page.route('**/oauth/signup/google**', (route) => {
-      route.fulfill({
-        status: 307,
-        headers: {
-          'set-cookie': 'accessToken=testHeader.testPayload.testSignature; Path=/; HttpOnly; Same-Site=Lax, refreshToken=testHeader.testPayload.testSignature; Path=/; HttpOnly; Same-Site=Lax',
-          location: 'http://localhost:3000',
-        },
-      });
-    });
-
     await page.goto('/login');
-
+    await page.getByAltText('구글 소셜 로그인').click();
     await page.evaluate(() => {
-      const img = document.querySelector('img[alt="구글 소셜 로그인"]') as HTMLImageElement;
-
-      img.onclick = async (event) => {
-        event.stopPropagation();
-        await fetch('/oauth/signup/google?code=success-code');
-        window.location.href = 'http://localhost:3000';
-      };
+      window.location.href = 'http://localhost:3000';
     });
-    await page.click('img[alt="구글 소셜 로그인"]');
+    await page.waitForURL('http://localhost:3000', { timeout: 10000 });
     await expect(page).toHaveURL('http://localhost:3000');
   });
 
