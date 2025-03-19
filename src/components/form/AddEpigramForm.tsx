@@ -8,7 +8,7 @@ import { RadioItem } from '@/components/ui/radio/RadioItem';
 import TextArea from '@/components/ui/textarea';
 import { Pretendard } from '@/fonts';
 import { MakeEpigramFormSchema } from '@/apis/auth/schemas';
-import { MakeEpigramForm } from '@/types';
+import { MakeEpigramForm } from '@/apis/auth/types';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
