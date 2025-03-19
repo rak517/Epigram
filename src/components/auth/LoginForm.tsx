@@ -4,7 +4,6 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { loginSchema } from '@/apis/auth/schemas';
 import { LoginForm as LoginFormType } from '@/apis/auth/types';
@@ -34,7 +33,6 @@ export default function LoginForm() {
 
   const { mutateAsync: login } = useLogin();
   const { openModal } = useModalStore();
-  const router = useRouter();
 
   const [isShowPassword, setIsShowPassword] = useState(true);
   const isDisabled = !isDirty || !isValid || isSubmitting;
@@ -48,7 +46,7 @@ export default function LoginForm() {
         title: '로그인에 성공했습니다!',
         description: '확인 버튼을 누르시면 홈페이지로 이동합니다.',
         callback: () => {
-          router.push('/');
+          window.location.href = '/';
         },
       });
     } catch (error) {
