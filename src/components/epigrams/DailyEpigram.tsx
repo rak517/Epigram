@@ -1,4 +1,4 @@
-import { EpigramResponse } from '@/types';
+import { EpigramResponse } from '@/apis/epigram/types';
 import TextCard from '@/components/ui/textcard';
 
 const REVALIDATE_TIME = 60 * 10;
