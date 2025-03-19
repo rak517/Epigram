@@ -3,32 +3,46 @@
 import TextArea from '../ui/textarea';
 import { RadioGroup } from '../ui/radio/RadioGroup';
 import { RadioItem } from '../ui/radio/RadioItem';
-import { useState } from 'react';
+import { UseFormRegister, UseFormWatch, UseFormSetValue } from 'react-hook-form';
+import { useEffect, useState } from 'react';
+
+type FormData = {
+  content: string;
+  author: string;
+  source: string;
+  tags: string[];
+};
 
 interface AuthorProps {
-  author: string;
-  onAuthorChange: (value: string) => void;
+  register: UseFormRegister<FormData>;
+  watch: UseFormWatch<FormData>;
+  setValue: UseFormSetValue<FormData>;
 }
 
-export default function Author({ author, onAuthorChange }: AuthorProps) {
+export default function Author({ register, watch, setValue }: AuthorProps) {
   const [selected, setSelected] = useState('myself');
-  const [inputValue, setInputValue] = useState(author);
+  const authorValue = watch('author');
 
   const handleRadioChange = (value: string) => {
     setSelected(value);
     if (value === 'myself') {
-      setInputValue(author);
+      setValue('author', '본인');
     } else if (value === 'unknown') {
-      setInputValue('알 수 없음');
+      setValue('author', '알 수 없음');
     } else {
-      setInputValue('');
+      setValue('author', '');
     }
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setInputValue(e.target.value); // 텍스트 입력값 업데이트
-    onAuthorChange(e.target.value); // 부모에게 상태 변경 알리기
-  };
+  useEffect(() => {
+    if (authorValue === '본인') {
+      setSelected('myself');
+    } else if (authorValue === '알 수 없음') {
+      setSelected('unknown');
+    } else {
+      setSelected('custom');
+    }
+  }, []);
 
   return (
     <div className='flex h-29 w-full flex-col gap-2 md:h-29.5 xl:h-42.75 xl:gap-6'>
@@ -36,14 +50,20 @@ export default function Author({ author, onAuthorChange }: AuthorProps) {
         <p className='text-md font-semibold md:text-lg xl:text-xl'>저자</p>
         <p className='flex h-3 translate-y-[2px] items-center justify-center text-lg font-medium text-[rgba(255,101,119,1)] xl:translate-y-[3px] xl:text-2xl'>*</p>
       </div>
-
+      
       <div className='flex h-20.5 w-full flex-col gap-3 xl:h-28 xl:gap-4'>
         <RadioGroup className='flex h-6.5 w-full xl:h-8' defaultValue={selected} onValueChange={handleRadioChange}>
           <RadioItem radioSize='sm' value='custom' id='custom' label='직접 입력' />
           <RadioItem radioSize='sm' value='unknown' id='unknown' label='알 수 없음' />
           <RadioItem radioSize='sm' value='myself' id='myself' label='본인' />
         </RadioGroup>
-        <TextArea size={'source'} maxLength={20} value={inputValue} onChange={handleInputChange} />
+        <TextArea 
+          size={'source'} 
+          maxLength={20} 
+          value={authorValue}
+          {...register('author', { required: true })}
+          onChange={(e) => setValue('author', e.target.value)}
+        />
       </div>
     </div>
   );

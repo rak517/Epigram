@@ -1,60 +1,85 @@
 'use client';
 
-import TextArea from '../ui/textarea';
 import { useState } from 'react';
+import TextArea from '../ui/textarea';
+import XIcon from '@/assets/icons/X.svg';
+import Image from 'next/image';
 
-interface TagsProps {
-  tags: string[];
-  onTagsChange: (tags: string[]) => void;
+interface TagInputProps {
+  value: string[];
+  onChange: (value: string[]) => void;
+  label?: string;
+  required?: boolean;
+  error?: string;
 }
 
-export default function Tags({ tags, onTagsChange }: TagsProps) {
+export default function TagInput({ value = [], onChange, label = '태그', required, error }: TagInputProps) {
   const [newTag, setNewTag] = useState('');
+  const [showAll, setShowAll] = useState(false); // 태그 모두 보기 토글 상태
 
   const handleTagInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setNewTag(e.target.value);
   };
 
   const handleAddTag = () => {
-    if (newTag.trim() && !tags.includes(newTag.trim())) {
-      // 비어있지 않고 중복되지 않으면
-      onTagsChange([...tags, newTag.trim()]); // 태그 추가
-      setNewTag(''); // 입력 필드 초기화
+    if (newTag.trim() && !value.includes(newTag.trim()) && value.length < 3) {
+      onChange([...value, newTag.trim()]);
+      setNewTag('');
     }
   };
 
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+  const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter') {
-      handleAddTag(); // 엔터키 눌렀을 때 태그 추가
+      e.preventDefault();
+      handleAddTag();
     }
   };
 
   const handleRemoveTag = (tagToRemove: string) => {
-    onTagsChange(tags.filter((tag) => tag !== tagToRemove)); // 삭제할 태그를 제외한 나머지 태그들로 상태 업데이트
+    onChange(value.filter((tag) => tag !== tagToRemove));
   };
 
   return (
-    <div className='flex h-32 w-full flex-col gap-2 md:h-35.5 xl:h-49.5 xl:gap-6'>
-      <div className={`flex h-6.5 w-9.5 items-center justify-between md:h-7 md:w-10.25 xl:h-8.75 xl:w-13.25`}>
-        <p className='text-md font-semibold md:text-lg xl:text-xl'>태그</p>
+    <div className='flex w-full flex-col gap-2 md:gap-4 xl:gap-6'>
+      <div className='flex items-center justify-between'>
+        <p className='text-md font-semibold md:text-lg xl:text-xl'>{label}</p>
+        {required && <p className='text-lg font-medium text-red-500'>*</p>}
       </div>
-      <div className='flex h-25.25 w-full flex-col gap-3.75 md:h-27 md:gap-4 xl:h-35.5 xl:gap-5.5'>
-        <TextArea placeholder='입력하여 태그 작성 (최대 10자)' size={'source'} maxLength={10} value={newTag} onChange={handleTagInputChange} onKeyDown={handleKeyDown} />
-        <div className='h-10.5 w-full md:h-12 xl:h-14'>
-          {tags.length > 0 && (
-            <div className='flex h-full flex-wrap gap-2 xl:gap-4'>
-              {tags.map((tag, index) => (
-                <span key={index} className='relative flex h-full items-center justify-center rounded-full bg-gray-100 px-4 py-1 text-lg md:text-xl xl:text-2xl'>
-                  {tag}
-                  <button type='button' className='text-md absolute top-[5px] md:top-[8px] right-[4px] xl:top-[11px]  text-red-500 hover:text-red-700 ' onClick={() => handleRemoveTag(tag)}>
-                    &times;
-                  </button>
-                </span>
-              ))}
-            </div>
-          )}
-        </div>
+
+      <TextArea
+        placeholder='입력하여 태그 작성 (최대 10자, 최대 3개)'
+        value={newTag}
+        onChange={handleTagInputChange}
+        onKeyDown={handleKeyDown}
+        size={'source'}
+        disabled={value.length >= 3} // 3개 이상이면 입력창 비활성화
+      />
+
+      {/* 태그 목록 */}
+      <div className='flex flex-wrap gap-2'>
+        {(showAll ? value : value.slice(0, 2)).map((tag, index) => (
+          <span key={index} className='relative flex items-center rounded-full bg-gray-100 px-4 py-1 text-lg'>
+            {tag}
+            <button type='button' className='ml-2' onClick={() => handleRemoveTag(tag)}>
+              <Image src={XIcon} alt='XIcon' />
+            </button>
+          </span>
+        ))}
+
+        {/* 더보기 버튼 */}
+        {value.length > 2 && !showAll && (
+          <button className='text-blue-500 hover:underline' onClick={() => setShowAll(true)}>
+            +{value.length - 2}개 더보기
+          </button>
+        )}
+        {showAll && (
+          <button className='text-blue-500 hover:underline' onClick={() => setShowAll(false)}>
+            닫기
+          </button>
+        )}
       </div>
+
+      {error && <p className='text-sm text-red-500'>{error}</p>}
     </div>
   );
 }
