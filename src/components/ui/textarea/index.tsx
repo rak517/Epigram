@@ -4,7 +4,7 @@ import { cn } from '@/utils/cn';
 import { cva, VariantProps } from 'class-variance-authority';
 import { TextareaHTMLAttributes, useState, ChangeEvent, Ref } from 'react';
 
-const textAreaVariants = cva('bg-white placeholder-blue-300', {
+const textAreaVariants = cva('bg-white placeholder-blue-300 resize-none', {
   variants: {
     variant: {
       limit100: '',
@@ -17,10 +17,12 @@ const textAreaVariants = cva('bg-white placeholder-blue-300', {
       sm: 'w-[312px] h-[132px] pt-[10px] pb-[96px] px-[16px]',
       md: 'w-sm h-[132px] pt-[10px] pb-[96px] px-[16px]',
       lg: 'w-[640px] h-[148px] pt-[10px] pb-[106px] px-[16px]',
+      responsive: 'w-full h-[132px] pb-[90px] px-[16px] xl:h-[148px]',
     },
     fontSize: {
-      base: 'text-base',
-      xl: 'text-xl',
+      base: 'text-base placeholder:text-base',
+      xl: 'text-xl placeholder:text-xl',
+      responsive: 'text-base placeholder:text-base xl:text-xl xl:placeholder:text-xl',
     },
     border: {
       'line-border': 'border border-line-200 border-solid',
@@ -47,7 +49,7 @@ export interface TextAreaProps extends TextareaHTMLAttributes<HTMLTextAreaElemen
   ref?: Ref<HTMLTextAreaElement>;
 }
 
-export default function TextArea({ variant, size, fontSize, border, borderRadius, maxLength, onChange, value, defaultValue, ref, ...props }: TextAreaProps) {
+export default function TextArea({ variant, size, fontSize, border, borderRadius, maxLength, onChange, value, defaultValue, ref, className, ...props }: TextAreaProps) {
   const initialValue = value?.toString() || defaultValue?.toString() || '';
 
   const [charCount, setCharCount] = useState(initialValue.length);
@@ -84,7 +86,7 @@ export default function TextArea({ variant, size, fontSize, border, borderRadius
   return (
     <div className='relative'>
       <textarea
-        className={cn(textAreaVariants({ variant, size, fontSize, border, borderRadius }))}
+        className={cn(textAreaVariants({ variant, size, fontSize, border, borderRadius }), className)}
         onChange={handleChange}
         maxLength={effectiveMaxLength}
         value={value}
