@@ -1,5 +1,5 @@
 import React from "react";
-import Image from "next/image";
+import Avatar from "@/components/ui/avatars";
 
 interface CommentProps {
   isOwnComment: boolean;
@@ -28,15 +28,7 @@ export default function Comment({
     >
       {/* 왼쪽: 이미지 박스 */}
       <div className="w-12 h-12 mr-4 rounded-full overflow-hidden">
-        <Image
-          src={profileImage}
-          alt="프로필 이미지"
-          width={48}
-          height={48}
-          className="object-cover w-full h-full"
-        />
-
-        {/* <Avatar src={profileImage} alt="프로필 이미지" size="default" /> */}
+        <Avatar src={profileImage} alt="프로필 이미지" size="default" />
       </div>
 
       {/* 오른쪽: 텍스트 박스 */}
