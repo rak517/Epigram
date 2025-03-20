@@ -86,6 +86,8 @@ describe('AddEpigram Component', () => {
     await userEvent.type(tagInput, '태그3');
     expect(addTagButton).not.toBeDisabled();
     await userEvent.click(addTagButton);
+    const moreButton = screen.getByText(/\+1개 더보기/);
+    await userEvent.click(moreButton);
     expect(screen.getByText('태그3')).toBeInTheDocument();
 
     expect(addTagButton).toBeDisabled();
