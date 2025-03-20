@@ -1,0 +1,41 @@
+import axiosClientHelper from "@/utils/network/axiosClientHelper"
+import { Emotion, MonthlyEmotionLogs, MonthlyEmotionLogsProps, TodayEmotionLogs } from "./types"
+import { safeResponse } from "@/utils/network/safeResponse"
+import { monthlyEmotionLogsSchema, todayEmotionLogsSchema } from "./schemas"
+
+/**
+ * 오늘의 감정 저장
+ * https://fe-project-epigram-api.vercel.app/docs/#/emotionLogs/today
+ */
+
+export const postTodayEmotionLog = async ({emotions} : {emotions : Emotion}) => {
+    const response = await axiosClientHelper.post<TodayEmotionLogs>('/emotionLogs/today', {
+        emotion : emotions
+    })
+    return safeResponse(response.data, todayEmotionLogsSchema)
+};
+
+/**
+ * 오늘의 감정 조회
+ * https://fe-project-epigram-api.vercel.app/docs/#/emotionLogs/today
+ */
+
+export const getTodayEmotionLog = async (userId : number) => {
+    const response = await axiosClientHelper.get<TodayEmotionLogs>('/emotionLogs/today', {
+        params : {userId},
+    })
+    return safeResponse(response.data, todayEmotionLogsSchema)
+}
+
+/**
+ * 월별 감정 조회
+ * https://fe-project-epigram-api.vercel.app/docs/#/emotionLogs/monthly
+ */
+
+
+export const getMonthlyEmotionLogs = async ({userId, year, month} : MonthlyEmotionLogsProps) => {
+    const response = await axiosClientHelper.get<MonthlyEmotionLogs>('/emotionLogs/monthly', {
+        params : {userId, year, month}
+    })
+    return safeResponse(response.data, monthlyEmotionLogsSchema)
+}

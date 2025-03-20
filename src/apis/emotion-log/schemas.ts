@@ -1,0 +1,25 @@
+import { z } from "zod";
+
+export const emotionEnum = z.enum(['MOVED', 'HAPPY', 'WORRIED', 'SAD', 'ANGRY'])
+
+export const monthlyEmotionLogsSchema = z.array(
+    z.object({
+    createdAt : z.string(),
+    emotion : emotionEnum,
+    userId : z.number(),
+    id : z.number(),
+})
+)
+
+export const todayEmotionLogsSchema = z.object({
+    createdAt : z.string(),
+    emotion : emotionEnum,
+    userId : z.number(),
+    id : z.number(),
+})
+
+export const getMonthlyEmotionLogsPros = z.object({
+    userId : z.number(),
+    year : z.number(),
+    month : z.number()
+})
