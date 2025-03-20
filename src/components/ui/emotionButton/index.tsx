@@ -36,12 +36,13 @@ const buttonBorderMap = {
 interface EmotionButtonProps {
   buttonVariant?: boolean;
   size?: 'sm' | 'md' | 'lg' | 'xl';
+  isInteractive?: boolean;
   emotion: EmotionType;
   emotionVariant?: EmotionProps['variant'];
   onClick?: () => void;
 }
 
-export default function EmotionButton({ buttonVariant, emotion, emotionVariant, size, onClick }: EmotionButtonProps) {
+export default function EmotionButton({ buttonVariant, emotion, emotionVariant, size, onClick, isInteractive }: EmotionButtonProps) {
   const [currentButtonVariant, setCurrentButtonVariant] = useState(buttonVariant);
 
   const buttonBorderColor = buttonBorderMap[emotion];
@@ -51,8 +52,8 @@ export default function EmotionButton({ buttonVariant, emotion, emotionVariant, 
     onClick?.();
   };
   return (
-    <button className={cn(buttonStyles({ isActive: currentButtonVariant, size }), buttonBorderColor)} onClick={handleClick}>
-      <Emotion variant={emotionVariant} emotion={emotion} size={size} />
+    <button className={cn(buttonStyles({ isActive: currentButtonVariant, size }), buttonBorderColor, isInteractive && 'size-12 md:size-16 lg:size-20 xl:size-24')} onClick={handleClick}>
+      <Emotion variant={emotionVariant} emotion={emotion} size={size} className={cn(isInteractive && 'size-8 sm:size-9 md:size-10 lg:size-11 xl:size-12')} />
     </button>
   );
 }
