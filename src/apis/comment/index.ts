@@ -42,5 +42,5 @@ export const patchComment = async (commentId: number, patchComment: PatchComment
  * https://fe-project-epigram-api.vercel.app/docs/#/Comment/DeleteComment
  */
 export const deleteComment = async (commentId: number) => {
-  await axiosClientHelper.delete<void>(`/comments/${commentId}`);
+  await axiosClientHelper.delete<{ id: number }>(`/comments/${commentId}`);
 };
