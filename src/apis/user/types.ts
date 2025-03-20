@@ -1,4 +1,6 @@
 import { z } from 'zod';
-import { userSchema } from './schemas';
+import { patchUserSchema, userSchema } from './schemas';
 
 export type User = z.infer<typeof userSchema>;
+
+export type PatchUser = z.infer<typeof patchUserSchema>;
