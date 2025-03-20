@@ -13,7 +13,7 @@ export default {
       },
       defaultValue: 'medium',
     },
-    isPublic: {
+    isOn: {
       control: 'boolean',
       defaultValue: false,
     },
@@ -21,24 +21,24 @@ export default {
 } as Meta;
 
 const Template: StoryFn = (args) => {
-  const [isPublic, setIsPublic] = useState(args.isPublic);
+  const [isOn, setIsOn] = useState(args.isOn);
 
   const handleToggle = (newState: boolean) => {
-    setIsPublic(newState);
+    setIsOn(newState);
     args.onToggle(newState);
   };
 
   useEffect(() => {
-    setIsPublic(args.isPublic);
-  }, [args.isPublic]);
+    setIsOn(args.isOn);
+  }, [args.isOn]);
 
-  return <ToggleBtn {...args} isPublic={isPublic} onToggle={handleToggle} />;
+  return <ToggleBtn {...args} isOn={isOn} onToggle={handleToggle} />;
 };
 
 export const Default = Template.bind({});
 Default.args = {
   size: 'medium',
-  isPublic: false,
+  isOn: false,
   onToggle: (newState: boolean) => {
     console.log('New state:', newState);
   },
@@ -47,7 +47,7 @@ Default.args = {
 export const Small = Template.bind({});
 Small.args = {
   size: 'small',
-  isPublic: false,
+  isOn: false,
   onToggle: (newState: boolean) => {
     console.log('New state:', newState);
   },
