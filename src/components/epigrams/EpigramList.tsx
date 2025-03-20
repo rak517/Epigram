@@ -24,10 +24,10 @@ export default function EpigramList() {
   };
 
   return (
-    <section className='flex flex-col gap-2'>
+    <section className='flex flex-col gap-4 md:gap-8'>
       <h2 className='text-black-600 text-lg font-semibold md:text-2xl'>최신 에피그램</h2>
       <AnimatePresence>
-        <div className='flex flex-col gap-10'>
+        <div className='flex flex-col gap-8 md:gap-14 xl:gap-16'>
           {isLoading && (
             <>
               <MainEpigramSkeletonList count={PAGE_LIMIT} />
@@ -47,7 +47,7 @@ export default function EpigramList() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
                 whileHover={{ y: -8, transition: { duration: 0.2 } }}
-                className='cursor-pointer'
+                className='text-md cursor-pointer md:text-lg lg:text-xl xl:text-2xl'
                 href={`/epigrams/${epigram.id}`}
               >
                 <TextCard author={epigram.author} cardContent={epigram.content} tags={epigram.tags} />
