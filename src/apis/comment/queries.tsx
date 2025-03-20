@@ -18,6 +18,7 @@ export const usePostComment = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['comments'] });
       queryClient.invalidateQueries({ queryKey: ['epigramComments'] });
+      queryClient.invalidateQueries({ queryKey: ['userComments'] });
     },
   });
 };
@@ -29,6 +30,7 @@ export const useUpdateComment = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['comments'] });
       queryClient.invalidateQueries({ queryKey: ['epigramComments'] });
+      queryClient.invalidateQueries({ queryKey: ['userComments'] });
     },
   });
 };
@@ -40,6 +42,7 @@ export const useDeleteComment = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['comments'] });
       queryClient.invalidateQueries({ queryKey: ['epigramComments'] });
+      queryClient.invalidateQueries({ queryKey: ['userComments'] });
     },
   });
 };
