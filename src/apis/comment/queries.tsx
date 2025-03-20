@@ -33,7 +33,7 @@ export const useUpdateComment = () => {
   });
 };
 
-export const useDeleteCommentMutation = () => {
+export const useDeleteComment = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (commentId: number) => deleteComment(commentId),
