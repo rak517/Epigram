@@ -18,8 +18,12 @@ export const todayEmotionLogsSchema = z.object({
     id : z.number(),
 })
 
-export const getMonthlyEmotionLogsPros = z.object({
+export const getMonthlyEmotionLogsSchema = z.object({
     userId : z.number(),
     year : z.number(),
     month : z.number()
+})
+
+export const emotionRequest = z.object({
+    emotion : emotionEnum
 })

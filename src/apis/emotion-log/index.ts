@@ -1,5 +1,5 @@
 import axiosClientHelper from "@/utils/network/axiosClientHelper"
-import { Emotion, MonthlyEmotionLogs, MonthlyEmotionLogsProps, TodayEmotionLogs } from "./types"
+import {  EmotionRequset, GetMonthlyEmotionLogs, TodayEmotionLogs } from "./types"
 import { safeResponse } from "@/utils/network/safeResponse"
 import { monthlyEmotionLogsSchema, todayEmotionLogsSchema } from "./schemas"
 
@@ -8,9 +8,9 @@ import { monthlyEmotionLogsSchema, todayEmotionLogsSchema } from "./schemas"
  * https://fe-project-epigram-api.vercel.app/docs/#/emotionLogs/today
  */
 
-export const postTodayEmotionLog = async ({emotions} : {emotions : Emotion}) => {
+export const postTodayEmotionLog = async (params : EmotionRequset) => {
     const response = await axiosClientHelper.post<TodayEmotionLogs>('/emotionLogs/today', {
-        emotion : emotions
+        params
     })
     return safeResponse(response.data, todayEmotionLogsSchema)
 };
@@ -33,9 +33,9 @@ export const getTodayEmotionLog = async (userId : number) => {
  */
 
 
-export const getMonthlyEmotionLogs = async ({userId, year, month} : MonthlyEmotionLogsProps) => {
-    const response = await axiosClientHelper.get<MonthlyEmotionLogs>('/emotionLogs/monthly', {
-        params : {userId, year, month}
+export const getMonthlyEmotionLogs = async (monthlyEmotionLogsParams : GetMonthlyEmotionLogs) => {
+    const response = await axiosClientHelper.get<GetMonthlyEmotionLogs>('/emotionLogs/monthly', {
+        params : monthlyEmotionLogsParams
     })
     return safeResponse(response.data, monthlyEmotionLogsSchema)
 }
