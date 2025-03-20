@@ -1,8 +1,10 @@
 import axiosClientHelper from '@/utils/network/axiosClientHelper';
 import { safeResponse } from '@/utils/network/safeResponse';
-import { commentsResponseSchema, epigramSchema, epigramsResponseSchema } from './schemas';
-import { CommentsResponse, Epigram, EpigramForm, EpigramsResponse, GetCommentsParams, GetEpigramsParams, PatchEpigram } from './types';
+import { epigramSchema, epigramsResponseSchema } from './schemas';
+import { Epigram, EpigramForm, EpigramsResponse, GetCommentsParams, GetEpigramsParams, PatchEpigram } from './types';
 import { z } from 'zod';
+import { CommentsResponse } from '@/apis/comment/types';
+import { commentsResponseSchema } from '@/apis/comment/schemas';
 
 /**
  * 에피그램 생성

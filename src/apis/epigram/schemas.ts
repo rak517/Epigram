@@ -44,24 +44,3 @@ export const getCommentsParamsSchema = z.object({
   limit: z.number(),
   cursor: z.number().optional(),
 });
-
-//TODO: comment API 작업이 완료되면 하위 수정할 예정입니다.
-export const commentSchema = z.object({
-  epigramId: z.number(),
-  writer: z.object({
-    image: z.string().nullable(),
-    nickname: z.string(),
-    id: z.number(),
-  }),
-  updatedAt: z.string(),
-  createdAt: z.string(),
-  isPrivate: z.boolean(),
-  content: z.string(),
-  id: z.number(),
-});
-
-export const commentsResponseSchema = z.object({
-  totalCount: z.number(),
-  nextCursor: z.number().nullable(),
-  list: z.array(commentSchema),
-});
