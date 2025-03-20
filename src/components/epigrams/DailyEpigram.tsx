@@ -1,4 +1,4 @@
-import { EpigramResponse } from '@/apis/epigram/types';
+import { Epigram } from '@/apis/epigram/types';
 import TextCard from '@/components/ui/textcard';
 
 const REVALIDATE_TIME = 60 * 10;
@@ -10,7 +10,7 @@ export default async function DailyEpigram() {
     },
   });
 
-  const epigramData: EpigramResponse = await response.json();
+  const epigramData: Epigram = await response.json();
 
   return (
     <div className='flex flex-col gap-6 text-lg md:text-2xl'>
