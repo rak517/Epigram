@@ -14,3 +14,5 @@ export const userSchema = z.object({
 export const userResponseSchema = z.object({
   user: userSchema,
 });
+
+export const patchUserSchema = userSchema.pick({ image: true, nickname: true }).partial();
