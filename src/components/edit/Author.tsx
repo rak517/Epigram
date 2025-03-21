@@ -1,6 +1,7 @@
 'use client';
 
-import TextArea from '../ui/textarea';
+
+import Input from '@/components/ui/Field/Input';
 import { RadioGroup } from '../ui/radio/RadioGroup';
 import { RadioItem } from '../ui/radio/RadioItem';
 import { useEffect, useState } from 'react';
@@ -44,7 +45,7 @@ export default function Author({ register, watch, setValue }: AuthorProps) {
           <RadioItem radioSize='sm' value='unknown' id='unknown' label='알 수 없음' />
           <RadioItem radioSize='sm' value='myself' id='myself' label='본인' />
         </RadioGroup>
-        <TextArea className='w-full h-11 xl:h-16' maxLength={20} value={authorValue} {...register('author', { required: true })} onChange={(e) => setValue('author', e.target.value)} />
+        <Input className='w-full h-11 xl:h-16' maxLength={20} value={authorValue} {...register('author', { required: true })} onChange={(e) => setValue('author', e.target.value)} />
       </div>
     </div>
   );
