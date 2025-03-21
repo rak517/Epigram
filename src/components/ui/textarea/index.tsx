@@ -47,7 +47,7 @@ export interface TextAreaProps extends TextareaHTMLAttributes<HTMLTextAreaElemen
   ref?: Ref<HTMLTextAreaElement>;
 }
 
-export default function TextArea({ variant, size, fontSize, border, borderRadius, maxLength, onChange, value, defaultValue, ref, ...props }: TextAreaProps) {
+export default function TextArea({ variant, size, fontSize, border, borderRadius, maxLength, onChange, value, defaultValue, ref, className, ...props }: TextAreaProps) {
   const initialValue = value?.toString() || defaultValue?.toString() || '';
 
   const [charCount, setCharCount] = useState(initialValue.length);
@@ -84,7 +84,7 @@ export default function TextArea({ variant, size, fontSize, border, borderRadius
   return (
     <div className='relative'>
       <textarea
-        className={cn(textAreaVariants({ variant, size, fontSize, border, borderRadius }))}
+        className={cn(textAreaVariants({ variant, size, fontSize, border, borderRadius }), className)}
         onChange={handleChange}
         maxLength={effectiveMaxLength}
         value={value}
