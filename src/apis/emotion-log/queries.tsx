@@ -1,15 +1,17 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { getMonthlyEmotionLogs, getTodayEmotionLog, postTodayEmotionLog } from '.';
 import { EmotionRequset, GetMonthlyEmotionLogs, TodayEmotionLogs } from './types';
-import { User } from '@/apis/user/types';
+import { getUser } from '@/apis/user';
 
-export const useGetTodayEmotionLog = (userId: User['id']) => {
+export const useGetTodayEmotionLog = () => {
   return useQuery({
-    queryKey: ['todayEmotionLog', userId],
-    queryFn: () => getTodayEmotionLog(userId),
+    queryKey: ['todayEmotionLog'],
+    queryFn: async () => {
+      const user = await getUser();
+      return await getTodayEmotionLog(user.id);
+    },
   });
 };
-
 export const usePostTodayEmotionLog = () => {
   const queryClient = useQueryClient();
 
@@ -34,14 +36,14 @@ export const useOptimisticEmotionLog = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: ({ params }: { params: EmotionRequset; userId: User['id'] }) => {
+    mutationFn: (params: EmotionRequset) => {
       return postTodayEmotionLog(params);
     },
-    onMutate: async ({ params, userId }: { params: EmotionRequset; userId: User['id'] }) => {
-      const previousData: TodayEmotionLogs = queryClient.getQueryData(['todayEmotionLog', userId])!;
+    onMutate: async (params: EmotionRequset) => {
+      const previousData: TodayEmotionLogs = queryClient.getQueryData(['todayEmotionLog'])!;
       await queryClient.cancelQueries({ queryKey: ['todayEmotionLog'] });
 
-      queryClient.setQueryData(['todayEmotionLog', userId], {
+      queryClient.setQueryData(['todayEmotionLog'], {
         ...previousData,
         emotion: params.emotion,
       });
