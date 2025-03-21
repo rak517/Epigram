@@ -5,7 +5,7 @@ interface ToggleButtonProps {
   isSelected: boolean;
   onToggle: (newState: boolean) => void;
   size?: 'sm' | 'md';
-  label?: string; // label 추가해서 성락님 의견대로 커스텀 가능하게 했습니다.
+  label?: string;
 }
 
 const ToggleButton: React.FC<ToggleButtonProps> = ({ isSelected, onToggle, size = 'md', label = '공개' }) => {
