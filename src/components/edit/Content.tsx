@@ -1,18 +1,7 @@
-import { UseFormRegister, FieldErrors, UseFormTrigger } from 'react-hook-form';
+import { ContentProps } from '@/components/addEditForm/types'; 
 import TextArea from '../ui/textarea';
 
-type FormValues = {
-  content: string;
-  author: string;
-  source: string;
-  tags: string[];
-};
 
-interface ContentProps {
-  register: UseFormRegister<FormValues>;
-  errors: FieldErrors<FormValues>;
-  trigger: UseFormTrigger<FormValues>;
-}
 
 const Content = ({ register, errors, trigger }: ContentProps) => {
   return (
