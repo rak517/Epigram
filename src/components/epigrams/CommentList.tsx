@@ -38,7 +38,7 @@ export default function CommentList() {
           commentId={comment.id}
           onSave={async (data: { commentId: number; patchData: PatchComment }) => {
             try {
-              updateComment.mutateAsync(data);
+              await updateComment.mutateAsync(data);
               openModal({
                 type: 'alert',
                 title: '수정 성공',
@@ -66,7 +66,7 @@ export default function CommentList() {
       title: '정말 삭제하시겠습니까?',
       callback: async () => {
         try {
-          deleteComment.mutateAsync(commentId);
+          await deleteComment.mutateAsync(commentId);
           openModal({
             type: 'alert',
             title: '삭제 성공',
@@ -88,7 +88,7 @@ export default function CommentList() {
     <section className='flex w-full flex-col gap-4 lg:gap-10'>
       <h3 className='text-black-600 pl-6 text-lg font-semibold md:pl-0 lg:text-2xl'>최신 댓글</h3>
       {isLoading ? (
-        <CommentsSkeleton />
+        <CommentsSkeleton count={PAGE_LIMIT} />
       ) : (
         <div className='w-full'>
           {comments.map((comment) => {
@@ -109,7 +109,7 @@ export default function CommentList() {
           })}
         </div>
       )}
-      {isFetchingNextPage && <CommentsSkeleton />}
+      {isFetchingNextPage && <CommentsSkeleton count={PAGE_LIMIT} />}
       <div className='flex justify-center'>
         <RoundedButton type='더보기' size='small' onClick={handleMoreClick} />
       </div>
