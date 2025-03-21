@@ -9,6 +9,7 @@ import RoundedButton from '@/components/ui/buttons/roundedButton';
 import { isEmpty } from 'es-toolkit/compat';
 import Image from 'next/image';
 import EmptyEpigram from '@/assets/images/empty_epigram.svg';
+import PlusIcon from '@/assets/icons/plus.svg';
 
 const PAGE_LIMIT = 3;
 
@@ -59,7 +60,10 @@ export default function EpigramList() {
 
           {hasNextPage && totalCount > epigrams.length && (
             <div className='flex w-full justify-center'>
-              <RoundedButton type='에픽그램' size='small' onClick={handleClick} />
+              <RoundedButton onClick={handleClick} variant='outline' className='gap-2'>
+                <Image src={PlusIcon} alt='에피그램 더보기' />
+                에피그램 더보기
+              </RoundedButton>
             </div>
           )}
         </div>
