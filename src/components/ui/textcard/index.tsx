@@ -36,7 +36,7 @@ const textCardVariants = cva(`border border-line-100 border-solid rounded-xl fon
       bottomRight: '',
     },
 
-    isBackground: {
+    hasBackground: {
       true: 'bg-[linear-gradient(white_90%,#f2f2f2)] bg-[length:100%_20px] bg-repeat shadow-[0px_3px_12px_0px_rgba(0,0,0,0.04)]',
       false: '',
     },
@@ -44,7 +44,7 @@ const textCardVariants = cva(`border border-line-100 border-solid rounded-xl fon
   defaultVariants: {
     variant: 'fixedHeight',
     tagPosition: 'bottomRight',
-    isBackground: true,
+    hasBackground: true,
   },
 });
 
@@ -56,7 +56,7 @@ interface TextCardProps extends HTMLAttributes<HTMLDivElement>, VariantProps<typ
   maxTags?: number; // 최대 표시할 태그 수
 }
 
-export default function TextCard({ isDropdown, cardContent, author, tags = [], maxTags = 2, variant, width, fixedSize, tagPosition, isBackground, className, ...props }: TextCardProps) {
+export default function TextCard({ isDropdown, cardContent, author, tags = [], maxTags = 2, variant, width, fixedSize, tagPosition, hasBackground, className, ...props }: TextCardProps) {
   let fixedSizeClass = '';
   if (fixedSize === 'w294h180') fixedSizeClass = 'w-[294px] h-[180px]';
   else if (fixedSize === 'w312h140') fixedSizeClass = 'w-[312px] h-[140px]';
@@ -71,7 +71,7 @@ export default function TextCard({ isDropdown, cardContent, author, tags = [], m
           variant,
           width,
           tagPosition,
-          isBackground,
+          hasBackground,
           className,
         })} relative`}
         {...props}
@@ -114,7 +114,7 @@ export default function TextCard({ isDropdown, cardContent, author, tags = [], m
         width,
         fixedSize,
         tagPosition,
-        isBackground,
+        hasBackground,
         className,
       })} relative`}
       {...props}

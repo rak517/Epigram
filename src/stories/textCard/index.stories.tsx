@@ -40,7 +40,7 @@ const meta: Meta<typeof TextCard> = {
       control: { type: 'select' },
     },
 
-    isBackground: {
+    hasBackground: {
       options: ['true', 'false'],
       control: { type: 'select' },
     },
