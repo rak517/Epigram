@@ -27,7 +27,7 @@ export default function EditCommentModal({ initialContent = '', commentId, onSav
         <TextArea className='w-full resize-none' value={content} onChange={(e) => setContent(e.target.value)} />
       </div>
       <div className='flex w-full justify-between'>
-        <ToggleButton isPublic={isPrivate} label='비공개' onToggle={(newState) => setIsPrivate(newState)} />
+        <ToggleButton isSelected={isPrivate} label='비공개' onToggle={(newState) => setIsPrivate(newState)} />
         <Button size='xs' onClick={handleSave}>
           저장
         </Button>
