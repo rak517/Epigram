@@ -10,6 +10,8 @@ import { useGetUser } from '@/apis/user/queries';
 import { getErrorMessage } from '@/utils/network/getErrorMessage';
 import { Comment as CommentType, PatchComment } from '@/apis/comment/types';
 import CommentsSkeleton from '../ui/skeletons/CommentLIstSkeleton';
+import plus_ic from '@/assets/icons/plus.svg';
+import Image from 'next/image';
 
 const PAGE_LIMIT = 4;
 
@@ -111,7 +113,12 @@ export default function CommentList() {
       )}
       {isFetchingNextPage && <CommentsSkeleton count={PAGE_LIMIT} />}
       <div className='flex justify-center'>
-        <RoundedButton type='더보기' size='small' onClick={handleMoreClick} />
+        {hasNextPage && (
+          <RoundedButton variant='outline' onClick={handleMoreClick} className='gap-2'>
+            <Image src={plus_ic} alt='최신 댓글 더보기' />
+            최신 댓글 더보기
+          </RoundedButton>
+        )}
       </div>
     </section>
   );
