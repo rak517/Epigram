@@ -17,7 +17,7 @@ export const GET = async (request: NextRequest) => {
           }
         : {},
     );
-    return NextResponse.json(apiResponse.data, { status: apiResponse.status });
+    return apiResponse.data ? NextResponse.json(apiResponse.data, { status: apiResponse.status }) : new NextResponse(null, { status: apiResponse.status });
   } catch (error) {
     return errorResponse(error);
   }
