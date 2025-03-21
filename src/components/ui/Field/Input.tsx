@@ -14,7 +14,7 @@ export default function Input({ label, error, variant = 'default', className, re
   const id = useId();
 
   return (
-    <BaseItem>
+    <BaseItem> 
       {label && (
         <BaseLabel required={props.required} htmlFor={id}>
           {label}
