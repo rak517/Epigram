@@ -9,9 +9,7 @@ import { monthlyEmotionLogsSchema, todayEmotionLogsSchema } from "./schemas"
  */
 
 export const postTodayEmotionLog = async (params : EmotionRequset) => {
-    const response = await axiosClientHelper.post<TodayEmotionLogs>('/emotionLogs/today', {
-        params
-    })
+    const response = await axiosClientHelper.post<TodayEmotionLogs>('/emotionLogs/today', { ...params })
     return safeResponse(response.data, todayEmotionLogsSchema)
 };
 
