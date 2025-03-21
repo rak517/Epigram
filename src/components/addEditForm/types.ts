@@ -32,8 +32,15 @@ export interface ContentProps {
   trigger: UseFormTrigger<FormValues>;
 }
 
+
 export interface AuthorProps {
   register: UseFormRegister<FormValues>;
   watch: UseFormWatch<FormValues>;
-  setValue: UseFormSetValue<FormValues>;
-}
+  setValue: UseFormSetValue<FormValues>;}
+
+export interface TagInputProps {
+  value: string[];
+  onChange: (value: string[]) => void;
+  label?: string;
+  required?: boolean;
+  error?: string;}
