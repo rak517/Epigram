@@ -1,5 +1,5 @@
 import { FormHTMLAttributes, ReactNode } from 'react';
-import { UseFormRegister, FieldErrors, UseFormTrigger } from 'react-hook-form';
+import { UseFormRegister, FieldErrors, UseFormTrigger,UseFormWatch, UseFormSetValue } from 'react-hook-form';
 import { MakeEpigramFormSchema } from './schemas';
 import { z } from 'zod';
 
@@ -30,4 +30,10 @@ export interface ContentProps {
   register: UseFormRegister<FormValues>;
   errors: FieldErrors<FormValues>;
   trigger: UseFormTrigger<FormValues>;
+}
+
+export interface AuthorProps {
+  register: UseFormRegister<FormValues>;
+  watch: UseFormWatch<FormValues>;
+  setValue: UseFormSetValue<FormValues>;
 }
