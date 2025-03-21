@@ -20,10 +20,14 @@ const CommentSkeleton = () => {
   );
 };
 
-export default function CommentsSkeleton() {
+interface CommentSkeletonProps {
+  count: number;
+}
+
+export default function CommentsSkeleton({ count }: CommentSkeletonProps) {
   return (
     <div className='w-full'>
-      {Array.from({ length: 4 }).map((_, index) => (
+      {Array.from({ length: count }).map((_, index) => (
         <div key={index}>
           <CommentSkeleton />
         </div>
