@@ -15,6 +15,14 @@ const PAGE_LIMIT = 3;
 
 const MotionLink = motion.create(Link);
 
+const epigramListAnimation = {
+  exit: { opacity: 0, y: -10 },
+  initial: { opacity: 0, y: 10 },
+  animate: { opacity: 1, y: 0 },
+  transition: { duration: 0.5 },
+  whileHover: { y: -8, transition: { duration: 0.2 } },
+};
+
 export default function EpigramList() {
   const { data, hasNextPage, fetchNextPage, isFetchingNextPage, isLoading } = useGetEpigrams({ limit: PAGE_LIMIT });
   const epigrams = data?.pages.flatMap((page) => page.list) ?? [];
@@ -43,13 +51,14 @@ export default function EpigramList() {
             epigrams.map((epigram) => (
               <MotionLink
                 key={epigram.id}
-                exit={{ opacity: 0, y: -10 }}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5 }}
-                whileHover={{ y: -8, transition: { duration: 0.2 } }}
+                variants={epigramListAnimation}
                 className='text-md cursor-pointer md:text-lg lg:text-xl xl:text-2xl'
                 href={`/epigrams/${epigram.id}`}
+                initial='initial'
+                whileInView='animate'
+                whileHover='whileHover'
+                exit='exit'
+                transition={epigramListAnimation.transition}
               >
                 <TextCard author={epigram.author} cardContent={epigram.content} tags={epigram.tags} />
               </MotionLink>
