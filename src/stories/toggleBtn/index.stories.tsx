@@ -9,11 +9,11 @@ export default {
     size: {
       control: {
         type: 'radio',
-        options: ['small', 'medium'],
+        options: ['sm', 'md'],
       },
-      defaultValue: 'medium',
+      defaultValue: 'md',
     },
-    isPublic: {
+    isSelected: {
       control: 'boolean',
       defaultValue: false,
     },
@@ -21,33 +21,33 @@ export default {
 } as Meta;
 
 const Template: StoryFn = (args) => {
-  const [isPublic, setIsPublic] = useState(args.isPublic);
+  const [isSelected, setIsSelected] = useState(args.isSelected);
 
   const handleToggle = (newState: boolean) => {
-    setIsPublic(newState);
+    setIsSelected(newState);
     args.onToggle(newState);
   };
 
   useEffect(() => {
-    setIsPublic(args.isPublic);
-  }, [args.isPublic]);
+    setIsSelected(args.isSelected);
+  }, [args.isSelected]);
 
-  return <ToggleBtn {...args} isPublic={isPublic} onToggle={handleToggle} />;
+  return <ToggleBtn {...args} isSelected={isSelected} onToggle={handleToggle} />;
 };
 
 export const Default = Template.bind({});
 Default.args = {
-  size: 'medium',
-  isPublic: false,
+  size: 'md',
+  isSelected: false,
   onToggle: (newState: boolean) => {
     console.log('New state:', newState);
   },
 };
 
-export const Small = Template.bind({});
-Small.args = {
-  size: 'small',
-  isPublic: false,
+export const Sm = Template.bind({});
+Sm.args = {
+  size: 'sm',
+  isSelected: false,
   onToggle: (newState: boolean) => {
     console.log('New state:', newState);
   },
