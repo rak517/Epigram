@@ -13,6 +13,7 @@ const RadioGroupContext = createContext<RadioGroupContextValue | null>(null);
 
 export interface RadioGroupProps extends HTMLAttributes<HTMLDivElement> {
   defaultValue?: string;
+  value?: string;
   onValueChange?: (value: string) => void;
   name?: string;
   children: ReactNode;

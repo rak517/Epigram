@@ -1,7 +1,5 @@
-import { ContentProps } from '@/components/addEditForm/types'; 
+import { ContentProps } from '@/components/addEditForm/types';
 import TextArea from '../ui/textarea';
-
-
 
 const Content = ({ register, errors, trigger }: ContentProps) => {
   return (
@@ -12,8 +10,10 @@ const Content = ({ register, errors, trigger }: ContentProps) => {
       </div>
 
       <TextArea
+        variant='limit500'
         size='sm'
         className='h-33 w-full xl:h-37'
+        placeholder='500자 이내로 입력해주세요.'
         {...register('content', {
           required: '내용을 입력해주세요',
           onBlur: () => trigger('content'),

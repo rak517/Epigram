@@ -26,15 +26,17 @@ export type FormValues = {
 };
 
 export interface ContentProps {
-  register: UseFormRegister<FormValues>;
-  errors: FieldErrors<FormValues>;
-  trigger: UseFormTrigger<FormValues>;
+  register: UseFormRegister<MakeEpigramForm>;
+  errors: FieldErrors<MakeEpigramForm>;
+  trigger: UseFormTrigger<MakeEpigramForm>;
 }
 
 export interface AuthorProps {
-  register: UseFormRegister<FormValues>;
-  watch: UseFormWatch<FormValues>;
-  setValue: UseFormSetValue<FormValues>;
+  register: UseFormRegister<MakeEpigramForm>;
+  watch: UseFormWatch<MakeEpigramForm>;
+  setValue: UseFormSetValue<MakeEpigramForm>;
+  errors: FieldErrors<MakeEpigramForm>;
+  trigger: UseFormTrigger<MakeEpigramForm>;
 }
 
 export interface TagInputProps {
