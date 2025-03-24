@@ -53,7 +53,6 @@ export default function CommentList() {
                 title: '댓글 수정 실패',
                 callback: () => getErrorMessage(err),
               });
-              getErrorMessage(err);
             }
           }}
         />
@@ -96,17 +95,16 @@ export default function CommentList() {
           {comments.map((comment) => {
             const isOwnComment = user.data?.id === comment.writer.id;
             return (
-              <div key={comment.id}>
-                <Comment
-                  nickname={comment.writer.nickname}
-                  commentTime={getTimeElapsed(comment.updatedAt)}
-                  content={comment.content}
-                  profileImage={comment.writer.image}
-                  isOwnComment={isOwnComment}
-                  onEdit={isOwnComment ? () => handleEditComment(comment) : undefined}
-                  onDelete={() => handleDelete(comment.id)}
-                />
-              </div>
+              <Comment
+                nickname={comment.writer.nickname}
+                commentTime={getTimeElapsed(comment.updatedAt)}
+                content={comment.content}
+                profileImage={comment.writer.image}
+                isOwnComment={isOwnComment}
+                onEdit={isOwnComment ? () => handleEditComment(comment) : undefined}
+                onDelete={() => handleDelete(comment.id)}
+                key={comment.id}
+              />
             );
           })}
         </div>

@@ -28,9 +28,7 @@ export default function CommentsSkeleton({ count }: CommentSkeletonProps) {
   return (
     <div className='w-full'>
       {Array.from({ length: count }).map((_, index) => (
-        <div key={index}>
-          <CommentSkeleton />
-        </div>
+        <CommentSkeleton key={index} />
       ))}
     </div>
   );
