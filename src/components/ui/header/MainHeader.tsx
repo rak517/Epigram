@@ -20,16 +20,16 @@ export default function MainHeader() {
 
   return (
     <>
-      <header className='border-b-line-100 md:px- fixed top-0 right-0 left-0 z-10 flex h-13 items-center justify-between border-b-[1px] bg-white px-6 py-4 md:h-15 md:px-18 md:py-[19px] lg:h-20 lg:px-30 lg:py-6.5'>
+      <header className='border-b-line-100 fixed top-0 right-0 left-0 z-10 flex h-13 items-center justify-between border-b-[1px] bg-white px-6 py-4 md:h-15 md:px-18 md:py-[19px] lg:h-20 lg:px-30 lg:py-6.5'>
         <div className='flex items-center justify-center gap-3 md:gap-6'>
           <Image src={menuIcon} alt='메뉴 아이콘' className='cursor-pointer md:hidden' onClick={toggleSidebar} />
           <Link href={'/'}>
             <Image src={headerLogo} alt='헤더 로고' />
           </Link>
-          <Link href={'/epigrams'} className='text-black-600 hidden leading-[26px] font-semibold md:block'>
+          <Link href={'/epigrams'} className='text-black-600 md:text-md hidden font-semibold md:block lg:text-lg'>
             피드
           </Link>
-          <Link href={'/search'} className='text-black-600 hidden leading-[26px] font-semibold md:block'>
+          <Link href={'/search'} className='text-black-600 md:text-md hidden font-semibold md:block lg:text-lg'>
             검색
           </Link>
         </div>
@@ -42,7 +42,7 @@ export default function MainHeader() {
           ) : (
             <>
               <Avatar src={user?.image} alt='프로필 이미지' className='h-6 w-6' />
-              <p className='xl:text-md text-sm font-medium text-gray-300'>{user?.nickname}</p>
+              <p className='text-sm font-medium text-gray-300 lg:text-lg'>{user?.nickname}</p>
             </>
           )}
         </Link>
