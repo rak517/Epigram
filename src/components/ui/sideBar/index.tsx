@@ -31,7 +31,7 @@ export default function SideBar({ items, isOpen = false }: SideBarProps) {
       >
         <div className='w-55'>
           {/* 닫기 버튼 */}
-          <div className='flex h-13 w-full items-center justify-center border-b border-gray-100'>
+          <div className='flex h-13 w-full cursor-pointer items-center justify-center border-b border-gray-100'>
             <div className='flex h-6 w-47 justify-end'>
               <Image src={closeIcon} alt='xIcon' width={24} height={24} onClick={toggleSidebar} />
             </div>
@@ -44,6 +44,7 @@ export default function SideBar({ items, isOpen = false }: SideBarProps) {
                 key={item.value}
                 className='cursor-pointer items-center rounded-2xl px-4 py-6 transition-all duration-300 ease-in-out hover:translate-x-1 hover:scale-[1.02] hover:bg-gray-100 hover:shadow-md active:scale-[0.98]'
                 href={item.value}
+                onClick={() => setIsOpen(false)}
               >
                 {item.label}
               </Link>

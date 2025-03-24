@@ -26,7 +26,7 @@ export default function MainHeader() {
           <Link href={'/'}>
             <Image src={headerLogo} alt='헤더 로고' />
           </Link>
-          <Link href={'/epigrams'} className='text-black-600 md:text-md hidden font-semibold md:block lg:text-lg'>
+          <Link href={'/feed'} className='text-black-600 md:text-md hidden font-semibold md:block lg:text-lg'>
             피드
           </Link>
           <Link href={'/search'} className='text-black-600 md:text-md hidden font-semibold md:block lg:text-lg'>
