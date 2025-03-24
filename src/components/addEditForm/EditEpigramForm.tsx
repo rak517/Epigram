@@ -1,7 +1,6 @@
 'use client';
 
 import { useForm } from 'react-hook-form';
-import MainHeader from '../ui/header/MainHeader';
 import Content from './Content';
 import EpigramFormLayout from './EpigramFormLayout';
 import { MakeEpigramForm } from './types';
@@ -38,10 +37,9 @@ export default function AddEpigramForm() {
 
   return (
     <>
-      <MainHeader />
       <EpigramFormLayout onSubmit={handleSubmit(onSubmit)}>
         <h1 className='text-lg font-bold md:text-xl lg:text-2xl'>에피그램 수정</h1>
-        <div className='pt-6 md:pt-8 lg:pt-10'>
+        <div>
           <Content register={register} errors={errors} trigger={trigger} />
         </div>
         <div className='pt-10 lg:pt-14'>

@@ -71,6 +71,7 @@ export default function TagInput({ value = [], onChange, label = '태그', requi
             onChange={handleTagInputChange}
             onKeyDown={handleKeyDown}
             disabled={value.length >= 3} // 3개 이상이면 입력창 비활성화
+            variant='outlined'
           />
         </div>
 
