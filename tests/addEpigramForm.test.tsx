@@ -2,6 +2,7 @@ import AddEpigramForm from '@/components/addEditForm/AddEpigramForm';
 // import { MakeEpigramApiRequest } from '@/types';
 import { fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 jest.mock('next/navigation', () => ({
   useRouter: () => ({
@@ -15,9 +16,26 @@ jest.mock('next/navigation', () => ({
 // }));
 
 describe('AddEpigram Component', () => {
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        retry: false,
+      },
+    },
+  });
+
+  // QueryClientProvider로 컴포넌트를 감싸는 함수
+  const renderWithQueryClient = () => {
+    return render(
+      <QueryClientProvider client={queryClient}>
+        <AddEpigramForm />
+      </QueryClientProvider>,
+    );
+  };
+
   beforeEach(() => {
     // mockCreateEpigram.mockClear();
-    render(<AddEpigramForm />);
+    renderWithQueryClient();
   });
 
   test('에피그램 추가폼을 불러온다', () => {
