@@ -1,4 +1,4 @@
-import AddEpigramForm from '@/components/addEditForm/AddEpigramForm';
+import AddEpigramForm from '@/components/addEditForm/EditEpigramForm';
 
 export default function AddEpigramPage() {
   return <AddEpigramForm />;

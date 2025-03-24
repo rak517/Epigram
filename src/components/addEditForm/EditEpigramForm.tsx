@@ -46,8 +46,8 @@ export default function AddEpigramForm() {
           <Author register={register} watch={watch} setValue={setValue} errors={errors} trigger={trigger} />
         </div>
         <div className='flex flex-col gap-4 pt-10 lg:pt-14'>
-          <Input label='출처' {...register('sourceTitle')} error={errors.sourceTitle?.message} placeholder='출처 제목 입력' />
-          <Input {...register('sourceUrl')} error={errors.sourceUrl?.message} placeholder='URL (ex. https://www.website.com)' />
+          <Input label='출처' {...register('sourceTitle')} error={errors.sourceTitle?.message} placeholder='출처 제목 입력' variant='outlined' />
+          <Input {...register('sourceUrl')} error={errors.sourceUrl?.message} placeholder='URL (ex. https://www.website.com)' variant='outlined' />
         </div>
         <div className='pt-10 lg:pt-14'>
           <TagInput value={watch('tag')} onChange={handleTagChange} error={errors.tag?.message} />
