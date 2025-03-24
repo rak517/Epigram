@@ -10,8 +10,12 @@ import Author from './Author';
 import Input from '../ui/Field/Input';
 import TagInput from './Tags';
 import Button from '../ui/buttons';
+import { useGetEpigram } from '@/apis/epigram/queries';
+import { useEffect } from 'react';
 
-export default function AddEpigramForm() {
+export default function AddEpigramForm({ id }: { id: number }) {
+  const { data } = useGetEpigram(id);
+
   const {
     handleSubmit,
     register,
@@ -27,12 +31,25 @@ export default function AddEpigramForm() {
     mode: 'onBlur',
   });
 
+
+  useEffect(() => {
+    if (data) {
+      setValue('content', data.content || '');
+      setValue('authorName', data.author || '');
+      setValue('sourceTitle', data.referenceTitle || '');
+      setValue('sourceUrl', data.referenceUrl || '');
+      setValue('tag', data.tags?.map((tag) => tag.name) || []);
+    }
+  }, [data, setValue]);
+
   const handleTagChange = (newTag: string[]) => {
     setValue('tag', newTag, { shouldValidate: true });
   };
 
   const onSubmit = (data: MakeEpigramForm) => {
     console.log(data);
+    console.log('수정할 ID:', id);
+    console.log('폼 데이터:', data?.content);
   };
 
   return (
