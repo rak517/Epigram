@@ -1,7 +1,6 @@
 'use client';
 
 import { useForm } from 'react-hook-form';
-import MainHeader from '../ui/header/MainHeader';
 import Content from './Content';
 import EpigramFormLayout from './EpigramFormLayout';
 import { MakeEpigramForm } from './types';
@@ -38,18 +37,17 @@ export default function AddEpigramForm() {
 
   return (
     <>
-      <MainHeader />
       <EpigramFormLayout onSubmit={handleSubmit(onSubmit)}>
         <h1 className='text-lg font-bold md:text-xl lg:text-2xl'>에피그램 만들기</h1>
-        <div className='pt-6 md:pt-8 lg:pt-10'>
+        <div>
           <Content register={register} errors={errors} trigger={trigger} />
         </div>
         <div className='pt-10 lg:pt-14'>
           <Author register={register} watch={watch} setValue={setValue} errors={errors} trigger={trigger} />
         </div>
         <div className='flex flex-col gap-4 pt-10 lg:pt-14'>
-          <Input label='출처' {...register('sourceTitle')} error={errors.sourceTitle?.message} placeholder='출처 제목 입력' />
-          <Input {...register('sourceUrl')} error={errors.sourceUrl?.message} placeholder='URL (ex. https://www.website.com)' />
+          <Input label='출처' {...register('sourceTitle')} error={errors.sourceTitle?.message} placeholder='출처 제목 입력' variant='outlined' />
+          <Input {...register('sourceUrl')} error={errors.sourceUrl?.message} placeholder='URL (ex. https://www.website.com)' variant='outlined' />
         </div>
         <div className='pt-10 lg:pt-14'>
           <TagInput value={watch('tag')} onChange={handleTagChange} error={errors.tag?.message} />

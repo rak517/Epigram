@@ -44,6 +44,7 @@ export default function Author({ register, watch, setValue, errors, trigger }: A
           {...register('authorName', { required: authorType === 'direct' ? '저자 이름을 입력해주세요' : false, onBlur: () => authorType === 'direct' && trigger('authorName') })}
           placeholder={authorType === 'direct' ? '저자 이름 입력' : authorType === 'unknown' ? '알 수 없음' : '본인'}
           error={errors.authorName?.message}
+          variant='outlined'
         />
       </div>
     </div>
