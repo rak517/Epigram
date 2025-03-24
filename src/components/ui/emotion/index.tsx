@@ -8,10 +8,12 @@ const emotionVariants = cva('flex items-center justify-center', {
       grayScales: 'grayscale-100',
     },
     size: {
-      sm: 'w-8 h-8',
-      md: 'w-8 h-8',
-      lg: 'w-9 h-9',
-      xl: 'w-12 h-12',
+      '2xs': 'size-4',
+      xs: 'size-6',
+      sm: 'size-8',
+      md: 'size-8',
+      lg: 'size-9',
+      xl: 'size-12',
     },
   },
   defaultVariants: {
