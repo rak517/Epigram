@@ -27,7 +27,7 @@ export default function DailyEmotion() {
             <div className='flex justify-center gap-4'>
               {EMOTION_STATUS.map((emotion, index) => (
                 <motion.div key={index} animate={{ opacity: 1 }} transition={{ duration: 0.2 }} whileHover={{ y: -8, transition: { duration: 0.2 } }} className='flex flex-col items-center gap-2'>
-                  <EmotionButton emotion={emotion} isInteractive onClick={() => handleEmotionClick(emotion)} disabled={isPosting} />
+                  <EmotionButton emotion={emotion} isInteractive onClick={() => handleEmotionClick(emotion)} disabled={isPosting} emotionVariant={isPosting ? 'grayScales' : 'default'} />
                   <span className='text-sub-blue-1 lg:text-2lg text-sm font-semibold md:text-lg'>{EMOTION_STATUS_KR[index]}</span>
                 </motion.div>
               ))}
