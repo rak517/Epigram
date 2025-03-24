@@ -10,8 +10,11 @@ import Author from './Author';
 import Input from '../ui/Field/Input';
 import TagInput from './Tags';
 import Button from '../ui/buttons';
+import { usePostEpigram } from '@/apis/epigram/queries'; 
+import { useRouter } from 'next/navigation'; 
 
 export default function AddEpigramForm() {
+  const router = useRouter();
   const {
     handleSubmit,
     register,
@@ -27,12 +30,31 @@ export default function AddEpigramForm() {
     mode: 'onBlur',
   });
 
+  const { mutate: postEpigram } = usePostEpigram();
+
   const handleTagChange = (newTag: string[]) => {
     setValue('tag', newTag, { shouldValidate: true });
   };
 
   const onSubmit = (data: MakeEpigramForm) => {
-    console.log(data);
+    const epigramForm = {
+      content: data.content,
+      author: data.authorName || '',
+      referenceTitle: data.sourceTitle,
+      referenceUrl: data.sourceUrl,
+      tags: data.tag,
+    };
+
+    postEpigram(epigramForm, {
+      onSuccess: (response) => {
+        if (response && response.id) {
+          router.push(`/epigrams/${response.id}`);
+        }
+      },
+      onError: (error) => {
+        console.error('에피그램 생성 실패:', error);
+      },
+    });
   };
 
   return (
