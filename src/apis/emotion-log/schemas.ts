@@ -27,3 +27,9 @@ export const getMonthlyEmotionLogsSchema = z.object({
 export const emotionRequest = z.object({
   emotion: emotionEnum,
 });
+
+export const emotionChartDataSchema = z.object({
+  emotion: emotionEnum,
+  emotionColor: z.string(),
+  percent: z.number(),
+});
