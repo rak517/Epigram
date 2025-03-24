@@ -1,3 +1,5 @@
-export default function AddEpigram() {
-  return <div>에피그램 생성 페이지</div>;
+import AddEpigramForm from '@/components/addEditForm/AddEpigramForm';
+
+export default function AddEpigramPage() {
+  return <AddEpigramForm />;
 }
