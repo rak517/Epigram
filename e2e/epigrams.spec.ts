@@ -65,6 +65,18 @@ test.describe('메인 페이지', () => {
   });
 
   test('오늘의 감정을 클릭 시 오늘의 감정 컴포넌트가 사라진다', async () => {
+    await page.route('**/api/emotionLogs/today', (route) => {
+      route.fulfill({
+        status: 201,
+        body: JSON.stringify({
+          createdAt: 'string',
+          emotion: 'string',
+          userId: 'string',
+          id: 'string',
+        }),
+      });
+    });
+
     await page
       .locator('div')
       .filter({ hasText: /^감동$/ })
