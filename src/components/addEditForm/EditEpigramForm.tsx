@@ -16,7 +16,7 @@ import { useEffect, useState } from 'react';
 import { useModalStore } from '@/stores/ModalStore';
 import { usePatchEpigram } from '@/apis/epigram/queries';
 
-export default function AddEpigramForm({ id }: { id: number }) {
+export default function EditEpigramForm({ id }: { id: number }) {
   const { data } = useGetEpigram(id);
   const { mutate: patchEpigram } = usePatchEpigram();
   const router = useRouter();

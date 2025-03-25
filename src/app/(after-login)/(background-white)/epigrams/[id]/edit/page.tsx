@@ -1,6 +1,7 @@
 import EditEpigramForm from '@/components/addEditForm/EditEpigramForm';
 
-export default function EpigramEdit({ params }: { params: { id: string } }) {
-  const { id } = params;
+export default async function EpigramEdit({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
+
   return <EditEpigramForm id={Number(id)} />;
 }
