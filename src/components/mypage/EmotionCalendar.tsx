@@ -76,7 +76,7 @@ export default function EmotionCalendar() {
     });
 
   return (
-    <div className='flex w-full flex-col gap-6 lg:gap-12'>
+    <div className='flex w-full flex-col gap-4 lg:gap-6'>
       <div className='flex items-center justify-between'>
         <h2 className='text-center text-lg font-semibold lg:text-2xl'>
           {year}년 {month + 1}월
