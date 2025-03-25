@@ -53,17 +53,9 @@ export default function EditEpigramForm({ id }: { id: number }) {
   };
 
   const onSubmit = async (data: MakeEpigramForm) => {
-    const updatedEpigram = {
-      content: data.content,
-      author: data.authorName,
-      referenceTitle: data.sourceTitle,
-      referenceUrl: data.sourceUrl,
-      tags: data.tag,
-    };
-
     setIsSubmitting(true);
     patchEpigram(
-      { epigramId: id, epigram: updatedEpigram },
+      { epigramId: id, epigram: data },
       {
         onSuccess: () => {
           openModal({
@@ -80,7 +72,7 @@ export default function EditEpigramForm({ id }: { id: number }) {
           });
         },
         onSettled: () => {
-          setIsSubmitting(false); 
+          setIsSubmitting(false);
         },
       },
     );
