@@ -5,7 +5,7 @@ import { cn } from '@/utils/cn';
 import { Pretendard } from '@/fonts';
 
 const meta: Meta<typeof DropdownMenu> = {
-  title: 'DropdownMenu',
+  title: 'Components/DropdownMenu',
   component: DropdownMenu,
   tags: ['autodocs'],
   parameters: {
@@ -13,12 +13,7 @@ const meta: Meta<typeof DropdownMenu> = {
   },
   decorators: [
     (Story) => (
-      <div
-        className={cn(
-          'flex h-[300px] w-[500px] items-center justify-center rounded-2xl bg-gray-100',
-          Pretendard.className
-        )}
-      >
+      <div className={cn('flex h-[300px] w-[500px] items-center justify-center rounded-2xl bg-gray-100', Pretendard.className)}>
         <Story />
       </div>
     ),
