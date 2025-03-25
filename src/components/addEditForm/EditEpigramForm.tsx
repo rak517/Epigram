@@ -61,32 +61,29 @@ export default function EditEpigramForm({ id }: { id: number }) {
       tags: data.tag,
     };
 
-    try {
-      setIsSubmitting(true);
-      await patchEpigram(
-        { epigramId: id, epigram: updatedEpigram },
-        {
-          onSuccess: () => {
-            openModal({
-              type: 'alert',
-              title: '에피그램 수정 성공',
-              callback: () => router.push(`/epigrams/${id}`),
-            });
-          },
-          onError: (error) => {
-            openModal({
-              type: 'alert',
-              title: '에피그램 수정 실패',
-              callback: () => console.error('에러 메시지:', error),
-            });
-          },
+    setIsSubmitting(true);
+    patchEpigram(
+      { epigramId: id, epigram: updatedEpigram },
+      {
+        onSuccess: () => {
+          openModal({
+            type: 'alert',
+            title: '에피그램 수정 성공',
+            callback: () => router.push(`/epigrams/${id}`),
+          });
         },
-      );
-    } catch (error) {
-      console.error('서버 오류:', error);
-    } finally {
-      setIsSubmitting(false);
-    }
+        onError: (error) => {
+          openModal({
+            type: 'alert',
+            title: '에피그램 수정 실패',
+            callback: () => console.error('에러 메시지:', error),
+          });
+        },
+        onSettled: () => {
+          setIsSubmitting(false); 
+        },
+      },
+    );
   };
 
   return (
