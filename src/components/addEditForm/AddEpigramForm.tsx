@@ -10,8 +10,14 @@ import Author from './Author';
 import Input from '../ui/Field/Input';
 import TagInput from './Tags';
 import Button from '../ui/buttons';
+import { usePostEpigram } from '@/apis/epigram/queries';
+import { useRouter } from 'next/navigation';
+import { useModalStore } from '@/stores/ModalStore';
 
 export default function AddEpigramForm() {
+  const router = useRouter();
+  const { openModal } = useModalStore();
+
   const {
     handleSubmit,
     register,
@@ -27,12 +33,33 @@ export default function AddEpigramForm() {
     mode: 'onBlur',
   });
 
+  const { mutateAsync: postEpigram } = usePostEpigram();
+
   const handleTagChange = (newTag: string[]) => {
     setValue('tag', newTag, { shouldValidate: true });
   };
 
-  const onSubmit = (data: MakeEpigramForm) => {
-    console.log(data);
+  const onSubmit = async (data: MakeEpigramForm) => {
+    const epigramForm = {
+      content: data.content,
+      author: data.authorName || '',
+      referenceTitle: data.sourceTitle,
+      referenceUrl: data.sourceUrl,
+      tags: data.tag,
+    };
+
+    try {
+      const response = await postEpigram(epigramForm);
+      if (response?.id) {
+        router.push(`/epigrams/${response.id}`);
+      }
+    } catch (error) {
+      openModal({
+        type: 'alert',
+        title: '에피그램 생성 실패',
+        callback: () => console.error('에러 메시지:', error),
+      });
+    }
   };
 
   return (
