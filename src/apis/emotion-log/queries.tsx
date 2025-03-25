@@ -1,15 +1,15 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient, UseQueryOptions } from '@tanstack/react-query';
 import { getMonthlyEmotionLogs, getTodayEmotionLog, postTodayEmotionLog } from '.';
-import { EmotionRequset, GetMonthlyEmotionLogs, TodayEmotionLogs } from './types';
-import { getUser } from '@/apis/user';
+import { EmotionRequset, GetMonthlyEmotionLogs, MonthlyEmotionLogs, TodayEmotionLogs } from './types';
+import { User } from '../user/types';
 
-export const useGetTodayEmotionLog = () => {
+export const useGetTodayEmotionLog = (userId: User['id'] | undefined, options?: Omit<UseQueryOptions<TodayEmotionLogs | null>, 'queryKey' | 'queryFn'>) => {
   return useQuery({
     queryKey: ['todayEmotionLog'],
-    queryFn: async () => {
-      const user = await getUser();
-      return await getTodayEmotionLog(user.id);
+    queryFn: () => {
+      return getTodayEmotionLog(userId);
     },
+    ...options,
   });
 };
 export const usePostTodayEmotionLog = () => {
@@ -21,14 +21,16 @@ export const usePostTodayEmotionLog = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['todayEmotionLog'] });
+      queryClient.invalidateQueries({ queryKey: ['month'] });
     },
   });
 };
 
-export const useGetMonthlyEmotionLogs = (params: GetMonthlyEmotionLogs) => {
+export const useGetMonthlyEmotionLogs = (params: GetMonthlyEmotionLogs | Partial<GetMonthlyEmotionLogs>, options?: Omit<UseQueryOptions<MonthlyEmotionLogs>, 'queryKey' | 'queryFn'>) => {
   return useQuery({
     queryKey: ['month', params],
     queryFn: () => getMonthlyEmotionLogs(params),
+    ...options,
   });
 };
 
@@ -56,6 +58,7 @@ export const useOptimisticEmotionLog = () => {
     },
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ['todayEmotionLog'] });
+      queryClient.invalidateQueries({ queryKey: ['month'] });
     },
   });
 };
