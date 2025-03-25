@@ -33,7 +33,7 @@ export const getTodayEmotionLog = async (userId: number | undefined) => {
  * https://fe-project-epigram-api.vercel.app/docs/#/emotionLogs/monthly
  */
 
-export const getMonthlyEmotionLogs = async (monthlyEmotionLogsParams: GetMonthlyEmotionLogs | Partial<GetMonthlyEmotionLogs>) => {
+export const getMonthlyEmotionLogs = async (monthlyEmotionLogsParams: GetMonthlyEmotionLogs) => {
   const response = await axiosClientHelper.get<MonthlyEmotionLogs>('/emotionLogs/monthly', {
     params: monthlyEmotionLogsParams,
   });

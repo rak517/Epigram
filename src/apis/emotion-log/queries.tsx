@@ -26,7 +26,7 @@ export const usePostTodayEmotionLog = () => {
   });
 };
 
-export const useGetMonthlyEmotionLogs = (params: GetMonthlyEmotionLogs | Partial<GetMonthlyEmotionLogs>, options?: Omit<UseQueryOptions<MonthlyEmotionLogs>, 'queryKey' | 'queryFn'>) => {
+export const useGetMonthlyEmotionLogs = (params: GetMonthlyEmotionLogs, options?: Omit<UseQueryOptions<MonthlyEmotionLogs>, 'queryKey' | 'queryFn'>) => {
   return useQuery({
     queryKey: ['month', params],
     queryFn: () => getMonthlyEmotionLogs(params),
