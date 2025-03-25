@@ -102,7 +102,7 @@ export default function EditEpigramForm({ id }: { id: number }) {
             className='w-full'
             disabled={!watch('content') || watch('content').length > 500 || (watch('authorType') === 'direct' && !watch('authorName')) || isSubmitting}
           >
-            {isSubmitting ? '수정 중...' : '수정 완료'}{' '}
+            {isSubmitting ? '수정 중...' : '수정 완료'}
           </Button>
         </div>
       </EpigramFormLayout>
