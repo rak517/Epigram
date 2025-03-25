@@ -5,18 +5,37 @@ import { EMOTION_STATUS, EMOTION_STATUS_KR } from '@/constants/emotions';
 import EmotionButton from '@/components/ui/emotionButton';
 import { useGetTodayEmotionLog, useOptimisticEmotionLog } from '@/apis/emotion-log/queries';
 import { Emotion } from '@/apis/emotion-log/types';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useGetUser } from '@/apis/user/queries';
 
 export default function DailyEmotion() {
-  const { mutateAsync: updateEmotionLog } = useOptimisticEmotionLog();
-  const { data: dailyEmotion, isFetching } = useGetTodayEmotionLog();
+  const { mutate: updateEmotionLog } = useOptimisticEmotionLog();
+  const { data: user } = useGetUser();
+  const { data: dailyEmotion, isFetching } = useGetTodayEmotionLog(user?.id, {
+    enabled: !!user,
+  });
   const [isPosting, setIsPosting] = useState(false);
+  const [selectedEmotion, setSelectedEmotion] = useState<Emotion | null>(dailyEmotion?.emotion ?? null);
 
   const handleEmotionClick = async (emotion: Emotion) => {
     setIsPosting(true);
-    await updateEmotionLog({ emotion });
-    setIsPosting(false);
+    updateEmotionLog(
+      { emotion },
+      {
+        onError: (_, __, context) => {
+          setSelectedEmotion(context?.emotion ?? null);
+          setIsPosting(false);
+        },
+        onSettled: () => {
+          setIsPosting(false);
+        },
+      },
+    );
   };
+
+  useEffect(() => {
+    setSelectedEmotion(dailyEmotion?.emotion ?? null);
+  }, [dailyEmotion]);
 
   return (
     <section className='flex flex-col gap-4 md:gap-8'>
@@ -27,7 +46,14 @@ export default function DailyEmotion() {
             <div className='flex justify-center gap-4'>
               {EMOTION_STATUS.map((emotion, index) => (
                 <motion.div key={index} animate={{ opacity: 1 }} transition={{ duration: 0.2 }} whileHover={{ y: -8, transition: { duration: 0.2 } }} className='flex flex-col items-center gap-2'>
-                  <EmotionButton emotion={emotion} isInteractive onClick={() => handleEmotionClick(emotion)} disabled={isPosting} emotionVariant={isPosting ? 'grayScales' : 'default'} />
+                  <EmotionButton
+                    emotion={emotion}
+                    isInteractive
+                    onClick={() => handleEmotionClick(emotion)}
+                    disabled={isPosting}
+                    emotionVariant={isPosting ? 'grayScales' : 'default'}
+                    buttonVariant={selectedEmotion === emotion}
+                  />
                   <span className='text-sub-blue-1 lg:text-2lg text-sm font-semibold md:text-lg'>{EMOTION_STATUS_KR[index]}</span>
                 </motion.div>
               ))}
