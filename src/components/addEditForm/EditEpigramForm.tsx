@@ -1,6 +1,7 @@
 'use client';
 
 import { useForm } from 'react-hook-form';
+import { useRouter } from 'next/navigation';
 import Content from './Content';
 import EpigramFormLayout from './EpigramFormLayout';
 import { MakeEpigramForm } from './types';
@@ -10,8 +11,18 @@ import Author from './Author';
 import Input from '../ui/Field/Input';
 import TagInput from './Tags';
 import Button from '../ui/buttons';
+import { useGetEpigram } from '@/apis/epigram/queries';
+import { useEffect, useState } from 'react';
+import { useModalStore } from '@/stores/ModalStore';
+import { usePatchEpigram } from '@/apis/epigram/queries';
 
-export default function AddEpigramForm() {
+export default function EditEpigramForm({ id }: { id: number }) {
+  const { data } = useGetEpigram(id);
+  const { mutate: patchEpigram } = usePatchEpigram();
+  const router = useRouter();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { openModal } = useModalStore();
+
   const {
     handleSubmit,
     register,
@@ -27,12 +38,44 @@ export default function AddEpigramForm() {
     mode: 'onBlur',
   });
 
+  useEffect(() => {
+    if (data) {
+      setValue('content', data.content || '');
+      setValue('authorName', data.author || '');
+      setValue('sourceTitle', data.referenceTitle || '');
+      setValue('sourceUrl', data.referenceUrl || '');
+      setValue('tag', data.tags?.map((tag) => tag.name) || []);
+    }
+  }, [data, setValue]);
+
   const handleTagChange = (newTag: string[]) => {
     setValue('tag', newTag, { shouldValidate: true });
   };
 
-  const onSubmit = (data: MakeEpigramForm) => {
-    console.log(data);
+  const onSubmit = async (data: MakeEpigramForm) => {
+    setIsSubmitting(true);
+    patchEpigram(
+      { epigramId: id, epigram: data },
+      {
+        onSuccess: () => {
+          openModal({
+            type: 'alert',
+            title: '에피그램 수정 성공',
+            callback: () => router.push(`/epigrams/${id}`),
+          });
+        },
+        onError: (error) => {
+          openModal({
+            type: 'alert',
+            title: '에피그램 수정 실패',
+            callback: () => console.error('에러 메시지:', error),
+          });
+        },
+        onSettled: () => {
+          setIsSubmitting(false);
+        },
+      },
+    );
   };
 
   return (
@@ -53,8 +96,13 @@ export default function AddEpigramForm() {
           <TagInput value={watch('tag')} onChange={handleTagChange} error={errors.tag?.message} />
         </div>
         <div className='pt-10 md:pt-6 lg:pt-6'>
-          <Button type='submit' variant='default' className='w-full' disabled={!watch('content') || watch('content').length > 500 || (watch('authorType') === 'direct' && !watch('authorName'))}>
-            수정 완료
+          <Button
+            type='submit'
+            variant='default'
+            className='w-full'
+            disabled={!watch('content') || watch('content').length > 500 || (watch('authorType') === 'direct' && !watch('authorName')) || isSubmitting}
+          >
+            {isSubmitting ? '수정 중...' : '수정 완료'}
           </Button>
         </div>
       </EpigramFormLayout>
