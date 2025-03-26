@@ -1,0 +1,184 @@
+import { Meta, Typeset } from '@storybook/blocks';
+import {Pretendard, Iropke} from '/src/fonts';
+
+<Meta title="Design System/Typeset" />
+
+export const typography = {
+  type: {
+    primary: Pretendard.className,
+    secondary : Iropke.className
+  },
+  weight: {
+    regular: '400',
+    medium: '500',
+    semibold: '600',
+    bold: '700',
+  },
+  size: {
+    'text-4xl' : '40px',
+    'text-3xl' : '32px',
+    'text-2xl' : '24px',
+    'text-xl' : '20px',
+    'text-2lg' : '18px',
+    'text-lg' : '16px',
+    'text-md' : '14px',
+    'text-sm' : '13px',
+    'text-xs' : '12px'
+  },
+  lineHeight: {
+    'text-4xl' : '52px',
+    'text-3xl' : '42px',
+    'text-2xl' : '32px',
+    'text-xl' : '32px',
+    'text-2lg' : '26px',
+    'text-lg' : '26px',
+    'text-md' : '24px',
+    'text-sm' : '22px',
+    'text-xs' : '20px'
+  },
+};
+ 
+ 
+# Typography
+
+## Pretendard Font Sizes
+
+**Font Name:** Pretendard
+
+<Typeset
+  fontSizes={[
+    typography.size["text-xs"],
+    typography.size["text-sm"],
+    typography.size["text-md"],
+    typography.size["text-lg"],
+    typography.size["text-2lg"],
+    typography.size["text-xl"],
+    typography.size["text-2xl"],
+    typography.size["text-3xl"],
+    typography.size["text-4xl"],
+  ]}
+  fontWeight={typography.weight.regular}
+  sampleText='모든 인류 구성원의 천부의 존엄성과 동등하고 양도'
+  fontFamily={typography.type.primary}
+/>
+
+<Typeset
+  fontSizes={[
+    typography.size["text-xs"],
+    typography.size["text-sm"],
+    typography.size["text-md"],
+    typography.size["text-lg"],
+    typography.size["text-2lg"],
+    typography.size["text-xl"],
+    typography.size["text-2xl"],
+    typography.size["text-3xl"],
+    typography.size["text-4xl"],
+  ]}
+  fontWeight={typography.weight.regular}
+  sampleText='abcdefghijklnmopqrstuvwxyz'
+  fontFamily={typography.type.primary}
+/>
+
+## Iropke Font Sizes
+ 
+**Font Family:** Iropke
+
+
+<Typeset
+  fontSizes={[
+    typography.size["text-xs"],
+    typography.size["text-sm"],
+    typography.size["text-md"],
+    typography.size["text-lg"],
+    typography.size["text-2lg"],
+    typography.size["text-xl"],
+    typography.size["text-2xl"],
+    typography.size["text-3xl"],
+    typography.size["text-4xl"],
+  ]}
+  fontWeight={typography.weight.regular}
+  sampleText='모든 인류 구성원의 천부의 존엄성과 동등하고 양도'
+  fontFamily={typography.type.secondary}
+/>
+
+<Typeset
+  fontSizes={[
+    typography.size["text-xs"],
+    typography.size["text-sm"],
+    typography.size["text-md"],
+    typography.size["text-lg"],
+    typography.size["text-2lg"],
+    typography.size["text-xl"],
+    typography.size["text-2xl"],
+    typography.size["text-3xl"],
+    typography.size["text-4xl"],
+  ]}
+  fontWeight={typography.weight.regular}
+  sampleText='abcdefghijklnmopqrstuvwxyz'
+  fontFamily={typography.type.secondary}
+/>
+
+
+## Pretendard Font Weights
+
+**Font Weights:** 400, 500, 600, 700
+
+<Typeset
+  fontSizes={[typography.size["text-2lg"]]}
+  fontWeight={typography.weight.regular}
+  sampleText="일반 Regular 400"
+  fontFamily={typography.type.primary}
+/>
+
+<Typeset
+  fontSizes={[typography.size["text-2lg"]]}
+  fontWeight={typography.weight.medium}
+  sampleText="중간 Medium 500"
+  fontFamily={typography.type.primary}
+/>
+
+<Typeset
+  fontSizes={[typography.size["text-2lg"]]}
+  fontWeight={typography.weight.semibold}
+  sampleText="약간 굵게 600"
+  fontFamily={typography.type.primary}
+/>
+
+<Typeset
+  fontSizes={[typography.size["text-2lg"]]}
+  fontWeight={typography.weight.bold}
+  sampleText="굵게 700"
+  fontFamily={typography.type.primary}
+/>
+
+## Pretendard Font Weights
+
+**Font Weights:** 400, 500, 600, 700
+
+<Typeset
+  fontSizes={[typography.size["text-2lg"]]}
+  fontWeight={typography.weight.regular}
+  sampleText="일반 Regular 400"
+  fontFamily={typography.type.secondary}
+/>
+
+<Typeset
+  fontSizes={[typography.size["text-2lg"]]}
+  fontWeight={typography.weight.medium}
+  sampleText="중간 Medium 500"
+  fontFamily={typography.type.secondary}
+/>
+
+<Typeset
+  fontSizes={[typography.size["text-2lg"]]}
+  fontWeight={typography.weight.semibold}
+  sampleText="약간 굵게 600"
+  fontFamily={typography.type.secondary}
+/>
+
+<Typeset
+  fontSizes={[typography.size["text-2lg"]]}
+  fontWeight={typography.weight.bold}
+  sampleText="굵게 700"
+  fontFamily={typography.type.secondary}
+/>
