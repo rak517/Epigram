@@ -20,6 +20,7 @@ test.describe('로그인 페이지', () => {
 
   test('가입되지 않은 이메일로 로그인을 시도하면, alert 모달이 렌더링된다.', async ({ page }) => {
     await page.goto('/login');
+    await page.waitForTimeout(1000);
     await page.getByTestId('email-input-login').fill('testFFFFFF@email.com');
     await page.getByTestId('password-input-login').fill('password1!');
     await page.getByRole('button', { name: '로그인' }).click();
@@ -31,6 +32,7 @@ test.describe('로그인 페이지', () => {
 
   test('일치하지 않는 비밀번호로 로그인을 시도하면, alert 모달이 렌더링된다.', async ({ page }) => {
     await page.goto('/login');
+    await page.waitForTimeout(1000);
     await page.getByTestId('email-input-login').fill('test5@email.com');
     await page.getByTestId('password-input-login').fill('password');
     await page.getByRole('button', { name: '로그인' }).click();
@@ -121,6 +123,7 @@ test.describe('로그인 페이지', () => {
 
   test('로그인에 성공하면 로그인 성공 메시지를 표시하며, 확인 버튼을 누르면 랜딩페이지로 이동한다.', async ({ page }) => {
     await page.goto('/login');
+    await page.waitForTimeout(1000);
     await page.getByTestId('email-input-login').fill('test5@email.com');
     await page.getByTestId('password-input-login').fill('password1!');
     await page.getByRole('button', { name: '로그인' }).click();
