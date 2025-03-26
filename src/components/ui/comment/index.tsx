@@ -41,7 +41,7 @@ export default function Comment({ isOwnComment, nickname, commentTime, content, 
         </div>
 
         {/* 댓글 내용 */}
-        <div className='text-black-700 text-md sm:text-md md:text-lg lg:text-xl'>{content}</div>
+        <div className='text-black-700 text-md sm:text-md break-all md:text-lg lg:text-xl'>{content}</div>
       </div>
     </div>
   );
