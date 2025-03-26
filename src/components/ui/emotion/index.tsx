@@ -13,6 +13,7 @@ const emotionVariants = cva('flex items-center justify-center', {
       sm: 'size-8',
       md: 'size-8',
       lg: 'size-9',
+      '2lg': 'size-10',
       xl: 'size-12',
     },
   },
