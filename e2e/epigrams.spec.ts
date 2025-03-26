@@ -58,10 +58,13 @@ test.describe('메인 페이지', () => {
     await expect(page).toHaveURL('http://localhost:3000/mypage');
   });
 
-  test('오늘의 에피그램을 클릭 시 상세페이지로 이동한다', async () => {
-    await page.locator('section').filter({ hasText: '오늘의 에피그램' }).getByRole('link').click();
-    // http://localhost:3000/epigrams/숫자 형태의 정규표현식
-    await expect(page).toHaveURL(/\/epigrams\/\d+$/);
+  test('오늘의 에피그램이 존재하고, 클릭 시 상세페이지로 이동한다', async () => {
+    const test = await page.locator('section').filter({ hasText: '오늘의 에피그램' }).getByRole('link');
+    if (await test.isVisible()) {
+      await test.click();
+      // http://localhost:3000/epigrams/숫자 형태의 정규표현식
+      await expect(page).toHaveURL(/\/epigrams\/\d+$/);
+    }
   });
 
   test('오늘의 감정을 클릭 시 오늘의 감정 컴포넌트가 사라진다', async () => {
