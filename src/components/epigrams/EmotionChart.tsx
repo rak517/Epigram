@@ -7,15 +7,19 @@ import Emotion from '../ui/emotion';
 import { EMOTION_STATUS, EMOTION_STATUS_KR } from '@/constants/emotions';
 import { useEffect, useState } from 'react';
 import { Emotion as EmotionType } from '@/apis/emotion-log/types';
+import { debounce } from 'es-toolkit';
 
 export default function EmotionChart() {
   const { data: userData } = useGetUser();
+  const currentDate = new Date();
+  const currentYear = currentDate.getFullYear();
+  const currentMonth = currentDate.getMonth() + 1;
 
   const { data: chartData } = useGetMonthlyEmotionLogs(
     {
       userId: userData?.id ?? 0,
-      year: 2025,
-      month: 3,
+      year: currentYear,
+      month: currentMonth,
     },
     {
       enabled: !!userData?.id,
@@ -26,12 +30,14 @@ export default function EmotionChart() {
   const [chartEmotionSize, setChartEmotionSize] = useState<'2lg' | 'xs'>('xs');
 
   useEffect(() => {
-    const updateSize = () => {
-      setSize(window.innerWidth >= 768 ? 'xs' : '2xs');
-      setChartEmotionSize(window.innerWidth >= 768 ? '2lg' : 'xs');
-    };
-    updateSize();
+    const updateSize = debounce(() => {
+      setSize(window.innerWidth >= 1024 ? 'xs' : '2xs');
+      setChartEmotionSize(window.innerWidth >= 1024 ? '2lg' : 'xs');
+    }, 100);
+
     window.addEventListener('resize', updateSize);
+
+    return () => window.removeEventListener('resize', updateSize);
   }, []);
 
   const emotionColors: { [key: string]: { fill: string; tailwindColor: string } } = {
@@ -51,12 +57,13 @@ export default function EmotionChart() {
 
   const totalDataCount = chartData?.length || 0;
 
-  const chartDataWithPercent = Object.keys(emotionCount)
-    .map((emotion) => ({
+  const chartDataWithPercent = EMOTION_STATUS.map((emotion) => {
+    const percent = totalDataCount > 0 ? Math.round((emotionCount[emotion] / totalDataCount) * 100 * 10) / 10 : 0;
+    return {
       emotion,
-      percent: totalDataCount > 0 ? Math.round((emotionCount[emotion] / totalDataCount) * 100 * 10) / 10 : 0,
-    }))
-    .sort((a, b) => b.percent - a.percent);
+      percent: isNaN(percent) ? 0 : percent,
+    };
+  }).sort((a, b) => b.percent - a.percent);
 
   const highestEmotion = chartDataWithPercent?.[0] ?? null;
 
@@ -65,9 +72,9 @@ export default function EmotionChart() {
   let offset = 0;
 
   return (
-    <div className='flex w-[312px] justify-center rounded-lg border border-blue-200 bg-blue-100 px-[38px] py-[22px] md:w-[384px] md:px-[61px] xl:w-[640px] xl:px-[112px]'>
-      <div className='flex w-[235px] items-center justify-between md:w-[263px] xl:w-[416px]'>
-        <svg width='120' height='120' viewBox='0 0 180 180' className='md:h-[180px] md:w-[180px]'>
+    <div className='flex w-[312px] justify-center rounded-lg border border-blue-200 bg-blue-100 px-[38px] py-[22px] md:w-[384px] md:px-[61px] lg:w-[640px] lg:px-[112px]'>
+      <div className='flex w-[235px] items-center justify-between md:w-[263px] lg:w-[416px]'>
+        <svg width='120' height='120' viewBox='0 0 180 180' className='lg:h-[180px] lg:w-[180px]'>
           {chartDataWithPercent?.map((emotion, index) => {
             const strokeDash = (emotion.percent / 100) * circumference;
             const style = {
@@ -78,7 +85,20 @@ export default function EmotionChart() {
 
             const color = emotionColors[emotion.emotion];
 
-            return <circle key={index} strokeLinecap='round' cx='90' cy='90' r={radius} fill='transparent' strokeWidth='8' stroke={color.fill} style={style} transform='rotate(-90 90 90)' />;
+            return (
+              <circle
+                key={index}
+                strokeLinecap='round'
+                cx='90'
+                cy='90'
+                r={radius}
+                fill='transparent'
+                strokeWidth='8'
+                stroke={emotion.percent ? color.fill : undefined}
+                style={emotion.percent ? style : undefined}
+                transform='rotate(-90 90 90)'
+              />
+            );
           })}
           <g>
             <ellipse cx='90' cy='90' rx='47' ry='47' stroke='#ECEFF4' strokeWidth='1.00104' strokeDasharray='1 5.01' fill='transparent' />
