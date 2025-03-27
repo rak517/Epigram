@@ -143,7 +143,7 @@ export default function EpigramContent() {
         onTagClick={handleTagClick}
         onEdit={handleEdit}
         onDelete={handleDeleteClick}
-        className='z-10 h-[164px] w-[312px] text-2xl md:h-[182px] md:w-[384px] lg:h-[236px] lg:w-[640px] lg:text-3xl'
+        className='h-[164px] w-[312px] text-2xl md:h-[182px] md:w-[384px] lg:h-[236px] lg:w-[640px] lg:text-3xl'
       />
       <div className='px-auto flex gap-4 pt-9'>
         <RoundedButton variant='secondary' onClick={handleToggleLike}>
