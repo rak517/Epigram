@@ -1,17 +1,16 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
-import Image from 'next/image';
+import { useContext, useEffect, useRef, useState } from 'react';
 import dayjs from 'dayjs';
+import Image from 'next/image';
 import ArrowLeft from '@/assets/icons/arrow_left.svg';
 import ArrowRight from '@/assets/icons/arrow_right.svg';
 import { CALENDAR_ROW } from '@/constants/calendar';
 import { cn } from '@/utils/cn';
-import { useGetUser } from '@/apis/user/queries';
-import { useGetMonthlyEmotionLogs } from '@/apis/emotion-log/queries';
 import Emotion from '@/components/ui/emotion';
 import RoundedButton from '@/components/ui/buttons/roundedButton';
 import { EMOTION_STATUS, EMOTION_STATUS_KR } from '@/constants/emotions';
+import { MypageContext } from '@/context/MypageProvider';
 
 const TEXT_FLEX_CENTER_ALIGN = 'flex flex-col items-center justify-center lg:gap-2';
 const ITEM_SIZE = 'size-11 md:size-14 lg:size-20';
@@ -20,25 +19,10 @@ const ITEM_TEXT_STYLE = 'font-semibold text-gray-200 text-lg lg:text-2xl';
 type EmotionKr = (typeof EMOTION_STATUS_KR)[number];
 
 export default function EmotionCalendar() {
-  const [currentDate, setCurrentDate] = useState<dayjs.Dayjs | null>(null);
+  const { currentDate, setCurrentDate, userEmotion } = useContext(MypageContext);
   const [selectedItem, setSelectedItem] = useState<EmotionKr | ''>('');
 
-  const { data: user } = useGetUser();
-  const emotionLogParams = {
-    userId: user?.id,
-    year: currentDate?.year(),
-    month: Number(currentDate?.month()) + 1,
-  };
-
-  const { data: logs } = useGetMonthlyEmotionLogs(emotionLogParams, {
-    enabled: !!user && !!currentDate,
-  });
-
-  useEffect(() => {
-    setCurrentDate(dayjs());
-  }, []);
-
-  if (currentDate === null) return null;
+  if (!currentDate) return null;
 
   const year = currentDate.year();
   const month = currentDate.month();
@@ -54,15 +38,13 @@ export default function EmotionCalendar() {
   const makeDays = (days: number[], className?: string, isDayInMonth = false) =>
     days.map((day, index) => {
       const isToday = currentDate.year() === dayjs().year() && currentDate.month() === dayjs().month() && day === dayjs().date();
-      const matchingLog = logs?.find((log) => dayjs(log.createdAt).date() === day);
+      const matchingLog = userEmotion?.find((log) => dayjs(log.createdAt).date() === day);
 
       return (
         <div
           key={`days-${index}`}
           className={cn(TEXT_FLEX_CENTER_ALIGN, ITEM_SIZE, ITEM_TEXT_STYLE, className, isDayInMonth && isToday && 'border-illust-red t text-illust-red rounded-md border-[3px]')}
         >
-          {/* 복잡한 조건식이라 주석 남겼습니다. */}
-          {/* 해당 날짜가 이번 달에 속하고, 해당 날짜에 감정이 있고, 필터를 선택하지 않았거나 선택한 필터가 감정과 같다면 */}
           {isDayInMonth && matchingLog && (selectedItem === '' || selectedItem === EMOTION_STATUS_KR[EMOTION_STATUS.indexOf(matchingLog.emotion)]) ? (
             <>
               <span className='text-[8px] md:text-[10px] lg:text-lg'>{day}</span>
