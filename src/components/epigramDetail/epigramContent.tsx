@@ -50,7 +50,7 @@ export default function EpigramContent() {
   };
 
   const handleEdit = () => {
-    router.push(`/epigrams/edit/${data?.id}`);
+    router.push(`/epigrams/${data?.writerId}/edit`);
   };
 
   const handleDeleteClick = () => {

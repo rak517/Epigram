@@ -51,7 +51,7 @@ export default function AddEpigramForm() {
     try {
       const response = await postEpigram(epigramForm);
       if (response?.id) {
-        router.push(`/epigrams/${response.id}`);
+        router.push(`/epigrams/${response.writerId}`);
       }
     } catch (error) {
       openModal({

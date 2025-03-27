@@ -136,7 +136,11 @@ export default function TextCard({
             }}
           >
             {displayTags.map((tag) => (
-              <span key={tag.id} className={`py-1 text-blue-400 ${tagClassName}`} onClick={tag.name !== '...' && onTagClick ? () => onTagClick(tag.name) : undefined}>
+              <span
+                key={tag.id}
+                className={`py-1 text-blue-400 ${tag.name !== '...' && onTagClick ? 'cursor-pointer' : ''} ${tagClassName}`}
+                onClick={tag.name !== '...' && onTagClick ? () => onTagClick(tag.name) : undefined}
+              >
                 {tag.name === '...' ? tag.name : `#${tag.name}`}
               </span>
             ))}
@@ -180,7 +184,11 @@ export default function TextCard({
           }}
         >
           {displayTags.map((tag) => (
-            <span key={tag.id} className={`py-1 text-blue-400 ${tagClassName}`} onClick={tag.name !== '...' && onTagClick ? () => onTagClick(tag.name) : undefined}>
+            <span
+              key={tag.id}
+              className={`py-1 text-blue-400 ${tag.name !== '...' && onTagClick ? 'cursor-pointer' : ''} ${tagClassName}`}
+              onClick={tag.name !== '...' && onTagClick ? () => onTagClick(tag.name) : undefined}
+            >
               {tag.name === '...' ? tag.name : `#${tag.name}`}
             </span>
           ))}
