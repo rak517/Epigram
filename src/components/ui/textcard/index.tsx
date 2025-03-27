@@ -4,7 +4,7 @@ import { Iropke } from '@/fonts';
 import DropdownMenu from '../DropdownMenu';
 import { Tag } from '@/apis/epigram/types';
 
-const textCardVariants = cva(`border border-line-100 border-solid rounded-xl font-normal ${Iropke.className}`, {
+const textCardVariants = cva(`rounded-xl font-normal ${Iropke.className}`, {
   variants: {
     variant: {
       fixedHeight: '',
@@ -40,11 +40,17 @@ const textCardVariants = cva(`border border-line-100 border-solid rounded-xl fon
       true: 'bg-[linear-gradient(white_90%,#f2f2f2)] bg-[length:100%_20px] bg-repeat shadow-[0px_3px_12px_0px_rgba(0,0,0,0.04)]',
       false: '',
     },
+
+    hasBorder: {
+      true: 'border border-line-100 border-solid',
+      false: '',
+    },
   },
   defaultVariants: {
     variant: 'fixedHeight',
     tagPosition: 'bottomRight',
     hasBackground: true,
+    hasBorder: true,
   },
 });
 
@@ -54,15 +60,47 @@ interface TextCardProps extends HTMLAttributes<HTMLDivElement>, VariantProps<typ
   author?: string;
   tags?: Tag[];
   maxTags?: number; // 최대 표시할 태그 수
+  tagClassName?: string;
+  authorClassName?: string;
+  onTagClick?: (tagName: string) => void;
+  onEdit?: () => void;
+  onDelete?: () => void;
 }
 
-export default function TextCard({ isDropdown, cardContent, author, tags = [], maxTags = 2, variant, width, fixedSize, tagPosition, hasBackground, className, ...props }: TextCardProps) {
+export default function TextCard({
+  isDropdown,
+  cardContent,
+  author,
+  tags = [],
+  maxTags = 2,
+  variant,
+  width,
+  fixedSize,
+  tagPosition,
+  hasBackground,
+  hasBorder,
+  tagClassName,
+  authorClassName,
+  onTagClick,
+  onEdit,
+  onDelete,
+  className,
+  ...props
+}: TextCardProps) {
   let fixedSizeClass = '';
   if (fixedSize === 'w294h180') fixedSizeClass = 'w-[294px] h-[180px]';
   else if (fixedSize === 'w312h140') fixedSizeClass = 'w-[312px] h-[140px]';
   else if (fixedSize === 'w585h259') fixedSizeClass = 'w-[585px] h-[259px]';
 
   const displayTags = tags.length > maxTags ? [...tags.slice(0, maxTags), { id: -1, name: '...' }] : tags;
+
+  const handleDropdownSelect = (option: string) => {
+    if (option === '수정하기' && onEdit) {
+      onEdit();
+    } else if (option === '삭제하기' && onDelete) {
+      onDelete();
+    }
+  };
 
   if (fixedSize) {
     return (
@@ -72,6 +110,7 @@ export default function TextCard({ isDropdown, cardContent, author, tags = [], m
           width,
           tagPosition,
           hasBackground,
+          hasBorder,
           className,
         })} relative`}
         {...props}
@@ -80,11 +119,11 @@ export default function TextCard({ isDropdown, cardContent, author, tags = [], m
           <div className='p-[22px]'>
             <div className='line-clamp-4'>{cardContent}</div>
 
-            {author && <div className='absolute right-5 bottom-5 text-blue-400'>- {author} -</div>}
+            {author && <div className={`absolute right-5 bottom-5 text-blue-400 ${authorClassName}`}>- {author} -</div>}
           </div>
           {isDropdown && (
-            <div className='absolute right-0' style={{ top: `calc(-1.5em - 12px)` }}>
-              <DropdownMenu />
+            <div className='absolute right-0 h-5 md:w-5 lg:h-9 lg:w-9' style={{ top: `calc(-1.5em - 8px)` }}>
+              <DropdownMenu onSelect={handleDropdownSelect} className='h-[80px] w-[97px] lg:h-[112px] lg:w-[134px]' />
             </div>
           )}
         </div>
@@ -97,7 +136,7 @@ export default function TextCard({ isDropdown, cardContent, author, tags = [], m
             }}
           >
             {displayTags.map((tag) => (
-              <span key={tag.id} className='py-1 text-blue-400'>
+              <span key={tag.id} className={`py-1 text-blue-400 ${tagClassName}`} onClick={tag.name !== '...' && onTagClick ? () => onTagClick(tag.name) : undefined}>
                 {tag.name === '...' ? tag.name : `#${tag.name}`}
               </span>
             ))}
@@ -115,6 +154,7 @@ export default function TextCard({ isDropdown, cardContent, author, tags = [], m
         fixedSize,
         tagPosition,
         hasBackground,
+        hasBorder,
         className,
       })} relative`}
       {...props}
@@ -123,11 +163,11 @@ export default function TextCard({ isDropdown, cardContent, author, tags = [], m
         <div className='p-[22px]'>
           <div className='mb-4 line-clamp-4'>{cardContent}</div>
 
-          {author && <div className='text-right text-blue-400'>- {author} -</div>}
+          {author && <div className={`text-right text-blue-400 ${authorClassName}`}>- {author} -</div>}
         </div>
         {isDropdown && (
-          <div className='absolute right-0' style={{ top: `calc(-1.5em - 12px)` }}>
-            <DropdownMenu />
+          <div className='absolute right-0 h-5 w-5 lg:h-9 lg:w-9' style={{ top: `calc(-1.5em - 8px)` }}>
+            <DropdownMenu onSelect={handleDropdownSelect} className='h-[80px] w-[97px] lg:h-[112px] lg:w-[134px]' />
           </div>
         )}
       </div>
@@ -140,7 +180,7 @@ export default function TextCard({ isDropdown, cardContent, author, tags = [], m
           }}
         >
           {displayTags.map((tag) => (
-            <span key={tag.id} className='py-1 text-blue-400'>
+            <span key={tag.id} className={`py-1 text-blue-400 ${tagClassName}`} onClick={tag.name !== '...' && onTagClick ? () => onTagClick(tag.name) : undefined}>
               {tag.name === '...' ? tag.name : `#${tag.name}`}
             </span>
           ))}

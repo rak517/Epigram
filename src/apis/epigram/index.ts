@@ -16,7 +16,7 @@ export const postEpigram = async (epigramForm: EpigramForm) => {
 };
 
 /**
- * 에피그램 리스트 조회
+ * 에피그램 목록 조회
  * https://fe-project-epigram-api.vercel.app/docs/#/Epigram/ListEpigrams
  */
 export const getEpigrams = async (epigramsParams: GetEpigramsParams) => {
@@ -26,6 +26,15 @@ export const getEpigrams = async (epigramsParams: GetEpigramsParams) => {
     },
   });
   return safeResponse(response.data, epigramsResponseSchema);
+};
+
+/**
+ * 오늘의 에피그램 조회
+ * https://fe-project-epigram-api.vercel.app/docs/#/Epigram/RetrieveTodayEpigram
+ */
+export const getTodayEpigram = async () => {
+  const response = await axiosClientHelper.get<Epigram>('/epigrams/today');
+  return safeResponse(response.data, epigramSchema);
 };
 
 /**

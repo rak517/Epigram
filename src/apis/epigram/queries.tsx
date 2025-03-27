@@ -1,6 +1,6 @@
 import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Epigram, EpigramForm, GetCommentsParams, GetEpigramsParams, PatchEpigram } from './types';
-import { deleteEpigram, deleteEpigramFavorite, getComments, getEpigram, getEpigrams, patchEpigram, postEpigram, postEpigramFavorite } from '.';
+import { deleteEpigram, deleteEpigramFavorite, getComments, getEpigram, getEpigrams, getTodayEpigram, patchEpigram, postEpigram, postEpigramFavorite } from '.';
 
 export const usePostEpigram = () => {
   const queryClient = useQueryClient();
@@ -21,6 +21,13 @@ export const useGetEpigrams = (epigramsParams: GetEpigramsParams) => {
     queryFn: ({ pageParam }) => getEpigrams({ ...epigramsParams, cursor: pageParam }),
     getNextPageParam: (lastPage) => lastPage.nextCursor,
     initialPageParam: 0,
+  });
+};
+
+export const useGetTodayEpigram = () => {
+  return useQuery({
+    queryKey: ['todayEpigram'],
+    queryFn: getTodayEpigram,
   });
 };
 
