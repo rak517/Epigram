@@ -7,8 +7,7 @@ test.describe('에픽그램 만들기', () => {
       {
         name: 'accessToken',
         value:
-          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTM0NiwidGVhbUlkIjoiMTItMzMiLCJzY29wZSI6ImFjY2VzcyIsImlhdCI6MTc0MzA3NDU5MSwiZXhwIjoxNzQzMDc2MzkxLCJpc3MiOiJzcC1lcGlncmFtIn0.iFjPTB5n7JKQMrXAhdyr2ynBAxsIgb_Bn5iIsYWljDE',
-        domain: 'localhost',
+          '직접넣어테스트했습니다',
         path: '/',
         httpOnly: true,
         secure: false,
