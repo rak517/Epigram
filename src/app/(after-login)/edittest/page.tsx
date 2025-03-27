@@ -1,5 +1,11 @@
-import EditEpigramForm from '@/components/addEditForm/EditEpigramForm';
+import EpigramContent from '@/components/epigramDetail/epigramContent';
+import MainHeader from '@/components/ui/header/MainHeader';
 
-export default function EpigramEdit() {
-  return <EditEpigramForm />;
+export default function EpigramDetail() {
+  return (
+    <>
+      <MainHeader />
+      <EpigramContent />
+    </>
+  );
 }
