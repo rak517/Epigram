@@ -1,36 +1,28 @@
 'use client';
 
-
 import Input from '@/components/ui/Field/Input';
 import { RadioGroup } from '../ui/radio/RadioGroup';
 import { RadioItem } from '../ui/radio/RadioItem';
-import { useEffect, useState } from 'react';
 import { AuthorProps } from '@/components/addEditForm/types';
 
-export default function Author({ register, watch, setValue }: AuthorProps) {
-  const [selected, setSelected] = useState('myself');
-  const authorValue = watch('author');
+export default function Author({ register, watch, setValue, errors, trigger }: AuthorProps) {
+  const authorType = watch('authorType');
 
-  const handleRadioChange = (value: string) => {
-    setSelected(value);
-    if (value === 'myself') {
-      setValue('author', '본인');
-    } else if (value === 'unknown') {
-      setValue('author', '알 수 없음');
-    } else {
-      setValue('author', '');
-    }
+  const getRadioValue = (authorType: string) => {
+    if (authorType === 'myself') return 'myself';
+    else if (authorType === 'unknown') return 'unknown';
+    return 'custom';
   };
 
-  useEffect(() => {
-    if (authorValue === '본인') {
-      setSelected('myself');
-    } else if (authorValue === '알 수 없음') {
-      setSelected('unknown');
+  const handleRadioChange = (value: string) => {
+    if (value === 'myself') {
+      setValue('authorType', 'myself');
+    } else if (value === 'unknown') {
+      setValue('authorType', 'unknown');
     } else {
-      setSelected('custom');
+      setValue('authorType', 'direct');
     }
-  }, [authorValue]);
+  };
 
   return (
     <div className='flex h-29 w-full flex-col gap-2 md:h-29.5 xl:h-42.75 xl:gap-6'>
@@ -40,12 +32,20 @@ export default function Author({ register, watch, setValue }: AuthorProps) {
       </div>
 
       <div className='flex h-20.5 w-full flex-col gap-3 xl:h-28 xl:gap-4'>
-        <RadioGroup className='flex h-6.5 w-full xl:h-8' defaultValue={selected} onValueChange={handleRadioChange}>
+        <RadioGroup className='flex h-6.5 w-full xl:h-8' value={getRadioValue(authorType)} onValueChange={handleRadioChange} defaultValue='custom'>
           <RadioItem radioSize='sm' value='custom' id='custom' label='직접 입력' />
           <RadioItem radioSize='sm' value='unknown' id='unknown' label='알 수 없음' />
           <RadioItem radioSize='sm' value='myself' id='myself' label='본인' />
         </RadioGroup>
-        <Input className='w-full h-11 xl:h-16' maxLength={20} value={authorValue} {...register('author', { required: true })} onChange={(e) => setValue('author', e.target.value)} />
+        <Input
+          className='h-11 w-full xl:h-16'
+          maxLength={20}
+          disabled={authorType !== 'direct'}
+          {...register('authorName', { required: authorType === 'direct' ? '저자 이름을 입력해주세요' : false, onBlur: () => authorType === 'direct' && trigger('authorName') })}
+          placeholder={authorType === 'direct' ? '저자 이름 입력' : authorType === 'unknown' ? '알 수 없음' : '본인'}
+          error={errors.authorName?.message}
+          variant='outlined'
+        />
       </div>
     </div>
   );

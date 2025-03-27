@@ -25,6 +25,18 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Create to .env file
+        run: |
+            echo "NEXT_PUBLIC_DEFAULT_IMAGE_URL=${{ secrets.NEXT_PUBLIC_DEFAULT_IMAGE_URL }}" >> .env
+            echo "NEXT_PUBLIC_API_URL=${{ secrets.NEXT_PUBLIC_API_URL }}" >> .env
+            echo "NEXT_PUBLIC_KAKAO_API_KEY=${{ secrets.NEXT_PUBLIC_KAKAO_API_KEY }}" >> .env
+            echo "NEXT_PUBLIC_KAKAO_REDIRECT_URI=${{ secrets.NEXT_PUBLIC_KAKAO_REDIRECT_URI }}" >> .env
+            echo "NEXT_PUBLIC_GOOGLE_API_KEY=${{ secrets.NEXT_PUBLIC_GOOGLE_API_KEY }}" >> .env
+            echo "NEXT_PUBLIC_GOOGLE_REDIRECT_URI=${{ secrets.NEXT_PUBLIC_GOOGLE_REDIRECT_URI }}" >> .env
+            echo "GOOGLE_SECRET_KEY=${{ secrets.GOOGLE_SECRET_KEY }}" >> .env
+            echo "NEXT_PUBLIC_PRODUCTION_DOMAIN=${{ secrets.NEXT_PUBLIC_PRODUCTION_DOMAIN }}" >> .env
+            echo "NEXT_PUBLIC_LOCAL_DOMAIN=${{ secrets.NEXT_PUBLIC_LOCAL_DOMAIN }}" >> .env
+
       # 4. 린트 실행
       - name: Run Lint
         run: npm run lint

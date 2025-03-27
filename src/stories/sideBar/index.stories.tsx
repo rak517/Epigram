@@ -1,15 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import SideBar from '@/components/ui/sideBar';
-import { action } from '@storybook/addon-actions';
 
 const meta: Meta<typeof SideBar> = {
   title: 'Components/SideBar',
   component: SideBar,
   parameters: {
     viewport: { defaultViewport: 'mobile1' },
-  },
-  argTypes: {
-    onSelect: { action: 'onSelect' },
   },
 };
 
@@ -25,18 +21,13 @@ const sampleItems = [
 export const Default: Story = {
   args: {
     items: sampleItems,
-    onSelect: (tab) => {
-      console.log(`Selected Tab: ${tab}`);
-      action('onSelect')(tab);
-    },
-    isOpen: false,
+    isOpen: true,
   },
 };
 
 export const Open: Story = {
   args: {
     items: sampleItems,
-    onSelect: action('onSelect'),
     isOpen: true,
   },
 };
@@ -44,7 +35,6 @@ export const Open: Story = {
 export const Closed: Story = {
   args: {
     items: sampleItems,
-    onSelect: action('onSelect'),
     isOpen: false,
   },
 };

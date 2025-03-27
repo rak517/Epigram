@@ -21,12 +21,6 @@ export default function SearchPage() {
       <SearchForm onSearch={handleSearch} />
 
       <div className="max-w-[680px] mx-auto w-full px-5 mt-4">
-        <p className="p-4">
-          검색어 저장 컴포넌트 적용 예정
-        </p>
-        <p className="p-4">
-          하단 리스트 컴포넌트 적용 예정
-        </p>
         {results.length > 0 ? (
           <ul className="divide-y divide-gray-300">
             {results.map((item, index) => (

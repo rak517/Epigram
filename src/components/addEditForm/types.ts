@@ -1,8 +1,7 @@
 import { FormHTMLAttributes, ReactNode } from 'react';
-import { UseFormRegister, FieldErrors, UseFormTrigger,UseFormWatch, UseFormSetValue } from 'react-hook-form';
+import { UseFormRegister, FieldErrors, UseFormTrigger, UseFormWatch, UseFormSetValue } from 'react-hook-form';
 import { MakeEpigramFormSchema } from './schemas';
 import { z } from 'zod';
-
 
 export interface AddEditEpigramFormProps extends FormHTMLAttributes<HTMLFormElement> {
   children: ReactNode;
@@ -27,20 +26,23 @@ export type FormValues = {
 };
 
 export interface ContentProps {
-  register: UseFormRegister<FormValues>;
-  errors: FieldErrors<FormValues>;
-  trigger: UseFormTrigger<FormValues>;
+  register: UseFormRegister<MakeEpigramForm>;
+  errors: FieldErrors<MakeEpigramForm>;
+  trigger: UseFormTrigger<MakeEpigramForm>;
 }
 
-
 export interface AuthorProps {
-  register: UseFormRegister<FormValues>;
-  watch: UseFormWatch<FormValues>;
-  setValue: UseFormSetValue<FormValues>;}
+  register: UseFormRegister<MakeEpigramForm>;
+  watch: UseFormWatch<MakeEpigramForm>;
+  setValue: UseFormSetValue<MakeEpigramForm>;
+  errors: FieldErrors<MakeEpigramForm>;
+  trigger: UseFormTrigger<MakeEpigramForm>;
+}
 
 export interface TagInputProps {
   value: string[];
   onChange: (value: string[]) => void;
   label?: string;
   required?: boolean;
-  error?: string;}
+  error?: string;
+}

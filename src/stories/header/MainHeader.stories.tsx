@@ -1,3 +1,4 @@
+import QueryClientProvider from '@/apis/QueryProvider';
 import MainHeader from '@/components/ui/header/MainHeader';
 import { Meta, StoryObj } from '@storybook/react';
 
@@ -17,7 +18,9 @@ const meta: Meta<typeof MainHeader> = {
   decorators: [
     (Story) => (
       <div className='bg-white'>
-        <Story></Story>
+        <QueryClientProvider>
+          <Story />
+        </QueryClientProvider>
       </div>
     ),
   ],

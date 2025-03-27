@@ -3,7 +3,7 @@
 import Emotion, { EmotionProps } from '@/components/ui/emotion';
 import { cn } from '@/utils/cn';
 import { cva } from 'class-variance-authority';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Emotion as EmotionType } from '@/apis/emotion-log/types';
 
 const buttonStyles = cva('flex justify-center items-center rounded-2xl cursor-pointer', {
@@ -47,18 +47,18 @@ export default function EmotionButton({ buttonVariant, emotion, emotionVariant, 
   const [currentButtonVariant, setCurrentButtonVariant] = useState(buttonVariant);
 
   const buttonBorderColor = buttonBorderMap[emotion];
-
   const handleClick = () => {
-    setCurrentButtonVariant(!currentButtonVariant);
+    setCurrentButtonVariant(true);
     onClick?.();
   };
+
+  useEffect(() => {
+    setCurrentButtonVariant(buttonVariant);
+  }, [buttonVariant]);
+
   return (
-    <button
-      className={cn(buttonStyles({ isActive: currentButtonVariant, size }), buttonBorderColor, isInteractive && 'size-12 md:size-16 lg:size-20 xl:size-24')}
-      onClick={handleClick}
-      disabled={disabled}
-    >
-      <Emotion variant={emotionVariant} emotion={emotion} size={size} className={cn(isInteractive && 'size-8 sm:size-9 md:size-10 lg:size-11 xl:size-12')} />
+    <button className={cn(buttonStyles({ isActive: currentButtonVariant, size }), buttonBorderColor, isInteractive && 'size-14 md:size-16 lg:size-24')} onClick={handleClick} disabled={disabled}>
+      <Emotion variant={emotionVariant} emotion={emotion} size={size} className={cn(isInteractive && 'size-8 lg:size-12')} />
     </button>
   );
 }
