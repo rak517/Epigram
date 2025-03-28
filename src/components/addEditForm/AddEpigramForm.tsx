@@ -64,22 +64,22 @@ export default function AddEpigramForm() {
 
   return (
     <>
-      <EpigramFormLayout onSubmit={handleSubmit(onSubmit)}>
+      <EpigramFormLayout className='flex flex-col gap-6 md:gap-8 lg:gap-10' onSubmit={handleSubmit(onSubmit)}>
         <h1 className='text-lg font-bold md:text-xl lg:text-2xl'>에피그램 만들기</h1>
-        <div>
-          <Content register={register} errors={errors} trigger={trigger} />
-        </div>
-        <div className='pt-10 lg:pt-14'>
-          <Author register={register} watch={watch} setValue={setValue} errors={errors} trigger={trigger} />
-        </div>
-        <div className='flex flex-col gap-4 pt-10 lg:pt-14'>
-          <Input label='출처' {...register('sourceTitle')} error={errors.sourceTitle?.message} placeholder='출처 제목 입력' variant='outlined' />
-          <Input {...register('sourceUrl')} error={errors.sourceUrl?.message} placeholder='URL (ex. https://www.website.com)' variant='outlined' />
-        </div>
-        <div className='pt-10 lg:pt-14'>
-          <TagInput value={watch('tag')} onChange={handleTagChange} error={errors.tag?.message} />
-        </div>
-        <div className='pt-10 md:pt-6 lg:pt-6'>
+        <div className='flex flex-col gap-6 md:gap-8 lg:gap-10'>
+          <div className='flex flex-col gap-10 md:gap-9.75 lg:gap-10'>
+            <Content register={register} errors={errors} trigger={trigger} />
+
+            <Author register={register} watch={watch} setValue={setValue} errors={errors} trigger={trigger} />
+
+            <div className='flex flex-col gap-4'>
+              <Input label='출처' {...register('sourceTitle')} error={errors.sourceTitle?.message} placeholder='출처 제목 입력' variant='outlined' />
+              <Input {...register('sourceUrl')} error={errors.sourceUrl?.message} placeholder='URL (ex. https://www.website.com)' variant='outlined' />
+            </div>
+
+            <TagInput value={watch('tag')} onChange={handleTagChange} error={errors.tag?.message} />
+          </div>
+
           <Button type='submit' variant='default' className='w-full' disabled={!watch('content') || watch('content').length > 500 || (watch('authorType') === 'direct' && !watch('authorName'))}>
             작성 완료
           </Button>
