@@ -29,6 +29,7 @@ export const useGetEpigram = (epigramId?: Epigram['id']) => {
     queryKey: ['epigram', epigramId],
     queryFn: () => getEpigram(epigramId!),
     enabled: epigramId !== undefined,
+    retry: 1,
   });
 };
 
