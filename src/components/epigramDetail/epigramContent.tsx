@@ -13,7 +13,6 @@ import { useModalStore } from '@/stores/ModalStore';
 import { useQueryClient } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import ErrorState from './ErrorState';
 
 export default function EpigramContent() {
   const router = useRouter();
@@ -22,7 +21,7 @@ export default function EpigramContent() {
 
   const epigramId = params?.id ? Number(params.id) : undefined;
 
-  const { data, isError, isLoading } = useGetEpigram(epigramId);
+  const { data, isError, isLoading, error } = useGetEpigram(epigramId);
 
   const deleteEpigramMutation = useDeleteEpigram();
 
@@ -60,8 +59,8 @@ export default function EpigramContent() {
     );
   }
 
-  if (!data || isError) {
-    return <ErrorState />;
+  if (isError) {
+    throw error;
   }
 
   const handleCopyUrl = () => {
