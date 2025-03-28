@@ -6,7 +6,7 @@ import like from '@/assets/icons/like.svg';
 import external from '@/assets/icons/external-link.svg';
 import share from '@/assets/icons/share.svg';
 import Image from 'next/image';
-import { useDeleteEpigram, useDeleteEpigramFavorite, useGetTodayEpigram, usePostEpigramFavorite } from '@/apis/epigram/queries';
+import { useDeleteEpigram, useDeleteEpigramFavorite, useGetEpigram, usePostEpigramFavorite } from '@/apis/epigram/queries';
 import { useParams, useRouter } from 'next/navigation';
 import { useModalStore } from '@/stores/ModalStore';
 import { useQueryClient } from '@tanstack/react-query';
@@ -17,7 +17,9 @@ export default function EpigramContent() {
   const params = useParams();
   const { openModal } = useModalStore();
 
-  const { data } = useGetTodayEpigram();
+  const epigramId = params?.id ? Number(params.id) : undefined;
+
+  const { data, isError, isLoading } = useGetEpigram(epigramId);
 
   const deleteEpigramMutation = useDeleteEpigram();
 
@@ -30,6 +32,36 @@ export default function EpigramContent() {
   const showDropdown = params?.id === data?.writerId.toString();
 
   const queryClient = useQueryClient();
+
+  if (isLoading) {
+    return (
+      <div className='flex w-full flex-col items-center justify-center pt-18 pb-1'>
+        <div className='h-[164px] w-[312px] rounded-lg bg-gray-200 md:h-[182px] md:w-[384px] lg:h-[236px] lg:w-[640px]'></div>
+        <div className='px-auto flex w-full max-w-[640px] justify-center gap-4 pt-9'>
+          <div className='h-10 w-32 rounded-full bg-gray-200'></div>
+          <div className='h-10 w-36 rounded-full bg-gray-200'></div>
+          <div className='h-10 w-40 rounded-full bg-gray-200'></div>
+        </div>
+      </div>
+    );
+  }
+
+  if (!data || isError) {
+    return (
+      <div className='flex h-[60vh] w-full flex-col items-center justify-center px-4'>
+        <h2 className='mb-4 text-2xl font-semibold text-gray-800'>존재하지 않는 에피그램입니다</h2>
+        <p className='mb-6 text-center text-gray-600'>존재하신 에피그램을 찾을 수 없습니다. 삭제되었거나 잘못된 ID일 수 있습니다.</p>
+        <div className='flex gap-4'>
+          <RoundedButton variant='outline' onClick={() => router.back()}>
+            이전 페이지로
+          </RoundedButton>
+          <RoundedButton variant='outline' onClick={() => router.push('/')}>
+            홈으로 돌아가기
+          </RoundedButton>
+        </div>
+      </div>
+    );
+  }
 
   const handleCopyUrl = () => {
     const currentURL = window.location.href;
@@ -98,13 +130,13 @@ export default function EpigramContent() {
         console.log('좋아요 추가 시도');
         await addFavoriteMutation.mutateAsync(data.id);
 
-        await queryClient.invalidateQueries({ queryKey: ['todayEpigram'] });
+        await queryClient.invalidateQueries({ queryKey: ['epigram', epigramId] });
       } catch (addError: unknown) {
         if (axios.isAxiosError(addError) && addError.response?.status === 400 && addError.response?.data?.message === '이미 좋아요를 눌렀습니다.') {
           console.log('이미 좋아요가 있어 취소 시도');
           await deleteFavoriteMutation.mutateAsync(data.id);
 
-          await queryClient.invalidateQueries({ queryKey: ['todayEpigram'] });
+          await queryClient.invalidateQueries({ queryKey: ['epigram', epigramId] });
         } else {
           throw addError;
         }

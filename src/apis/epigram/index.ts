@@ -29,15 +29,6 @@ export const getEpigrams = async (epigramsParams: GetEpigramsParams) => {
 };
 
 /**
- * 오늘의 에피그램 조회
- * https://fe-project-epigram-api.vercel.app/docs/#/Epigram/RetrieveTodayEpigram
- */
-export const getTodayEpigram = async () => {
-  const response = await axiosClientHelper.get<Epigram>('/epigrams/today');
-  return safeResponse(response.data, epigramSchema);
-};
-
-/**
  * 에피그램 상세 조회
  * https://fe-project-epigram-api.vercel.app/docs/#/Epigram/RetrieveEpigram
  */
