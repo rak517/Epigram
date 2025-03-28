@@ -4,9 +4,12 @@ import Input from '@/components/ui/Field/Input';
 import { RadioGroup } from '../ui/radio/RadioGroup';
 import { RadioItem } from '../ui/radio/RadioItem';
 import { AuthorProps } from '@/components/addEditForm/types';
+import { useGetUser } from '@/apis/user/queries'; 
 
 export default function Author({ register, watch, setValue, errors, trigger }: AuthorProps) {
   const authorType = watch('authorType');
+  const { data: user } = useGetUser();
+  const userNickname = user?.nickname || ''; 
 
   const getRadioValue = (authorType: string) => {
     if (authorType === 'myself') return 'myself';
@@ -17,10 +20,13 @@ export default function Author({ register, watch, setValue, errors, trigger }: A
   const handleRadioChange = (value: string) => {
     if (value === 'myself') {
       setValue('authorType', 'myself');
+      setValue('authorName', userNickname);
     } else if (value === 'unknown') {
       setValue('authorType', 'unknown');
+      setValue('authorName', '알 수 없음');
     } else {
       setValue('authorType', 'direct');
+      setValue('authorName', '');
     }
   };
 
