@@ -1,30 +1,15 @@
 'use client';
 
-import { useGetMonthlyEmotionLogs } from '@/apis/emotion-log/queries';
-import { useGetUser } from '@/apis/user/queries';
+import { useContext, useEffect, useState } from 'react';
 import EmotionChartData from './EmotionChartData';
 import Emotion from '../ui/emotion';
 import { EMOTION_STATUS, EMOTION_STATUS_KR } from '@/constants/emotions';
-import { useEffect, useState } from 'react';
 import { Emotion as EmotionType } from '@/apis/emotion-log/types';
 import { debounce } from 'es-toolkit';
+import { MypageContext } from '@/context/MypageProvider';
 
 export default function EmotionChart() {
-  const { data: userData } = useGetUser();
-  const currentDate = new Date();
-  const currentYear = currentDate.getFullYear();
-  const currentMonth = currentDate.getMonth() + 1;
-
-  const { data: chartData } = useGetMonthlyEmotionLogs(
-    {
-      userId: userData?.id ?? 0,
-      year: currentYear,
-      month: currentMonth,
-    },
-    {
-      enabled: !!userData?.id,
-    },
-  );
+  const { userEmotion } = useContext(MypageContext);
 
   const [size, setSize] = useState<'2xs' | 'xs'>('2xs');
   const [chartEmotionSize, setChartEmotionSize] = useState<'2lg' | 'xs'>('xs');
@@ -48,14 +33,14 @@ export default function EmotionChart() {
     ANGRY: { fill: 'hsl(351, 69%, 66%)', tailwindColor: 'bg-illust-red' },
   };
 
-  const emotionCount = chartData
-    ? chartData.reduce((acc: { [key: string]: number }, data) => {
+  const emotionCount = userEmotion
+    ? userEmotion.reduce((acc: { [key: string]: number }, data) => {
         acc[data.emotion] = (acc[data.emotion] || 0) + 1;
         return acc;
       }, {})
     : {};
 
-  const totalDataCount = chartData?.length || 0;
+  const totalDataCount = userEmotion?.length || 0;
 
   const chartDataWithPercent = EMOTION_STATUS.map((emotion) => {
     const percent = totalDataCount > 0 ? Math.round((emotionCount[emotion] / totalDataCount) * 100 * 10) / 10 : 0;
