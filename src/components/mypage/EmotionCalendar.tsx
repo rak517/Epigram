@@ -45,6 +45,8 @@ export default function EmotionCalendar() {
           key={`days-${index}`}
           className={cn(TEXT_FLEX_CENTER_ALIGN, ITEM_SIZE, ITEM_TEXT_STYLE, className, isDayInMonth && isToday && 'border-illust-red t text-illust-red rounded-md border-[3px]')}
         >
+          {/* 복잡한 조건식이라 주석 남겼습니다. */}
+          {/* 해당 날짜가 이번 달에 속하고, 해당 날짜에 감정이 있고, 필터를 선택하지 않았거나 선택한 필터가 감정과 같다면 */}
           {isDayInMonth && matchingLog && (selectedItem === '' || selectedItem === EMOTION_STATUS_KR[EMOTION_STATUS.indexOf(matchingLog.emotion)]) ? (
             <>
               <span className='text-[8px] md:text-[10px] lg:text-lg'>{day}</span>
