@@ -5,7 +5,7 @@ import Confirm from '@/components/ui/modals/Confirm';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { AlramMessage } from '@/components/ui/modals/types';
 
-export const modalVariants = cva('rounded-lg bg-white px-10 py-6 shadow-lg', {
+export const modalVariants = cva('rounded-lg bg-white px-10 py-6 shadow-lg ', {
   variants: {
     size: {
       sm: 'w-[320px] lg:w-[360px] xl:w-[400px]',

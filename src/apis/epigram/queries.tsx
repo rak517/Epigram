@@ -24,10 +24,12 @@ export const useGetEpigrams = (epigramsParams: GetEpigramsParams) => {
   });
 };
 
-export const useGetEpigram = (epigramId: Epigram['id']) => {
+export const useGetEpigram = (epigramId?: Epigram['id']) => {
   return useQuery({
     queryKey: ['epigram', epigramId],
-    queryFn: () => getEpigram(epigramId),
+    queryFn: () => getEpigram(epigramId!),
+    enabled: epigramId !== undefined,
+    retry: false,
   });
 };
 
