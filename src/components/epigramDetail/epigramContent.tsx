@@ -159,7 +159,6 @@ export default function EpigramContent() {
         }
       }
 
-      // API 호출 성공 후 서버 데이터 갱신
       await queryClient.invalidateQueries({ queryKey: ['epigram', epigramId] });
     } catch (err) {
       setLocalIsLiked(!newIsLiked);
