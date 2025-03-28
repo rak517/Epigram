@@ -5,8 +5,7 @@ export async function navigateToAddEpigramPage(page: Page) {
   await page.context().addCookies([
     {
       name: 'accessToken',
-      value:
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTM0NiwidGVhbUlkIjoiMTItMzMiLCJzY29wZSI6ImFjY2VzcyIsImlhdCI6MTc0MzE0NDg3OCwiZXhwIjoxNzQzMTQ2Njc4LCJpc3MiOiJzcC1lcGlncmFtIn0.nyHtB4CyVervHxiAAvzb-MTk-rbU_5stK4Y4UuveX9A',
+      value: '임시값',
       path: '/',
       domain: 'localhost',
       httpOnly: true,
