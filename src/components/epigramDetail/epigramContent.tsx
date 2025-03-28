@@ -129,7 +129,6 @@ export default function EpigramContent() {
 
     setIsLikeLoading(true);
 
-    // 낙관적 업데이트: 즉시 UI 상태 변경
     const newIsLiked = !localIsLiked;
     setLocalIsLiked(newIsLiked);
     setLocalLikeCount((prev) => (newIsLiked ? prev + 1 : prev - 1));
@@ -139,9 +138,7 @@ export default function EpigramContent() {
         try {
           await addFavoriteMutation.mutateAsync(data.id);
         } catch (addError) {
-          // 이미 좋아요를 누른 상태일 수 있음
           if (axios.isAxiosError(addError) && addError.response?.status === 400 && addError.response?.data?.message === '이미 좋아요를 눌렀습니다.') {
-            // 이미 좋아요 상태이므로 UI 업데이트는 유지
             console.log('이미 좋아요 상태입니다');
           } else {
             throw addError;
@@ -153,9 +150,7 @@ export default function EpigramContent() {
         try {
           await deleteFavoriteMutation.mutateAsync(data.id);
         } catch (deleteError) {
-          // 이미 좋아요가 취소된 상태일 수 있음
           if (axios.isAxiosError(deleteError) && deleteError.response?.status === 400 && deleteError.response?.data?.message === '좋아요를 누르지 않았습니다.') {
-            // 이미 좋아요가 취소된 상태이므로 UI 업데이트는 유지
             console.log('이미 좋아요가 취소된 상태입니다');
           } else {
             throw deleteError;
@@ -165,10 +160,8 @@ export default function EpigramContent() {
         }
       }
 
-      // API 호출 성공 후 서버 데이터 갱신
       await queryClient.invalidateQueries({ queryKey: ['epigram', epigramId] });
     } catch (err) {
-      // 오류 발생 시 낙관적 업데이트 되돌리기
       setLocalIsLiked(!newIsLiked);
       setLocalLikeCount((prev) => (!newIsLiked ? prev + 1 : prev - 1));
 
