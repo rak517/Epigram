@@ -10,7 +10,6 @@ import { useDeleteEpigram, useDeleteEpigramFavorite, useGetEpigram, usePostEpigr
 import { useParams, useRouter } from 'next/navigation';
 import { useModalStore } from '@/stores/ModalStore';
 import { useQueryClient } from '@tanstack/react-query';
-import axios from 'axios';
 
 export default function EpigramContent() {
   const router = useRouter();
@@ -125,31 +124,18 @@ export default function EpigramContent() {
   const handleToggleLike = async () => {
     if (!data) return;
 
+    const isCurrentlyLiked = data.isLiked;
+
     try {
-      try {
-        console.log('좋아요 추가 시도');
-        await addFavoriteMutation.mutateAsync(data.id);
-
-        await queryClient.invalidateQueries({ queryKey: ['epigram', epigramId] });
-      } catch (addError: unknown) {
-        if (axios.isAxiosError(addError) && addError.response?.status === 400 && addError.response?.data?.message === '이미 좋아요를 눌렀습니다.') {
-          console.log('이미 좋아요가 있어 취소 시도');
-          await deleteFavoriteMutation.mutateAsync(data.id);
-
-          await queryClient.invalidateQueries({ queryKey: ['epigram', epigramId] });
-        } else {
-          throw addError;
-        }
-      }
-    } catch (err: unknown) {
-      if (axios.isAxiosError(err)) {
-        console.error('AxiosError 발생:', err.response?.data?.message || err.message);
-      } else if (err instanceof Error) {
-        console.error('일반 오류 발생:', err.message);
+      if (isCurrentlyLiked) {
+        await deleteFavoriteMutation.mutateAsync(data.id);
       } else {
-        console.error('알 수 없는 오류 발생', err);
+        await addFavoriteMutation.mutateAsync(data.id);
       }
 
+      await queryClient.invalidateQueries({ queryKey: ['epigram', epigramId] });
+    } catch (err) {
+      console.error('좋아요 처리 오류:', err);
       openModal({
         type: 'alert',
         title: '오류',
