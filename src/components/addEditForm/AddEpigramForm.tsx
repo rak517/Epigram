@@ -19,6 +19,7 @@ export default function AddEpigramForm() {
   const router = useRouter();
   const { openModal } = useModalStore();
 
+
   const {
     handleSubmit,
     register,
@@ -37,16 +38,16 @@ export default function AddEpigramForm() {
   const { mutateAsync: postEpigram } = usePostEpigram();
 
   const handleTagChange = (newTag: string[]) => {
-    setValue('tag', newTag, { shouldValidate: true });
+    setValue('tags', newTag, { shouldValidate: true });
   };
 
   const onSubmit = async (data: MakeEpigramForm) => {
     const epigramForm = {
       content: data.content,
-      author: data.authorName || '',
-      referenceTitle: data.sourceTitle,
-      referenceUrl: data.sourceUrl,
-      tags: data.tag,
+      author: data.author || '',
+      referenceTitle: data.referenceTitle,
+      referenceUrl: data.referenceUrl,
+      tags: data.tags,
     };
 
     try {
@@ -74,14 +75,14 @@ export default function AddEpigramForm() {
             <Author register={register} watch={watch} setValue={setValue} errors={errors} trigger={trigger} />
 
             <div className='flex flex-col gap-4'>
-              <Input label='출처' {...register('sourceTitle')} error={errors.sourceTitle?.message} placeholder='출처 제목 입력' variant='outlined' />
-              <Input {...register('sourceUrl')} error={errors.sourceUrl?.message} placeholder='URL (ex. https://www.website.com)' variant='outlined' />
+              <Input label='출처' {...register('referenceTitle')} error={errors.referenceTitle?.message} placeholder='출처 제목 입력' variant='outlined' />
+              <Input {...register('referenceUrl')} error={errors.referenceUrl?.message} placeholder='URL (ex. https://www.website.com)' variant='outlined' />
             </div>
 
-            <TagInput value={watch('tag')} onChange={handleTagChange} error={errors.tag?.message} />
+            <TagInput value={watch('tags')} onChange={handleTagChange} error={errors.tags?.message} />
           </div>
 
-          <Button type='submit' variant='default' className='w-full' disabled={!watch('content') || watch('content').length > 500 || (watch('authorType') === 'direct' && !watch('authorName'))}>
+          <Button type='submit' variant='default' className='w-full' disabled={!watch('content') || watch('content').length > 500 || (watch('authorType') === 'direct' && !watch('author'))}>
             작성 완료
           </Button>
         </div>

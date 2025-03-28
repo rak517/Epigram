@@ -42,8 +42,12 @@ export const getEpigram = async (epigramId: number) => {
  * https://fe-project-epigram-api.vercel.app/docs/#/Epigram/UpdateEpigram
  */
 export const patchEpigram = async (epigramId: number, epigram: PatchEpigram) => {
-  const response = await axiosClientHelper.patch<Epigram>(`/epigrams/${epigramId}`, { ...epigram });
-  return safeResponse(response.data, epigramSchema);
+  try{const response = await axiosClientHelper.patch<Epigram>(`/epigrams/${epigramId}`, { ...epigram });
+  return safeResponse(response.data, epigramSchema);}
+  catch (error) {
+    console.error('🚨 patchEpigram Error:', error.response?.data || error.message);
+    throw error;
+  }
 };
 
 /**

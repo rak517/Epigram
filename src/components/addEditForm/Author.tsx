@@ -20,13 +20,13 @@ export default function Author({ register, watch, setValue, errors, trigger }: A
   const handleRadioChange = (value: string) => {
     if (value === 'myself') {
       setValue('authorType', 'myself');
-      setValue('authorName', userNickname);
+      setValue('author', userNickname);
     } else if (value === 'unknown') {
       setValue('authorType', 'unknown');
-      setValue('authorName', '알 수 없음');
+      setValue('author', '알 수 없음');
     } else {
       setValue('authorType', 'direct');
-      setValue('authorName', '');
+      setValue('author', '');
     }
   };
 
@@ -53,9 +53,9 @@ export default function Author({ register, watch, setValue, errors, trigger }: A
           className='h-11 w-full xl:h-16'
           maxLength={20}
           disabled={authorType !== 'direct'}
-          {...register('authorName', { required: authorType === 'direct' ? '저자 이름을 입력해주세요' : false, onBlur: () => authorType === 'direct' && trigger('authorName') })}
+          {...register('author', { required: authorType === 'direct' ? '저자 이름을 입력해주세요' : false, onBlur: () => authorType === 'direct' && trigger('author') })}
           placeholder={authorType === 'direct' ? '저자 이름 입력' : authorType === 'unknown' ? '알 수 없음' : '본인'}
-          error={errors.authorName?.message}
+          error={errors.author?.message}
           variant='outlined'
         />
       </div>
