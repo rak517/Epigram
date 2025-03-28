@@ -53,8 +53,8 @@ export default function LoginForm() {
       const errorMessage = getErrorMessage(error);
       openModal({
         type: 'alert',
-        title: '회원가입에 실패했습니다.',
-        description: errorMessage,
+        title: '로그인에 실패했습니다.',
+        description: errorMessage === 'Validation Failed' ? '비밀번호가 일치하지 않습니다.' : errorMessage,
       });
     }
   };
