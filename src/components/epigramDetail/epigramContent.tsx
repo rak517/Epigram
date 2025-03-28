@@ -3,6 +3,7 @@
 import RoundedButton from '../ui/buttons/roundedButton';
 import TextCard from '../ui/textcard';
 import like from '@/assets/icons/like.svg';
+import like_outlined from '@/assets/icons/like_outlined.svg';
 import external from '@/assets/icons/external-link.svg';
 import share from '@/assets/icons/share.svg';
 import Image from 'next/image';
@@ -164,17 +165,32 @@ export default function EpigramContent() {
         className='h-[164px] w-[312px] text-2xl md:h-[182px] md:w-[384px] lg:h-[236px] lg:w-[640px] lg:text-3xl'
       />
       <div className='px-auto flex gap-4 pt-9'>
-        <RoundedButton variant='secondary' onClick={handleToggleLike}>
-          <div className='flex items-center justify-center'>
-            <div className='hidden md:block'>
-              <Image src={like} alt='좋아요 따봉 이미지' width={36} height={36} />
+        {data.isLiked ? (
+          <RoundedButton variant='secondary' onClick={handleToggleLike}>
+            <div className='flex items-center justify-center'>
+              <div className='hidden md:block'>
+                <Image src={like} alt='좋아요 따봉 이미지' width={36} height={36} />
+              </div>
+              <div className='block md:hidden'>
+                <Image src={like} alt='좋아요 따봉 이미지' width={20} height={20} />
+              </div>
+              <div className='text-md min-w-[75px] text-center lg:text-xl'>{data?.likeCount}</div>
             </div>
-            <div className='block md:hidden'>
-              <Image src={like} alt='좋아요 따봉 이미지' width={20} height={20} />
+          </RoundedButton>
+        ) : (
+          <RoundedButton variant='secondary' onClick={handleToggleLike}>
+            <div className='flex items-center justify-center'>
+              <div className='hidden h-9 w-9 md:block'>
+                <Image src={like_outlined} alt='좋아요 따봉 이미지' className='mt-1.5 ml-1' />
+              </div>
+              <div className='block md:hidden md:h-5 md:w-5'>
+                <Image src={like_outlined} alt='좋아요 따봉 이미지' />
+              </div>
+              <div className='text-md min-w-[75px] text-center lg:text-xl'>{data?.likeCount}</div>
             </div>
-            <div className='text-md min-w-[75px] text-center lg:text-xl'>{data?.likeCount}</div>
-          </div>
-        </RoundedButton>
+          </RoundedButton>
+        )}
+
         <RoundedButton variant='outline' onClick={handleCopyUrl}>
           <div className='flex items-center justify-center gap-2'>
             <div className='text-md lg:text-xl'>URL 복사</div>
