@@ -1,4 +1,4 @@
-import { createContext, PropsWithChildren, useEffect, useState } from 'react';
+import { createContext, PropsWithChildren, useState } from 'react';
 import { MypageContext as CreateContext } from './types';
 import { useGetUser } from '@/apis/user/queries';
 import dayjs, { Dayjs } from 'dayjs';
@@ -24,10 +24,6 @@ export default function MypageProvider({ children }: PropsWithChildren) {
   const { data: userEmotion } = useGetMonthlyEmotionLogs(emotionLogParams, {
     enabled: !!user && !!currentDate,
   });
-
-  useEffect(() => {
-    setCurrentDate(dayjs);
-  }, []);
 
   if (userEmotion !== undefined) {
     return <MypageContext.Provider value={{ currentDate, setCurrentDate, userEmotion }}>{children}</MypageContext.Provider>;
