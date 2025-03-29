@@ -5,7 +5,7 @@ export async function navigateToAddEpigramPage(page: Page) {
   await page.context().addCookies([
     {
       name: 'accessToken',
-      value: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTM0NiwidGVhbUlkIjoiMTItMzMiLCJzY29wZSI6ImFjY2VzcyIsImlhdCI6MTc0MzIzMjk0MCwiZXhwIjoxNzQzMjM0NzQwLCJpc3MiOiJzcC1lcGlncmFtIn0.U9J6d6Z4qQZsWilOOJyQAoV9Hlt7fDXh9qj12iaF2Xg',
+      value: 'test',
       path: '/',
       domain: 'localhost',
       httpOnly: true,
