@@ -18,22 +18,22 @@ test.describe('에픽그램 만들기', () => {
   test('저자 이름이 입력된다.', async ({ page }) => {
     await navigateToAddEpigramPage(page);
     await page.click('label[for="custom"]');
-    await page.fill('input[name="authorName"]', '테스트이름');
-    await expect(page.locator('input[name="authorName"]')).toHaveValue('테스트이름');
+    await page.fill('input[name="author"]', '테스트이름');
+    await expect(page.locator('input[name="author"]')).toHaveValue('테스트이름');
   });
 
   // 4. 출처 제목 입력
   test('출처 제목이 입력된다.', async ({ page }) => {
     await navigateToAddEpigramPage(page);
-    await page.fill('input[name="sourceTitle"]', '테스트출처');
-    await expect(page.locator('input[name="sourceTitle"]')).toHaveValue('테스트출처');
+    await page.fill('input[name="referenceTitle"]', '테스트출처');
+    await expect(page.locator('input[name="referenceTitle"]')).toHaveValue('테스트출처');
   });
 
   // 5. URL 입력
   test('URL이 입력된다.', async ({ page }) => {
     await navigateToAddEpigramPage(page);
-    await page.fill('input[name="sourceUrl"]', 'http://www.naver.com');
-    await expect(page.locator('input[name="sourceUrl"]')).toHaveValue('http://www.naver.com');
+    await page.fill('input[name="referenceUrl"]', 'https://www.naver.com');
+    await expect(page.locator('input[name="referenceUrl"]')).toHaveValue('https://www.naver.com');
   });
 
   // 6. 태그 입력
@@ -57,9 +57,9 @@ test.describe('에픽그램 만들기', () => {
     await navigateToAddEpigramPage(page);
     await page.fill('textarea[name="content"]', '테스트내용');
     await page.click('label[for="custom"]');
-    await page.fill('input[name="authorName"]', '테스트이름');
-    await page.fill('input[name="sourceTitle"]', '테스트출처');
-    await page.fill('input[name="sourceUrl"]', 'http://www.naver.com');
+    await page.fill('input[name="author"]', '테스트이름');
+    await page.fill('input[name="referenceTitle"]', '테스트출처');
+    await page.fill('input[name="referenceUrl"]', 'https://www.naver.com');
     await page.fill('input[placeholder="입력하여 태그 작성 (최대 10자)"]', '테스트태그');
     await page.fill('input[placeholder="입력하여 태그 작성 (최대 10자)"]', '테스트태그');
     await page.click('button:has-text("추가")');
@@ -75,9 +75,9 @@ test.describe('에픽그램 만들기', () => {
     await navigateToAddEpigramPage(page);
     await page.fill('textarea[name="content"]', '테스트내용');
     await page.click('label[for="custom"]');
-    await page.fill('input[name="authorName"]', '테스트이름');
-    await page.fill('input[name="sourceTitle"]', '테스트출처');
-    await page.fill('input[name="sourceUrl"]', 'http://www.naver.com');
+    await page.fill('input[name="author"]', '테스트이름');
+    await page.fill('input[name="referenceTitle"]', '테스트출처');
+    await page.fill('input[name="referenceUrl"]', 'https://www.naver.com');
     await page.fill('input[placeholder="입력하여 태그 작성 (최대 10자)"]', '테스트태그');
     await page.click('button:has-text("추가")');
 
@@ -91,9 +91,9 @@ test.describe('에픽그램 만들기', () => {
     await navigateToAddEpigramPage(page);
     await page.fill('textarea[name="content"]', '테스트내용');
     await page.click('label[for="custom"]');
-    await page.fill('input[name="authorName"]', '테스트이름');
-    await page.fill('input[name="sourceTitle"]', '테스트출처');
-    await page.fill('input[name="sourceUrl"]', 'http://www.naver.com');
+    await page.fill('input[name="author"]', '테스트이름');
+    await page.fill('input[name="referenceTitle"]', '테스트출처');
+    await page.fill('input[name="referenceUrl"]', 'https://www.naver.com');
     await page.fill('input[placeholder="입력하여 태그 작성 (최대 10자)"]', '테스트태그');
     await page.click('button:has-text("추가")');
 
@@ -115,15 +115,15 @@ test.describe('에픽그램 만들기', () => {
     // 에픽그램 상세 페이지에서 작성한 내용 비교
     await page.waitForSelector('textarea[name="content"]');
     const content = await page.locator('textarea[name="content"]').inputValue();
-    const authorName = await page.locator('input[name="authorName"]').inputValue()
-    console.log(authorName)
-    const sourceTitle = await page.locator('input[name="sourceTitle"]').inputValue();
-    const sourceUrl = await page.locator('input[name="sourceUrl"]').inputValue();
+    const author = await page.locator('input[name="author"]').inputValue()
+    console.log(author)
+    const referenceTitle = await page.locator('input[name="referenceTitle"]').inputValue();
+    const referenceUrl = await page.locator('input[name="referenceUrl"]').inputValue();
 
     // 비교: 페이지에 표시된 내용이 작성한 내용과 일치하는지 확인
     await expect(content).toBe('테스트내용');
-    await expect(authorName).toBe('테스트이름');
-    await expect(sourceTitle).toBe('테스트출처');
-    await expect(sourceUrl).toBe('http://www.naver.com');
+    await expect(author).toBe('테스트이름');
+    await expect(referenceTitle).toBe('테스트출처');
+    await expect(referenceUrl).toBe('https://www.naver.com');
   });
 });
