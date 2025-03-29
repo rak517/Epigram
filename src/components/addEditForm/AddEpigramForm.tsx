@@ -14,11 +14,9 @@ import { usePostEpigram } from '@/apis/epigram/queries';
 import { useRouter } from 'next/navigation';
 import { useModalStore } from '@/stores/ModalStore';
 
-
 export default function AddEpigramForm() {
   const router = useRouter();
   const { openModal } = useModalStore();
-
 
   const {
     handleSubmit,
