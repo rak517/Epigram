@@ -11,17 +11,23 @@ import { useDeleteEpigram, useDeleteEpigramFavorite, useGetEpigram, usePostEpigr
 import { useParams, useRouter } from 'next/navigation';
 import { useModalStore } from '@/stores/ModalStore';
 import { useQueryClient } from '@tanstack/react-query';
-import { useEffect, useState } from 'react';
-import axios from 'axios';
+import { useEffect, useRef, useState } from 'react';
+import axios, { isAxiosError } from 'axios';
+import { useGetUser } from '@/apis/user/queries';
+import { getErrorMessage } from '@/utils/network/getErrorMessage';
 
 export default function EpigramContent() {
   const router = useRouter();
   const params = useParams();
   const { openModal } = useModalStore();
 
+  const isDeleted = useRef(false);
+
   const epigramId = params?.id ? Number(params.id) : undefined;
 
-  const { data, isError, isLoading, error } = useGetEpigram(epigramId);
+  const { data, isError, isLoading, error } = useGetEpigram(isDeleted.current ? undefined : epigramId);
+
+  const { data: user } = useGetUser();
 
   const deleteEpigramMutation = useDeleteEpigram();
 
@@ -29,9 +35,9 @@ export default function EpigramContent() {
 
   const deleteFavoriteMutation = useDeleteEpigramFavorite();
 
-  const hasSourceUrl = data?.referenceUrl && data.referenceUrl.trim() !== '';
+  const hasSourceUrl = data?.referenceUrl;
 
-  const showDropdown = params?.id === data?.writerId.toString();
+  const showDropdown = user?.id === data?.writerId;
 
   const queryClient = useQueryClient();
 
@@ -45,6 +51,10 @@ export default function EpigramContent() {
       setLocalLikeCount(data?.likeCount || 0);
     }
   }, [data]);
+
+  if (isDeleted.current) {
+    return null;
+  }
 
   if (isLoading) {
     return (
@@ -82,7 +92,7 @@ export default function EpigramContent() {
   };
 
   const handleEdit = () => {
-    router.push(`/epigrams/${data?.writerId}/edit`);
+    router.push(`/epigrams/${data?.id}/edit`);
   };
 
   const handleDeleteClick = () => {
@@ -102,15 +112,19 @@ export default function EpigramContent() {
     if (data) {
       try {
         await deleteEpigramMutation.mutateAsync(data.id);
+
+        isDeleted.current = true;
+
         openModal({
           type: 'alert',
           title: '알림',
           description: '에피그램이 삭제되었습니다.',
           okMessage: '확인',
           callback: () => {
-            window.location.reload();
+            router.push('/epigrams');
           },
         });
+        queryClient.removeQueries({ queryKey: ['epigram', epigramId] });
       } catch (err) {
         console.error('삭제중 오류 발생', err);
         openModal({
@@ -163,13 +177,23 @@ export default function EpigramContent() {
     } catch (err) {
       setLocalIsLiked(!newIsLiked);
       setLocalLikeCount((prev) => (!newIsLiked ? prev + 1 : prev - 1));
+      let errorMessage = getErrorMessage(err);
+      let callback = () => {};
 
       console.error('좋아요 처리 오류:', err);
+      //세션 만료 처리
+      if (isAxiosError(err) && err.status === 401) {
+        errorMessage = '세션이 만료되었습니다.';
+        callback = () => {
+          router.push('/login');
+        };
+      }
       openModal({
         type: 'alert',
         title: '오류',
-        description: '좋아요 처리 중 오류가 발생했습니다.',
+        description: errorMessage,
         okMessage: '확인',
+        callback,
       });
     }
   };
