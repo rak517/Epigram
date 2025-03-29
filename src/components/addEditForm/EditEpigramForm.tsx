@@ -57,8 +57,8 @@ export default function EditEpigramForm({ id }: { id: number }) {
     const epigramForm = {
       content: data.content,
       author: data.author || '',
-      referenceTitle: data.referenceTitle,
-      referenceUrl: data.referenceUrl,
+      ...(data.referenceTitle && { referenceTitle: data.referenceTitle }),
+      ...(data.referenceUrl && { referenceUrl: data.referenceUrl }),
       tags: data.tags,
     };
 
