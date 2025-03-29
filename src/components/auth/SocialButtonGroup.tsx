@@ -26,7 +26,7 @@ export default function SocialButtonGroup({ endPoint }: { endPoint: '/login' | '
     <div className='w-full max-w-96 space-y-2'>
       <div className='flex w-full items-center'>
         <hr className='flex-grow border-t border-gray-200' />
-        <span className='px-4 text-xs text-blue-400'>
+        <span className='px-4 text-xs text-blue-800'>
           {endPoint === '/login' && 'SNS 계정으로 간편 가입하기'}
           {endPoint === '/signup' && 'SNS 계정으로 로그인하기'}
         </span>

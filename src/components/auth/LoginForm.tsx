@@ -53,8 +53,8 @@ export default function LoginForm() {
       const errorMessage = getErrorMessage(error);
       openModal({
         type: 'alert',
-        title: '회원가입에 실패했습니다.',
-        description: errorMessage,
+        title: '로그인에 실패했습니다.',
+        description: errorMessage === 'Validation Failed' ? '비밀번호가 일치하지 않습니다.' : errorMessage,
       });
     }
   };
@@ -62,7 +62,7 @@ export default function LoginForm() {
   return (
     <form className='flex w-full max-w-96 flex-col gap-2' onSubmit={handleSubmit(onSubmit)}>
       <Link className='flex w-full items-center justify-center' href='/'>
-        <Image src={Logo} alt='로고' width={172} height={48} className='cursor-pointer' />
+        <Image src={Logo} alt='로고' width={172} height={48} className='cursor-pointer' priority />
       </Link>
       <Input
         label='이메일'
@@ -86,6 +86,7 @@ export default function LoginForm() {
           data-testid='password-input-login'
           disabled={isSubmitting}
           className='text-md md:text-lg lg:text-xl'
+          autoComplete='on'
         />
         <Image
           src={isShowPassword ? ClosedEye : OpendEye}
