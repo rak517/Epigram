@@ -16,6 +16,8 @@ import axios, { isAxiosError } from 'axios';
 import { useGetUser } from '@/apis/user/queries';
 import { getErrorMessage } from '@/utils/network/getErrorMessage';
 
+//TODO: 데이터 삭제시 404에러 해결
+
 export default function EpigramContent() {
   const router = useRouter();
   const params = useParams();
