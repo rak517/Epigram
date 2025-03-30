@@ -6,6 +6,7 @@ const avatarVariants = cva('rounded-full flex items-center justify-center', {
   variants: {
     size: {
       default: 'size-12',
+      md: 'size-20 border-2 border-blue-300',
       lg: 'size-[120px] border-2 border-blue-300',
     },
   },
