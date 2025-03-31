@@ -6,7 +6,7 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: '*',
         allow: ['/', '/login', '/signup'],
-        disallow: ['/epigrams/*', '/addepigrams', '/search', '/feed', '/mypage', '/oauth'],
+        disallow: ['/epigrams/*', '/addepigrams', '/search', '/feed', '/mypage', '/oauth', '/api/*'],
       },
     ],
     sitemap: 'https://dailyepigram.vercel.app/sitemap.xml',
