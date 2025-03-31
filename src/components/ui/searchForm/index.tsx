@@ -12,7 +12,7 @@ export default function SearchForm({ onSearch }: SearchFormProps) {
   const [search, setSearch] = useState("");
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault(); // 폼 제출 시 페이지 새로고침 방지
+    e.preventDefault();
     if (search.trim()) {
       onSearch(search.trim());
     }
