@@ -11,34 +11,34 @@ interface SearchFormProps {
 export default function SearchForm({ onSearch }: SearchFormProps) {
   const [search, setSearch] = useState("");
 
-  const handleSearch = () => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault(); // 폼 제출 시 페이지 새로고침 방지
     if (search.trim()) {
       onSearch(search.trim());
     }
   };
 
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") {
-      handleSearch();
-    }
-  };
-
   return (
-    <>
-      <div className="max-w-[640px] mx-auto w-full">
-        <div className="relative flex items-center border-b-2 sm:border-b-2 md:border-b-2 lg:border-b-4">
-          <input
-            type="text"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            onKeyDown={handleKeyDown}
-            className="w-full pr-[55px] py-[9px] text-lg text-black-700 sm:py-[9px] md:py-[13px] lg:py-[22px] text-2xl"
+    <form onSubmit={handleSubmit} className="max-w-[640px] mx-auto w-full">
+      <div className="relative flex items-center border-b-2 sm:border-b-2 md:border-b-2 lg:border-b-4">
+        <input
+          type="text"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          placeholder="검색어를 입력해주세요."
+          className="w-full pr-[55px] py-[13px] lg:py-[25px] text-lg md:text-xl lg:text-2xl text-black-700"
+        />
+        <button
+          type="submit"
+          className="absolute right-2 h-full w-10 flex items-center justify-center cursor-pointer sm:w-10 md:w-10 lg:w-15"
+        >
+          <Image
+            src={SearchImage}
+            alt="검색 돋보기 아이콘"
+            className="w-[13px] h-[13px] md:w-5 md:h-5 lg:w-9 lg:h-9"
           />
-          <button className="absolute right-2 h-full w-10 flex items-center justify-center cursor-pointer sm:w-10 md:w-10 lg:w-15" onClick={handleSearch}>
-            <Image src={SearchImage} alt="검색이미지" />
-          </button>
-        </div>
+        </button>
       </div>
-    </>
+    </form>
   );
 }
