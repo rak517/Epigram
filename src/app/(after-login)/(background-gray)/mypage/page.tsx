@@ -6,31 +6,16 @@ import EmotionCalendar from '@/components/mypage/EmotionCalendar';
 import EmotionChart from '@/components/mypage/EmotionChart';
 import Avatar from '@/components/ui/avatars';
 import { MypageContext } from '@/context/MypageProvider';
-import { useContext, useEffect, useState } from 'react';
+import { useContext } from 'react';
 
 export default function MyPage() {
   const { user } = useContext(MypageContext);
-  const [avatorSize, setAavatorSize] = useState<'lg' | 'md'>('md');
-
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth >= 1024) {
-        setAavatorSize('lg');
-      } else {
-        setAavatorSize('md');
-      }
-    };
-    handleResize();
-    window.addEventListener('resize', handleResize);
-
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
 
   return (
     <div className='bg-background-100'>
       <div className='shadow-custom relative mt-16 flex flex-col items-center justify-center rounded-3xl bg-blue-100 px-6 pt-[184px] pb-10 shadow-black md:pb-[63px] lg:pt-[276px] lg:pb-22'>
         <div className='absolute top-0 left-1/2 flex -translate-x-1/2 -translate-y-[40px] flex-col items-center justify-center gap-4 lg:-translate-y-[60px] lg:gap-6'>
-          <Avatar src={user.image} alt='유저이미지' size={avatorSize}></Avatar>
+          <Avatar src={user.image} alt='유저이미지' className='size-20 border-2 border-blue-300 lg:size-[120px]'></Avatar>
           <p className='text-black-950 text-lg font-medium lg:text-2xl'>{user.nickname}</p>
           <LogoutButton className='h-9 w-[77px] px-3.5 py-1.5 text-[14px] font-normal whitespace-nowrap lg:h-12 lg:w-[100px] lg:px-4 lg:py-2 lg:text-xl lg:font-medium'></LogoutButton>
         </div>
@@ -43,7 +28,6 @@ export default function MyPage() {
           </div>
         </div>
       </div>
-      <div></div>
     </div>
   );
 }
