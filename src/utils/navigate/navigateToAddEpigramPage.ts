@@ -7,8 +7,8 @@ export async function navigateToAddEpigramPage(page: Page) {
   });
 
   // 이메일과 비밀번호 입력
-  await page.fill('input[name="email"]', 'tito625@naver.com');
-  await page.fill('input[name="password"]', 'test1234@');
+  await page.fill('input[name="email"]', 'e2eTest@test.com');
+  await page.fill('input[name="password"]', 'e2etest123@');
 
   // '로그인' 텍스트가 있는 버튼 클릭
   await page.click('button:text("로그인")');
@@ -42,11 +42,7 @@ export async function navigateToAddEpigramPage(page: Page) {
       secure: false,
     },
   ]);
-
-  // 3초 대기
-  await page.waitForTimeout(3000); // 3초 대기
-
-  // addepigram 페이지로 이동
+  
   await page.goto('http://localhost:3000/addepigram', {
     waitUntil: 'networkidle', // 네트워크가 안정될 때까지 대기
   });

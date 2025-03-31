@@ -45,6 +45,8 @@ test('작성 후 수정 페이지에서 수정하고, 상세 페이지에서 비
   await page.fill('input[name="author"]', updatedAuthor);
   await page.fill('input[name="referenceTitle"]', updatedReferenceTitle);
   await page.fill('input[name="referenceUrl"]', updatedReferenceUrl);
+  await page.fill('input[placeholder="입력하여 태그 작성 (최대 10자)"]', '태그추가');
+  await page.click('button:has-text("추가")');
 
   // 수정 완료 버튼 클릭
   const updateSubmitButton = page.locator('button[type="submit"]');
@@ -61,10 +63,12 @@ test('작성 후 수정 페이지에서 수정하고, 상세 페이지에서 비
 
   await page.goto(`http://localhost:3000/epigrams/${epigramId}/edit`, { waitUntil: 'networkidle' });
 
-
   /// 수정된 내용 확인 (수정 페이지에서)
   await expect(page.locator('textarea[name="content"]')).toHaveValue(updatedContent);
   await expect(page.locator('input[name="author"]')).toHaveValue(updatedAuthor);
   await expect(page.locator('input[name="referenceTitle"]')).toHaveValue(updatedReferenceTitle);
   await expect(page.locator('input[name="referenceUrl"]')).toHaveValue(updatedReferenceUrl);
+  // 수정된 태그 텍스트 확인
+  await expect(page.locator('span:has-text("테스트태그")')).toBeVisible(); // '테스트태그' 확인
+  await expect(page.locator('span:has-text("태그추가")')).toBeVisible(); // '태그추가' 확인
 });
