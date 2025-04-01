@@ -70,7 +70,7 @@ export default function SignupForm() {
   return (
     <form className='flex w-full max-w-96 flex-col gap-2' onSubmit={handleSubmit(onSubmit)}>
       <Link className='flex w-full items-center justify-center' href='/'>
-        <Image src={Logo} alt='로고' width={172} height={48} className='cursor-pointer' />
+        <Image src={Logo} alt='로고' width={172} height={48} className='cursor-pointer' priority />
       </Link>
       <Input
         label='이메일'
@@ -94,6 +94,7 @@ export default function SignupForm() {
           data-testid='password-input'
           disabled={isSubmitting}
           className='text-md md:text-lg lg:text-xl'
+          autoComplete='on'
         />
         <Image
           src={isShowPassword ? ClosedEye : OpendEye}
@@ -116,6 +117,7 @@ export default function SignupForm() {
           data-testid='password-confirm-input'
           disabled={isSubmitting}
           className='text-md md:text-lg lg:text-xl'
+          autoComplete='on'
         />
         <Image
           src={isShowPasswordConfirm ? ClosedEye : OpendEye}
