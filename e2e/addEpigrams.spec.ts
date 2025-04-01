@@ -1,9 +1,48 @@
 import { test, expect } from '@playwright/test';
-import { navigateToAddEpigramPage } from '@/utils/navigate/navigateToAddEpigramPage';
 
 test.describe('에픽그램 만들기', () => {
   test.beforeEach(async ({ page }) => {
-    await navigateToAddEpigramPage(page);
+    await page.goto('http://localhost:3000/login', {
+      waitUntil: 'networkidle',
+    });
+
+    await page.fill('input[name="email"]', 'e2eTest@test.com');
+    await page.fill('input[name="password"]', 'e2etest123@');
+
+    await page.click('button:text("로그인")');
+
+    await page.waitForSelector('button:text("확인")');
+    await page.click('button:text("확인")');
+
+    await page.waitForTimeout(3000);
+
+    await expect(page).toHaveURL('http://localhost:3000/');
+
+    const cookies = await page.context().cookies();
+    const accessTokenCookie = cookies.find((cookie) => cookie.name === 'accessToken');
+
+    if (!accessTokenCookie) {
+      throw new Error('로그인 실패: accessToken을 받을 수 없습니다.');
+    }
+
+    const accessToken = accessTokenCookie.value;
+
+    await page.context().addCookies([
+      {
+        name: 'accessToken',
+        value: accessToken,
+        path: '/',
+        domain: 'localhost',
+        httpOnly: true,
+        secure: false,
+      },
+    ]);
+
+    await page.goto('http://localhost:3000/addepigram', {
+      waitUntil: 'networkidle',
+    });
+
+    await expect(page).toHaveURL('http://localhost:3000/addepigram');
   });
 
   test('본문 내용이 입력된다.', async ({ page }) => {
