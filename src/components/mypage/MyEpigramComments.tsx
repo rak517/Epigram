@@ -26,7 +26,7 @@ export default function MyEpigramComments() {
     }
   };
 
-  const { data: myComments, fetchNextPage: fetchNextComments, hasNextPage: hasNextComments, isFetchingNextPage: isFetchingComments } = useGetComments(userId, { limit: 3 });
+  const { data: myComments, fetchNextPage: fetchNextComments, hasNextPage: hasNextComments, isFetchingNextPage: isFetchingComments } = useGetComments(userId, { limit: 4 });
 
   const handleLoadCommentsButton = () => {
     if (hasNextComments) {
@@ -36,9 +36,15 @@ export default function MyEpigramComments() {
 
   return (
     <div className='flex flex-col gap-6 md:gap-8 lg:gap-12'>
-      <div className='flex gap-4 lg:gap-12'>
-        <button onClick={() => setButtonTab('myEpigram')}>{`내 에피그램(${myEpigrams?.pages[0].totalCount ?? 0})`}</button>
-        <button onClick={() => setButtonTab('myComment')}>{`내 댓글(${myComments?.pages[0].totalCount ?? 0})`}</button>
+      <div className='flex gap-4 px-6 lg:gap-12'>
+        <button
+          onClick={() => setButtonTab('myEpigram')}
+          className={`text-lg font-semibold lg:text-2xl ${buttonTab === 'myEpigram' ? 'text-black-600' : 'text-gray-300'}`}
+        >{`내 에피그램(${myEpigrams?.pages[0].totalCount ?? 0})`}</button>
+        <button
+          onClick={() => setButtonTab('myComment')}
+          className={`text-lg font-semibold lg:text-2xl ${buttonTab === 'myComment' ? 'text-black-600' : 'text-gray-300'}`}
+        >{`내 댓글(${myComments?.pages[0].totalCount ?? 0})`}</button>
       </div>
 
       {buttonTab === 'myEpigram' && myEpigrams ? (
@@ -103,7 +109,7 @@ export default function MyEpigramComments() {
             </Link>
           </div>
         ) : (
-          <div className='flex flex-col items-center justify-center gap-12 md:gap-16 lg:gap-20'>
+          <div className=''>
             {myComments.pages.flatMap((page) =>
               page.list.map((comment) => (
                 <Link key={comment.id} href={`/epigrams/${comment.epigramId}`}>
@@ -113,7 +119,7 @@ export default function MyEpigramComments() {
             )}
             {hasNextComments && (
               <RoundedButton
-                className='bg-background-100 border-line-200 flex h-12 w-[153px] gap-1 border px-[18px] py-3 text-[14px] font-medium text-blue-500 lg:h-14 lg:w-[238px] lg:text-xl'
+                className='bg-background-100 border-line-200 mx-auto mt-14 flex h-12 w-[153px] gap-1 border px-[18px] py-3 text-[14px] font-medium text-blue-500 md:mt-10 lg:mt-18 lg:h-14 lg:w-[238px] lg:text-xl'
                 onClick={handleLoadCommentsButton}
                 disabled={isFetchingComments}
               >
