@@ -6,38 +6,32 @@ test.describe('에픽그램 만들기', () => {
     await navigateToAddEpigramPage(page);
   });
 
-  // 1. 내용 입력 (본문)
   test('본문 내용이 입력된다.', async ({ page }) => {
     await page.fill('textarea[name="content"]', '테스트내용');
     await expect(page.locator('textarea[name="content"]')).toHaveValue('테스트내용');
   });
 
-  // 2. 저자 이름 입력
   test('저자 이름이 입력된다.', async ({ page }) => {
     await page.click('label[for="custom"]');
     await page.fill('input[name="author"]', '테스트이름');
     await expect(page.locator('input[name="author"]')).toHaveValue('테스트이름');
   });
 
-  // 3. 출처 제목 입력
   test('출처 제목이 입력된다.', async ({ page }) => {
     await page.fill('input[name="referenceTitle"]', '테스트출처');
     await expect(page.locator('input[name="referenceTitle"]')).toHaveValue('테스트출처');
   });
 
-  // 4. URL 입력
   test('URL이 입력된다.', async ({ page }) => {
     await page.fill('input[name="referenceUrl"]', 'https://www.naver.com');
     await expect(page.locator('input[name="referenceUrl"]')).toHaveValue('https://www.naver.com');
   });
 
-  // 5. 태그 입력
   test('태그가 입력된다.', async ({ page }) => {
     await page.fill('input[placeholder="입력하여 태그 작성 (최대 10자)"]', '테스트태그');
     await expect(page.locator('input[placeholder="입력하여 태그 작성 (최대 10자)"]')).toHaveValue('테스트태그');
   });
 
-  // 6. 태그 추가 버튼 클릭
   test('태그 추가 버튼이 클릭된다.', async ({ page }) => {
     await page.fill('input[placeholder="입력하여 태그 작성 (최대 10자)"]', '테스트태그');
     await page.click('button:has-text("추가")');
@@ -45,7 +39,6 @@ test.describe('에픽그램 만들기', () => {
     await expect(buttonText).toBe('추가');
   });
 
-  // 7. 작성 완료 버튼 활성화 여부 확인
   test('작성 완료 버튼이 활성화된다.', async ({ page }) => {
     await page.fill('textarea[name="content"]', '테스트내용');
     await page.click('label[for="custom"]');
@@ -62,7 +55,6 @@ test.describe('에픽그램 만들기', () => {
     await expect(isEnabled).toBe(true);
   });
 
-  // 8. 작성 완료 버튼 클릭 후 이동 확인
   test('작성 완료 버튼 클릭 후 상세 페이지로 이동한다.', async ({ page }) => {
     await page.fill('textarea[name="content"]', '테스트내용');
     await page.click('label[for="custom"]');
@@ -87,22 +79,17 @@ test.describe('에픽그램 만들기', () => {
     await page.fill('input[placeholder="입력하여 태그 작성 (최대 10자)"]', '테스트태그');
     await page.click('button:has-text("추가")');
 
-    // 작성 완료 버튼 클릭
     const submitButton = page.locator('button[type="submit"]');
     await submitButton.click();
 
-    // 페이지 이동 대기
-    await page.waitForTimeout(3000); // 페이지 이동 대기
-    await expect(page).toHaveURL(/\/epigrams\/\d+/); // 에픽그램 상세 페이지로 이동 확인
+    await page.waitForTimeout(3000);
+    await expect(page).toHaveURL(/\/epigrams\/\d+/);
 
-    // id 값 추출
     const epigramId = page.url().split('/').pop();
 
-    // 해당 id 값 수정페이지로 이동
     await page.goto(`http://localhost:3000/epigrams/${epigramId}/edit`, { waitUntil: 'networkidle' });
     console.log(epigramId);
 
-    /// 수정된 내용 확인 (수정 페이지에서)
     await expect(page.locator('textarea[name="content"]')).toHaveValue('테스트내용');
     await expect(page.locator('input[name="author"]')).toHaveValue('테스트이름');
     await expect(page.locator('input[name="referenceTitle"]')).toHaveValue('테스트출처');
