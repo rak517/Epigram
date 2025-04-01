@@ -58,7 +58,7 @@ export default function EpigramList() {
         />
       </div>
       <>
-        <div className={!isLoading && isEmpty(epigrams) ? LIST_LAYOUT.flex : layout}>
+        <div className={!isLoading && isEmpty(epigrams) ? LIST_LAYOUT.flex : layout} data-testid='feed-layout'>
           {isLoading && <FeedEpigramSkeletonList count={PAGE_LIMIT} />}
 
           {/* 로딩 종료 후 empty 상태 조건부 렌더링 */}
