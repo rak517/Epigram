@@ -58,6 +58,7 @@ jobs:
           echo "GOOGLE_SECRET_KEY=${{ secrets.GOOGLE_SECRET_KEY }}" >> .env
           echo "NEXT_PUBLIC_PRODUCTION_DOMAIN=${{ secrets.NEXT_PUBLIC_PRODUCTION_DOMAIN }}" >> .env
           echo "NEXT_PUBLIC_LOCAL_DOMAIN=${{ secrets.NEXT_PUBLIC_LOCAL_DOMAIN }}" >> .env
+          echo "DOMAIN=${{ secrets.DOMAIN }}" >> .env
       
       # 9. Next.js 빌드
       - name: Build Next.js app

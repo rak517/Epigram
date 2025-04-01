@@ -25,7 +25,7 @@ export const POST = async () => {
     response.cookies.set('accessToken', accessToken, {
       httpOnly: true,
       sameSite: 'lax',
-      secure: process.env.NODE_ENV === 'production',
+      secure: process.env.DOMAIN === process.env.NEXT_PUBLIC_PRODUCTION_DOMAIN,
       path: '/',
       expires: accessTokenExp || undefined,
     });

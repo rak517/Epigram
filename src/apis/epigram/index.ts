@@ -16,7 +16,7 @@ export const postEpigram = async (epigramForm: EpigramForm) => {
 };
 
 /**
- * 에피그램 리스트 조회
+ * 에피그램 목록 조회
  * https://fe-project-epigram-api.vercel.app/docs/#/Epigram/ListEpigrams
  */
 export const getEpigrams = async (epigramsParams: GetEpigramsParams) => {

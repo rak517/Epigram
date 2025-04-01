@@ -22,6 +22,7 @@ export default function EditEpigramForm({ id }: { id: number }) {
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { openModal } = useModalStore();
+  
 
   const {
     handleSubmit,
@@ -41,21 +42,29 @@ export default function EditEpigramForm({ id }: { id: number }) {
   useEffect(() => {
     if (data) {
       setValue('content', data.content || '');
-      setValue('authorName', data.author || '');
-      setValue('sourceTitle', data.referenceTitle || '');
-      setValue('sourceUrl', data.referenceUrl || '');
-      setValue('tag', data.tags?.map((tag) => tag.name) || []);
+      setValue('author', data.author || '');
+      setValue('referenceTitle', data.referenceTitle || '');
+      setValue('referenceUrl', data.referenceUrl || '');
+      setValue('tags', data.tags?.map((tag) => tag.name) || []);
     }
   }, [data, setValue]);
 
   const handleTagChange = (newTag: string[]) => {
-    setValue('tag', newTag, { shouldValidate: true });
+    setValue('tags', newTag, { shouldValidate: true });
   };
 
   const onSubmit = async (data: MakeEpigramForm) => {
+    const epigramForm = {
+      content: data.content,
+      author: data.author || '',
+      ...(data.referenceTitle && { referenceTitle: data.referenceTitle }),
+      ...(data.referenceUrl && { referenceUrl: data.referenceUrl }),
+      tags: data.tags,
+    };
+
     setIsSubmitting(true);
     patchEpigram(
-      { epigramId: id, epigram: data },
+      { epigramId: id, epigram:  epigramForm },
       {
         onSuccess: () => {
           openModal({
@@ -80,27 +89,27 @@ export default function EditEpigramForm({ id }: { id: number }) {
 
   return (
     <>
-      <EpigramFormLayout onSubmit={handleSubmit(onSubmit)}>
+      <EpigramFormLayout className='flex flex-col gap-6 md:gap-8 lg:gap-10' onSubmit={handleSubmit(onSubmit)}>
         <h1 className='text-lg font-bold md:text-xl lg:text-2xl'>에피그램 수정</h1>
-        <div>
-          <Content register={register} errors={errors} trigger={trigger} />
-        </div>
-        <div className='pt-10 lg:pt-14'>
-          <Author register={register} watch={watch} setValue={setValue} errors={errors} trigger={trigger} />
-        </div>
-        <div className='flex flex-col gap-4 pt-10 lg:pt-14'>
-          <Input label='출처' {...register('sourceTitle')} error={errors.sourceTitle?.message} placeholder='출처 제목 입력' variant='outlined' />
-          <Input {...register('sourceUrl')} error={errors.sourceUrl?.message} placeholder='URL (ex. https://www.website.com)' variant='outlined' />
-        </div>
-        <div className='pt-10 lg:pt-14'>
-          <TagInput value={watch('tag')} onChange={handleTagChange} error={errors.tag?.message} />
-        </div>
-        <div className='pt-10 md:pt-6 lg:pt-6'>
+        <div className='flex flex-col gap-6 md:gap-8 lg:gap-10'>
+          <div className='flex flex-col gap-10 md:gap-9.75 lg:gap-10'>
+            <Content register={register} errors={errors} trigger={trigger} />
+
+            <Author register={register} watch={watch} setValue={setValue} errors={errors} trigger={trigger} />
+
+            <div className='flex flex-col gap-4'>
+              <Input label='출처' {...register('referenceTitle')} error={errors.referenceTitle?.message} placeholder='출처 제목 입력' variant='outlined' />
+              <Input {...register('referenceUrl')} error={errors.referenceUrl?.message} placeholder='URL (ex. https://www.website.com)' variant='outlined' />
+            </div>
+
+            <TagInput value={watch('tags')} onChange={handleTagChange} error={errors.tags?.message} />
+          </div>
+
           <Button
             type='submit'
             variant='default'
             className='w-full'
-            disabled={!watch('content') || watch('content').length > 500 || (watch('authorType') === 'direct' && !watch('authorName')) || isSubmitting}
+            disabled={!watch('content') || watch('content').length > 500 || (watch('authorType') === 'direct' && !watch('author')) || isSubmitting}
           >
             {isSubmitting ? '수정 중...' : '수정 완료'}
           </Button>

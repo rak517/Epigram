@@ -1,17 +1,16 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
-import Image from 'next/image';
+import { useContext, useEffect, useRef, useState } from 'react';
 import dayjs from 'dayjs';
+import Image from 'next/image';
 import ArrowLeft from '@/assets/icons/arrow_left.svg';
 import ArrowRight from '@/assets/icons/arrow_right.svg';
 import { CALENDAR_ROW } from '@/constants/calendar';
 import { cn } from '@/utils/cn';
-import { useGetUser } from '@/apis/user/queries';
-import { useGetMonthlyEmotionLogs } from '@/apis/emotion-log/queries';
 import Emotion from '@/components/ui/emotion';
 import RoundedButton from '@/components/ui/buttons/roundedButton';
 import { EMOTION_STATUS, EMOTION_STATUS_KR } from '@/constants/emotions';
+import { MypageContext } from '@/context/MypageProvider';
 
 const TEXT_FLEX_CENTER_ALIGN = 'flex flex-col items-center justify-center lg:gap-2';
 const ITEM_SIZE = 'size-11 md:size-14 lg:size-20';
@@ -20,25 +19,10 @@ const ITEM_TEXT_STYLE = 'font-semibold text-gray-200 text-lg lg:text-2xl';
 type EmotionKr = (typeof EMOTION_STATUS_KR)[number];
 
 export default function EmotionCalendar() {
-  const [currentDate, setCurrentDate] = useState<dayjs.Dayjs | null>(null);
+  const { currentDate, setCurrentDate, userEmotion } = useContext(MypageContext);
   const [selectedItem, setSelectedItem] = useState<EmotionKr | ''>('');
 
-  const { data: user } = useGetUser();
-  const emotionLogParams = {
-    userId: user?.id,
-    year: currentDate?.year(),
-    month: Number(currentDate?.month()) + 1,
-  };
-
-  const { data: logs } = useGetMonthlyEmotionLogs(emotionLogParams, {
-    enabled: !!user && !!currentDate,
-  });
-
-  useEffect(() => {
-    setCurrentDate(dayjs());
-  }, []);
-
-  if (currentDate === null) return null;
+  if (!currentDate) return null;
 
   const year = currentDate.year();
   const month = currentDate.month();
@@ -54,7 +38,7 @@ export default function EmotionCalendar() {
   const makeDays = (days: number[], className?: string, isDayInMonth = false) =>
     days.map((day, index) => {
       const isToday = currentDate.year() === dayjs().year() && currentDate.month() === dayjs().month() && day === dayjs().date();
-      const matchingLog = logs?.find((log) => dayjs(log.createdAt).date() === day);
+      const matchingLog = userEmotion?.find((log) => dayjs(log.createdAt).date() === day);
 
       return (
         <div
