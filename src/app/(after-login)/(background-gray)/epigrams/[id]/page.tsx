@@ -1,5 +1,5 @@
-import EpigramComment from '@/components/epigramDetail/epigramComment';
-import EpigramContent from '@/components/epigramDetail/epigramContent';
+import EpigramComment from '@/components/epigramDetail/EpigramComment';
+import EpigramContent from '@/components/epigramDetail/EpigramContent';
 import MainHeader from '@/components/ui/header/MainHeader';
 
 export default function Page() {

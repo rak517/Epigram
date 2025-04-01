@@ -3,7 +3,7 @@
 import { useGetComments } from '@/apis/epigram/queries';
 import { useCommentActions } from '@/hooks/useCommentActions';
 import { useParams } from 'next/navigation';
-import EpigramCommentLayout from './epigramCommentLayout';
+import EpigramCommentLayout from './EpigramCommentLayout';
 import { useMemo, useState } from 'react';
 import { Pretendard } from '@/fonts';
 import { useGetUser } from '@/apis/user/queries';
