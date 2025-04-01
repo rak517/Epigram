@@ -8,13 +8,20 @@ export const MypageContext = createContext<CreateContext>({
   currentDate: dayjs(),
   setCurrentDate: () => {},
   userEmotion: [],
+  user: {
+    image: '',
+    createdAt: '',
+    updatedAt: '',
+    teamId: '',
+    nickname: '',
+    id: 0,
+  },
 });
 
 export default function MypageProvider({ children }: PropsWithChildren) {
   const [currentDate, setCurrentDate] = useState<Dayjs | null>(dayjs());
 
   const { data: user } = useGetUser();
-
   const emotionLogParams = {
     userId: user?.id,
     year: currentDate?.year(),
@@ -25,7 +32,7 @@ export default function MypageProvider({ children }: PropsWithChildren) {
     enabled: !!user && !!currentDate,
   });
 
-  if (userEmotion !== undefined) {
-    return <MypageContext.Provider value={{ currentDate, setCurrentDate, userEmotion }}>{children}</MypageContext.Provider>;
+  if (userEmotion !== undefined && user !== undefined) {
+    return <MypageContext.Provider value={{ currentDate, setCurrentDate, userEmotion, user }}>{children}</MypageContext.Provider>;
   }
 }

@@ -46,7 +46,7 @@ export default function DailyEmotion() {
         {
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0, transition: { duration: 1 } }} className='flex flex-col items-center gap-6 lg:gap-12'>
             <div className='flex w-full items-center justify-between'>
-              <h2 className='text-black-600 text-lg font-semibold md:text-2xl'>오늘의 감정</h2>
+              <h2 className='text-black-600 text-lg font-semibold lg:text-2xl'>오늘의 감정</h2>
               <span className='text-lg text-blue-400 lg:text-xl'>{date}</span>
             </div>
             <div className='flex justify-center gap-2 lg:gap-4'>

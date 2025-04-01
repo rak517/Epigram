@@ -118,4 +118,11 @@
     background-position: left top;
     background-repeat: repeat-x;
   }
+
+  @layer utilities {
+  .shadow-custom {
+    box-shadow: 0px 0px 36px 0px var(--color-shadow);
+  }
+}
+
 }

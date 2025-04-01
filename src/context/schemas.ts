@@ -19,4 +19,12 @@ export const mypageContextSchema = z.object({
       emotion: emotionEnum,
     }),
   ),
+  user: z.object({
+    image: z.union([z.string(), z.undefined(), z.null()]),
+    createdAt: z.string(),
+    updatedAt: z.string(),
+    teamId: z.union([z.string(), z.undefined()]),
+    nickname: z.string().min(1).max(30),
+    id: z.number(),
+  }),
 });
