@@ -49,14 +49,14 @@ export const POST = async (request: NextRequest) => {
       response.cookies.set('accessToken', apiResponse.data.accessToken, {
         httpOnly: true,
         sameSite: 'lax',
-        secure: process.env.NODE_ENV === 'production',
+        secure: process.env.DOMAIN === process.env.NEXT_PUBLIC_PRODUCTION_DOMAIN,
         path: '/',
         expires: accessTokenExp || undefined,
       });
       response.cookies.set('refreshToken', apiResponse.data.refreshToken, {
         httpOnly: true,
         sameSite: 'lax',
-        secure: process.env.NODE_ENV === 'production',
+        secure: process.env.DOMAIN === process.env.NEXT_PUBLIC_PRODUCTION_DOMAIN,
         path: '/',
         expires: refreshTokenExp || undefined,
       });
