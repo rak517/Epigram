@@ -4,6 +4,7 @@ import LogoutButton from '@/components/auth/LogoutButton';
 import DailyEmotion from '@/components/mypage/DailyEmotion';
 import EmotionCalendar from '@/components/mypage/EmotionCalendar';
 import EmotionChart from '@/components/mypage/EmotionChart';
+import MyEpigramComments from '@/components/mypage/MyEpigramComments';
 import Avatar from '@/components/ui/avatars';
 import { MypageContext } from '@/context/MypageProvider';
 import { useContext } from 'react';
@@ -27,6 +28,9 @@ export default function MyPage() {
             <EmotionChart></EmotionChart>
           </div>
         </div>
+      </div>
+      <div className='mx-auto w-[360px] pt-14 md:w-[384px] lg:w-[640px] lg:pt-24'>
+        <MyEpigramComments></MyEpigramComments>
       </div>
     </div>
   );
