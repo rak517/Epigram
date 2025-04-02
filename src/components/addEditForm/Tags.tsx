@@ -7,7 +7,7 @@ import Image from 'next/image';
 import { TagInputProps } from '@/components/addEditForm/types';
 import Button from '@/components/ui/buttons/index';
 
-export default function TagInput({ value = [], onChange, label = '태그', required, error }: TagInputProps) {
+export default function Tags({ value = [], onChange, label = '태그', required, error }: TagInputProps) {
   const [newTag, setNewTag] = useState('');
   const [showAll, setShowAll] = useState(false); // 태그 모두 보기 토글 상태
   const [localError, setLocalError] = useState<string | null>(null);
