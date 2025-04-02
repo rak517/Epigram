@@ -107,6 +107,12 @@ export default function EpigramComment() {
         },
         onError: (error) => {
           console.error('댓글 등록 실패', error);
+          openModal({
+            type: 'alert',
+            title: '오류',
+            description: '삭제중 오류가 발생했습니다.',
+            okMessage: '확인',
+          });
         },
       },
     );
@@ -134,6 +140,7 @@ export default function EpigramComment() {
                 variant='default'
                 className={`h-[32px] w-[53px] gap-2 rounded-lg px-4 text-xs font-semibold lg:text-sm ${Pretendard.className} text-white lg:h-[44px] lg:w-[60px]`}
                 onClick={handleSubmitComment}
+                disabled={!commentText.trim()}
               >
                 저장
               </Button>
@@ -143,7 +150,7 @@ export default function EpigramComment() {
         <div className='pt-3 md:pt-8 lg:pt-10'>
           {renderComment()}
 
-          {isFetchingNextPage && <CommentsSkeleton count={3} />}
+          {isFetchingNextPage && <CommentsSkeleton count={PAGE_LIMIT} />}
           <div className='flex justify-center'>
             {hasNextPage && (
               <RoundedButton variant='outline' onClick={handleMoreClick} className='gap-2'>
