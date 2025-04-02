@@ -78,6 +78,7 @@
   --color-sub-gray-3: hsl(213, 39%, 95%, 1);
 
   --color-blue-gray-100: hsla(220, 20%, 75%, 0.15)
+
 }
 
 @layer utilities {
@@ -125,4 +126,21 @@
   }
 }
 
+}
+
+@layer utilities {
+  .animate-text {
+    @apply animate-[text_5s_ease_infinite];
+  }
+  
+  @keyframes text {
+    0%, 100% {
+      background-size: 200% 200%;
+      background-position: left center;
+    }
+    50% {
+      background-size: 200% 200%;
+      background-position: right center;
+    }
+  }
 }
