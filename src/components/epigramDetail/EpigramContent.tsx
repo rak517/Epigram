@@ -10,12 +10,10 @@ import Image from 'next/image';
 import { useDeleteEpigram, useDeleteEpigramFavorite, useGetEpigram, usePostEpigramFavorite } from '@/apis/epigram/queries';
 import { useParams, useRouter } from 'next/navigation';
 import { useModalStore } from '@/stores/ModalStore';
-import { useQueryClient } from '@tanstack/react-query';
 import { isAxiosError } from 'axios';
 import { useGetUser } from '@/apis/user/queries';
 import { getErrorMessage } from '@/utils/network/getErrorMessage';
 import { CopyCurrentUrl } from '@/utils/copyCurrentUrl';
-import { useEffect, useState } from 'react';
 import { useToast } from '@/utils/toast/ToastContext';
 
 export default function EpigramContent() {
@@ -23,11 +21,9 @@ export default function EpigramContent() {
   const params = useParams();
   const { openModal } = useModalStore();
 
-  const [isDeleted, setIsDeleted] = useState(false);
-
   const epigramId = params?.id ? Number(params.id) : undefined;
 
-  const { data, isError, isLoading, error } = useGetEpigram(isDeleted ? undefined : epigramId);
+  const { data, isError, isLoading, error } = useGetEpigram(epigramId);
 
   const { data: user } = useGetUser();
 
@@ -41,15 +37,7 @@ export default function EpigramContent() {
 
   const showDropdown = user?.id === data?.writerId;
 
-  const queryClient = useQueryClient();
-
   const { showToast } = useToast();
-
-  useEffect(() => {
-    if (isDeleted) {
-      router.push('/epigrams');
-    }
-  }, [isDeleted, router]); // isDeleted.current가 변경될 때 실행
 
   if (isLoading) {
     return (
@@ -95,20 +83,11 @@ export default function EpigramContent() {
 
   const handleDelete = async () => {
     if (data) {
-      try {
-        await deleteEpigramMutation.mutateAsync(data.id);
-
-        queryClient.removeQueries({ queryKey: ['epigram', epigramId] });
-
-        setIsDeleted(true);
-
-        showToast('에피그램이 성공적으로 삭제되었습니다.', 'success', '삭제 완료');
-
-        router.push('/epigrams');
-      } catch (err) {
-        console.error('삭제중 오류 발생', err);
-        showToast('에피그램 삭제 중 오류가 발생했습니다.', 'error', '삭제 실패');
-      }
+      deleteEpigramMutation.mutate(data.id, {
+        onError: () => {
+          showToast('에피그램 삭제 중 오류가 발생했습니다.', 'error', '삭제 실패');
+        },
+      });
     }
   };
 
