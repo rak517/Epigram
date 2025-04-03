@@ -10,24 +10,20 @@ import Image from 'next/image';
 import { useDeleteEpigram, useDeleteEpigramFavorite, useGetEpigram, usePostEpigramFavorite } from '@/apis/epigram/queries';
 import { useParams, useRouter } from 'next/navigation';
 import { useModalStore } from '@/stores/ModalStore';
-import { useQueryClient } from '@tanstack/react-query';
-import { useEffect, useRef, useState } from 'react';
-import axios, { isAxiosError } from 'axios';
+import { isAxiosError } from 'axios';
 import { useGetUser } from '@/apis/user/queries';
 import { getErrorMessage } from '@/utils/network/getErrorMessage';
-
-//TODO: 데이터 삭제시 404에러 해결
+import { CopyCurrentUrl } from '@/utils/copyCurrentUrl';
+import { useToast } from '@/utils/toast/ToastContext';
 
 export default function EpigramContent() {
   const router = useRouter();
   const params = useParams();
   const { openModal } = useModalStore();
 
-  const isDeleted = useRef(false);
-
   const epigramId = params?.id ? Number(params.id) : undefined;
 
-  const { data, isError, isLoading, error } = useGetEpigram(isDeleted.current ? undefined : epigramId);
+  const { data, isError, isLoading, error } = useGetEpigram(epigramId);
 
   const { data: user } = useGetUser();
 
@@ -41,22 +37,7 @@ export default function EpigramContent() {
 
   const showDropdown = user?.id === data?.writerId;
 
-  const queryClient = useQueryClient();
-
-  const [localIsLiked, setLocalIsLiked] = useState(false);
-  const [localLikeCount, setLocalLikeCount] = useState(0);
-  const [isLikeLoading, setIsLikeLoading] = useState(false);
-
-  useEffect(() => {
-    if (data) {
-      setLocalIsLiked(data?.isLiked || false);
-      setLocalLikeCount(data?.likeCount || 0);
-    }
-  }, [data]);
-
-  if (isDeleted.current) {
-    return null;
-  }
+  const { showToast } = useToast();
 
   if (isLoading) {
     return (
@@ -76,17 +57,7 @@ export default function EpigramContent() {
   }
 
   const handleCopyUrl = () => {
-    const currentURL = window.location.href;
-
-    navigator.clipboard
-      .writeText(currentURL)
-      .then(() => {
-        alert('URL이 클립보드에 복사되었습니다');
-      })
-      .catch((err) => {
-        console.error(err);
-        alert('URL 복사에 실패했습니다. 직접 주소창의 URL을 복사해주세요.');
-      });
+    CopyCurrentUrl();
   };
 
   const handleTagClick = (tagName: string) => {
@@ -112,73 +83,24 @@ export default function EpigramContent() {
 
   const handleDelete = async () => {
     if (data) {
-      try {
-        await deleteEpigramMutation.mutateAsync(data.id);
-
-        isDeleted.current = true;
-
-        openModal({
-          type: 'alert',
-          title: '알림',
-          description: '에피그램이 삭제되었습니다.',
-          okMessage: '확인',
-          callback: () => {
-            router.push('/epigrams');
-          },
-        });
-        queryClient.removeQueries({ queryKey: ['epigram', epigramId] });
-      } catch (err) {
-        console.error('삭제중 오류 발생', err);
-        openModal({
-          type: 'alert',
-          title: '오류',
-          description: '삭제중 오류가 발생했습니다.',
-          okMessage: '확인',
-        });
-      }
+      deleteEpigramMutation.mutate(data.id, {
+        onError: () => {
+          showToast('에피그램 삭제 중 오류가 발생했습니다.', 'error', '삭제 실패');
+        },
+      });
     }
   };
 
   const handleToggleLike = async () => {
-    if (!data || isLikeLoading) return;
-
-    setIsLikeLoading(true);
-
-    const newIsLiked = !localIsLiked;
-    setLocalIsLiked(newIsLiked);
-    setLocalLikeCount((prev) => (newIsLiked ? prev + 1 : prev - 1));
+    if (!data) return;
 
     try {
-      if (newIsLiked) {
-        try {
-          await addFavoriteMutation.mutateAsync(data.id);
-        } catch (addError) {
-          if (axios.isAxiosError(addError) && addError.response?.status === 400 && addError.response?.data?.message === '이미 좋아요를 눌렀습니다.') {
-            console.log('이미 좋아요 상태입니다');
-          } else {
-            throw addError;
-          }
-        } finally {
-          setIsLikeLoading(false);
-        }
+      if (!data.isLiked) {
+        await addFavoriteMutation.mutateAsync(data.id);
       } else {
-        try {
-          await deleteFavoriteMutation.mutateAsync(data.id);
-        } catch (deleteError) {
-          if (axios.isAxiosError(deleteError) && deleteError.response?.status === 400 && deleteError.response?.data?.message === '좋아요를 누르지 않았습니다.') {
-            console.log('이미 좋아요가 취소된 상태입니다');
-          } else {
-            throw deleteError;
-          }
-        } finally {
-          setIsLikeLoading(false);
-        }
+        await deleteFavoriteMutation.mutateAsync(data.id);
       }
-
-      await queryClient.invalidateQueries({ queryKey: ['epigram', epigramId] });
     } catch (err) {
-      setLocalIsLiked(!newIsLiked);
-      setLocalLikeCount((prev) => (!newIsLiked ? prev + 1 : prev - 1));
       let errorMessage = getErrorMessage(err);
       let callback = () => {};
 
@@ -219,7 +141,7 @@ export default function EpigramContent() {
         className='h-[164px] w-[312px] text-2xl md:h-[182px] md:w-[384px] lg:h-[236px] lg:w-[640px] lg:text-3xl'
       />
       <div className='px-auto flex gap-4 pt-9'>
-        {localIsLiked ? (
+        {data?.isLiked ? (
           <RoundedButton variant='secondary' onClick={handleToggleLike}>
             <div className='flex items-center justify-center'>
               <div className='hidden md:block'>
@@ -228,7 +150,7 @@ export default function EpigramContent() {
               <div className='block md:hidden'>
                 <Image src={like} alt='좋아요 따봉 이미지' width={20} height={20} />
               </div>
-              <div className='text-md min-w-[65px] text-center lg:text-xl'>{localLikeCount}</div>
+              <div className='text-md min-w-[65px] text-center lg:text-xl'>{data?.likeCount}</div>
             </div>
           </RoundedButton>
         ) : (
@@ -240,7 +162,7 @@ export default function EpigramContent() {
               <div className='block md:hidden md:h-5 md:w-5'>
                 <Image src={like_outlined} alt='좋아요 따봉 이미지' />
               </div>
-              <div className='text-md min-w-[65px] text-center lg:text-xl'>{localLikeCount}</div>
+              <div className='text-md min-w-[65px] text-center lg:text-xl'>{data?.likeCount}</div>
             </div>
           </RoundedButton>
         )}

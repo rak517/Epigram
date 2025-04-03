@@ -1,6 +1,8 @@
 import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { Epigram, EpigramForm, GetCommentsParams, GetEpigramsParams, PatchEpigram } from './types';
+import { Epigram, EpigramForm, GetCommentsParams, GetEpigramsParams, MutationContext, PatchEpigram } from './types';
 import { deleteEpigram, deleteEpigramFavorite, getComments, getEpigram, getEpigrams, patchEpigram, postEpigram, postEpigramFavorite } from '.';
+import { useToast } from '@/utils/toast/ToastContext';
+import { useRouter } from 'next/navigation';
 
 export const usePostEpigram = () => {
   const queryClient = useQueryClient();
@@ -49,13 +51,15 @@ export const usePatchEpigram = () => {
 
 export const useDeleteEpigram = () => {
   const queryClient = useQueryClient();
-
+  const { showToast } = useToast();
+  const router = useRouter();
   return useMutation({
     mutationFn: (epigramId: Epigram['id']) => {
       return deleteEpigram(epigramId);
     },
-    onSuccess: (epigram) => {
-      queryClient.invalidateQueries({ queryKey: ['epigram', epigram.id] });
+    onSuccess: () => {
+      router.push('/');
+      showToast('에피그램이 성공적으로 삭제되었습니다.', 'success', '삭제 완료');
       queryClient.invalidateQueries({ queryKey: ['epigrams'] });
     },
   });
@@ -68,6 +72,32 @@ export const usePostEpigramFavorite = () => {
     mutationFn: (epigramId: Epigram['id']) => {
       return postEpigramFavorite(epigramId);
     },
+    onMutate: async (epigramId: Epigram['id']) => {
+      await queryClient.cancelQueries({ queryKey: ['epigram', epigramId] });
+
+      const previousEpigram = await queryClient.getQueryData(['epigram', epigramId]);
+
+      queryClient.setQueryData<Epigram>(['epigram', epigramId], (old) => {
+        if (!old) return old;
+        return {
+          ...old,
+          isLiked: true,
+          likeCount: old.likeCount + 1,
+        };
+      });
+
+      return { previousEpigram };
+    },
+
+    onError: (err: Error, epigramId: number, context: unknown) => {
+      if (context && typeof context === 'object' && 'previousEpigram' in context) {
+        const typedContext = context as MutationContext;
+        if (typedContext.previousEpigram) {
+          queryClient.setQueryData<Epigram>(['epigram', epigramId], typedContext.previousEpigram);
+        }
+      }
+    },
+
     onSuccess: (epigram) => {
       queryClient.invalidateQueries({ queryKey: ['epigram', epigram.id] });
     },
@@ -80,6 +110,32 @@ export const useDeleteEpigramFavorite = () => {
     mutationFn: (epigramId: Epigram['id']) => {
       return deleteEpigramFavorite(epigramId);
     },
+    onMutate: async (epigramId: Epigram['id']): Promise<MutationContext> => {
+      await queryClient.cancelQueries({ queryKey: ['epigram', epigramId] });
+
+      const previousEpigram = queryClient.getQueryData<Epigram>(['epigram', epigramId]);
+
+      queryClient.setQueryData<Epigram | undefined>(['epigram', epigramId], (old) => {
+        if (!old) return old;
+        return {
+          ...old,
+          isLiked: false,
+          likeCount: Math.max(0, old.likeCount - 1),
+        };
+      });
+
+      return { previousEpigram };
+    },
+
+    onError: (err: Error, epigramId: number, context: unknown) => {
+      if (context && typeof context === 'object' && 'previousEpigram' in context) {
+        const typedContext = context as MutationContext;
+        if (typedContext.previousEpigram) {
+          queryClient.setQueryData<Epigram>(['epigram', epigramId], typedContext.previousEpigram);
+        }
+      }
+    },
+
     onSuccess: (epigram) => {
       queryClient.invalidateQueries({ queryKey: ['epigram', epigram.id] });
     },
