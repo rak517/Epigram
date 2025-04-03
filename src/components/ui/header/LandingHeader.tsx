@@ -17,16 +17,16 @@ export default function LandingHeader({ showIcon = false }: LandingHeaderProps) 
           <Image src={searchIcon} alt='검색 아이콘' className='xl:w-9' />
         </Link>
         <Link href={'/'}>
-          <Image src={headerLogo} alt='헤더 로고' className='h-[36px] w-[119px] xl:h-12 xl:w-[172px]' />
+          <Image src={headerLogo} alt='헤더 로고' className='h-[36px] w-[119px] xl:h-12 xl:w-[172px]' priority />
         </Link>
         <Link href={'/mypage'}>
-          <Image src={userIconDark} alt='유저 아이콘' className='xl:w-9' />
+          <Image src={userIconDark} alt='유저 아이콘' />
         </Link>
       </header>
     );
   }
   return (
-    <header className='border-b-line-100 fixed flex w-full items-center justify-center border-b bg-white py-3.5 md:h-[60px] xl:h-20'>
+    <header className='border-b-line-100 fixed z-100 flex w-full items-center justify-center border-b bg-white py-3.5 md:h-[60px] xl:h-20'>
       <Link href={'/'} className='flex items-center justify-center'>
         <Image src={headerLogo} alt='헤더 로고' className='xl:h-9 xl:w-[131px]' />
       </Link>
