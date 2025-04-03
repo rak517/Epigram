@@ -14,3 +14,7 @@ export type PatchEpigram = z.infer<typeof patchEpigramSchema>;
 export type GetCommentsParams = z.infer<typeof getCommentsParamsSchema>;
 
 export type EpigramsResponse = z.infer<typeof epigramsResponseSchema>;
+
+export type MutationContext = {
+  previousEpigram?: Epigram;
+};
