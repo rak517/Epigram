@@ -3,8 +3,15 @@ import card_2 from '@/assets//landings/card_2.png';
 import card_3 from '@/assets//landings/card_3.png';
 import { Iropke } from '@/fonts';
 import { cn } from '@/utils/cn';
-import { easeInOut, motion } from 'motion/react';
+import { easeInOut } from 'motion/react';
+import dynamic from 'next/dynamic';
 import Image, { StaticImageData } from 'next/image';
+
+const MotionLi = dynamic(() =>
+  import('framer-motion').then((mod) => ({
+    default: mod.motion.li,
+  })),
+);
 
 interface EPIGRAM_CONTENT {
   image: StaticImageData;
@@ -52,20 +59,22 @@ export default function Epigrams() {
         사용자들이 직접
         <br /> 인용한 에피그램들
       </h3>
-      {EPIGRAM_CONTENT.map((item, index) => (
-        <motion.li key={index} custom={index} variants={cardVariants} initial='initial' whileInView='animate' className='max-w-[640px] list-none overflow-hidden rounded-lg'>
-          <figure>
-            <Image src={item.image} alt={item.title} />
-          </figure>
-          <div className='flex justify-end gap-4'>
-            {item.tag.map((item, index) => (
-              <span className={cn('text-md mr-2 font-light text-blue-400 md:text-lg lg:text-2xl', Iropke.className)} key={index}>
-                {item}
-              </span>
-            ))}
-          </div>
-        </motion.li>
-      ))}
+      <ul>
+        {EPIGRAM_CONTENT.map((item, index) => (
+          <MotionLi key={index} custom={index} variants={cardVariants} initial='initial' whileInView='animate' className='max-w-[640px] list-none overflow-hidden rounded-lg'>
+            <figure>
+              <Image src={item.image} alt={item.title} />
+            </figure>
+            <div className='flex justify-end gap-4'>
+              {item.tag.map((item, index) => (
+                <span className={cn('text-md mr-2 font-light text-blue-400 md:text-lg lg:text-2xl', Iropke.className)} key={index}>
+                  {item}
+                </span>
+              ))}
+            </div>
+          </MotionLi>
+        ))}
+      </ul>
     </section>
   );
 }
