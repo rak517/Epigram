@@ -8,7 +8,7 @@ import Button from '@/components/ui/buttons';
 import { getErrorMessage } from '@/utils/network/getErrorMessage';
 
 class ErrorRender {
-  static rederTo400(error: AxiosError) {
+  static renderTo400(error: AxiosError) {
     return <Layout title='400' subTitle='잘못된 요청입니다.' description={getErrorMessage(error)} />;
   }
   static renderTo401(error: AxiosError) {
@@ -23,7 +23,7 @@ class ErrorRender {
 }
 
 const errorStatus = {
-  400: ErrorRender.rederTo400,
+  400: ErrorRender.renderTo400,
   401: ErrorRender.renderTo401,
   500: ErrorRender.renderTo500,
   other: ErrorRender.renderToOther,
