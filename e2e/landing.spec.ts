@@ -58,7 +58,7 @@ test.describe('랜딩 페이지', () => {
   test('하단 화살표 이미지 클릭 시 기능 소개 레이아웃으로 스크롤이 내려간다', async () => {
     const initialScrollY = await page.evaluate(() => window.scrollY);
 
-    await page.getByAltText('더 알아보기').click();
+    await page.getByAltText('아래로 스크롤').click();
 
     await page.waitForTimeout(1000);
 
