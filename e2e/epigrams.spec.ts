@@ -54,7 +54,8 @@ test.describe('메인 페이지', () => {
   });
 
   test('헤더의 프로필 이미지를 클릭하면 마이페이지로 이동한다', async () => {
-    await page.getByRole('link', { name: '프로필 이미지' }).click();
+    await page.getByRole('button', { name: '프로필 이미지' }).click();
+    await page.getByText('마이페이지').click();
     await expect(page).toHaveURL('http://localhost:3000/mypage');
   });
 
