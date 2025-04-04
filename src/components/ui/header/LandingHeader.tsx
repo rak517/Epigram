@@ -8,13 +8,35 @@ import Link from 'next/link';
 import DropdownMenu from '@/components/ui/DropdownMenu';
 import { useRouter } from 'next/navigation';
 import logout from '@/actions/logoutAction';
+import { useEffect, useState } from 'react';
+import { getUser } from '@/apis/user';
 
 export interface LandingHeaderProps {
   showIcon?: boolean;
 }
 
 export default function LandingHeader({ showIcon = false }: LandingHeaderProps) {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const router = useRouter();
+
+  useEffect(() => {
+    const checkLogin = async () => {
+      try {
+        const user = await getUser(); 
+        if (user) {
+          setIsLoggedIn(true);
+        } else {
+          setIsLoggedIn(false);
+        }
+      } catch {
+        setIsLoggedIn(false);
+      }
+    };
+
+    checkLogin();
+  }, []);
+
+  const options = isLoggedIn ? ['마이페이지', '로그아웃'] : ['로그인'];
 
   const handleSelect = async (option: string) => {
     if (option === '마이페이지') {
@@ -27,6 +49,9 @@ export default function LandingHeader({ showIcon = false }: LandingHeaderProps) 
         console.error(result.error);
         alert(result.error);
       }
+    }
+    else if (option === '로그인') {
+      router.push('/login');
     }
   };
 
@@ -41,7 +66,7 @@ export default function LandingHeader({ showIcon = false }: LandingHeaderProps) 
         </Link>
         <DropdownMenu
           size="sm"
-          options={['마이페이지', '로그아웃']}
+          options={options}
           onSelect={handleSelect}
           trigger={<Image src={userIconDark} alt="유저 아이콘" />}
         />
