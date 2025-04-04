@@ -1,4 +1,10 @@
 import EpigramList from '@/components/feed/EpigramList';
+import { Metadata } from 'next/types';
+
+export const metadata: Metadata = {
+  title: '에피그램 - 피드',
+  description: '좋은 글귀를 공유하기 위해 로그인 해보세요!',
+};
 
 export default function Feed() {
   return (
