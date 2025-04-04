@@ -8,14 +8,31 @@ import Image from 'next/image';
 import menuIcon from '@/assets/icons/hamburgerMenuIcon.svg';
 import headerLogo from '@/assets/images/headerLogo.svg';
 import SideBar from '../sideBar';
+import DropdownMenu from '@/components/ui/DropdownMenu';
+import { useRouter } from 'next/navigation';
+import logout from '@/actions/logoutAction';
 
 export default function MainHeader() {
   const { data: user, isLoading } = useGetUser();
-
+  const router = useRouter();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const toggleSidebar = () => {
     setIsSidebarOpen((prev) => !prev);
+  };
+
+  const handleSelect = async (option: string) => {
+    if (option === '마이페이지') {
+      router.push('/mypage');
+    } else if (option === '로그아웃') {
+      const result = await logout();
+      if (result.status) {
+        router.push('/login');
+      } else {
+        console.error(result.error);
+        alert(result.error);
+      }
+    }
   };
 
   return (
@@ -33,19 +50,26 @@ export default function MainHeader() {
             검색
           </Link>
         </div>
-        <Link href={'/mypage'} className='flex items-center gap-1.5'>
+        <div>
           {isLoading ? (
-            <>
+            <div className='flex items-center gap-1.5'>
               <div className='h-6 w-6 animate-pulse rounded-full bg-gray-300' />
               <p className='text-sm font-medium text-gray-300'>Loading...</p>
-            </>
+            </div>
           ) : (
-            <>
-              <Avatar src={user?.image} alt='프로필 이미지' className='h-6 w-6' />
-              <p className='text-sm font-medium text-gray-300 lg:text-lg'>{user?.nickname}</p>
-            </>
+            <DropdownMenu
+              size='sm'
+              options={['마이페이지', '로그아웃']}
+              onSelect={handleSelect}
+              trigger={
+                <div className='flex items-center gap-1.5 cursor-pointer'>
+                  <Avatar src={user?.image} alt='프로필 이미지' className='h-6 w-6' />
+                  <p className='text-sm font-medium text-gray-300 lg:text-lg'>{user?.nickname}</p>
+                </div>
+              }
+            />
           )}
-        </Link>
+        </div>
       </header>
 
       {isSidebarOpen && (
