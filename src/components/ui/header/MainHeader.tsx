@@ -9,31 +9,17 @@ import menuIcon from '@/assets/icons/hamburgerMenuIcon.svg';
 import headerLogo from '@/assets/images/headerLogo.svg';
 import SideBar from '../sideBar';
 import DropdownMenu from '@/components/ui/DropdownMenu';
-import { useRouter } from 'next/navigation';
-import logout from '@/actions/logoutAction';
+import { useHandleHeaderSelect } from '@/hooks/useHandleHeaderSelect';
 
 export default function MainHeader() {
   const { data: user, isLoading } = useGetUser();
-  const router = useRouter();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const handleSelect = useHandleHeaderSelect();
 
   const toggleSidebar = () => {
     setIsSidebarOpen((prev) => !prev);
   };
 
-  const handleSelect = async (option: string) => {
-    if (option === '마이페이지') {
-      router.push('/mypage');
-    } else if (option === '로그아웃') {
-      const result = await logout();
-      if (result.status) {
-        router.push('/login');
-      } else {
-        console.error(result.error);
-        alert(result.error);
-      }
-    }
-  };
 
   return (
     <>
