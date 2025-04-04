@@ -7,6 +7,7 @@ import searchIcon from '@/assets/icons/searchIcon.svg';
 import Link from 'next/link';
 import DropdownMenu from '@/components/ui/DropdownMenu';
 import { useRouter } from 'next/navigation';
+import logout from '@/actions/logoutAction';
 
 export interface LandingHeaderProps {
   showIcon?: boolean;
@@ -15,11 +16,17 @@ export interface LandingHeaderProps {
 export default function LandingHeader({ showIcon = false }: LandingHeaderProps) {
   const router = useRouter();
 
-  const handleSelect = (option: string) => {
+  const handleSelect = async (option: string) => {
     if (option === '마이페이지') {
       router.push('/mypage');
     } else if (option === '로그아웃') {
-      console.log('로그아웃');
+      const result = await logout();
+      if (result.status) {
+        router.push('/login'); 
+      } else {
+        console.error(result.error);
+        alert(result.error);
+      }
     }
   };
 
