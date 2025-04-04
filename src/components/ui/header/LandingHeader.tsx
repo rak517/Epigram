@@ -22,19 +22,15 @@ export default function LandingHeader({ showIcon = false }: LandingHeaderProps) 
   useEffect(() => {
     const checkLogin = async () => {
       try {
-        const user = await getUser(); 
-        if (user) {
-          setIsLoggedIn(true);
-        } else {
-          setIsLoggedIn(false);
-        }
+        const user = await getUser();
+        setIsLoggedIn(!!user);
       } catch {
         setIsLoggedIn(false);
       }
     };
-
     checkLogin();
   }, []);
+  
 
   const options = isLoggedIn ? ['마이페이지', '로그아웃'] : ['로그인'];
 
@@ -46,7 +42,6 @@ export default function LandingHeader({ showIcon = false }: LandingHeaderProps) 
       if (result.status) {
         router.push('/login'); 
       } else {
-        console.error(result.error);
         alert(result.error);
       }
     }
