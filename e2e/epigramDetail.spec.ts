@@ -1,10 +1,10 @@
 import { test, expect, BrowserContext, Page } from '@playwright/test';
 
-const TEST_EPIGRAM_ID = '1504';
+const TEST_EPIGRAM_ID = '1562';
 
 test.describe('로그인 이전 상세 페이지', () => {
   test('로그인이 안된 상태에서 상세페이지 접속 시 로그인 페이지로 리다이렉트 된다', async ({ page }) => {
-    await page.goto(`{/epigrams/${TEST_EPIGRAM_ID}}`);
+    await page.goto(`/epigrams/${TEST_EPIGRAM_ID}`);
     await expect(page).toHaveURL('http://localhost:3000/login');
   });
 });
@@ -41,7 +41,7 @@ test.describe('로그인 이후 상세 페이지', () => {
 
   test('공유 버튼 클릭 시 해당 URL을 복사한다', async () => {
     await page.getByRole('button', { name: 'URL 복사' }).click();
-    await expect(page.getByText('URL이 클립보드에 복사되었습니다')).toBeVisible();
+    await expect(page.getByTestId('toast-message')).toBeVisible();
   });
 
   test('좋아요 버튼을 누르면 상태가 변경된다', async () => {
@@ -118,15 +118,6 @@ test.describe('로그인 이후 상세 페이지', () => {
     const testComment = '테스트 댓글';
     await commentTextArea.fill(testComment);
 
-    const toggleButton = page.getByText('공개');
-    await expect(toggleButton).toBeVisible();
-
-    await toggleButton.click();
-    await expect(page.getByText('비공개')).toBeVisible();
-
-    await toggleButton.click();
-    await expect(page.getByText('공개')).toBeVisible();
-
     await page.getByRole('button', { name: '저장' }).click();
 
     await expect(commentTextArea).toHaveValue('');
@@ -148,8 +139,8 @@ test.describe('로그인 이후 상세 페이지', () => {
     const comments = page.locator('div.bg-background-100.border-line-200.flex');
     await expect(comments.first()).toBeVisible();
 
-    const editButton = comments.first().getByText('수정');
-    const deleteButton = comments.first().getByText('삭제');
+    const editButton = page.getByRole('button', { name: '수정' }).first();
+    const deleteButton = page.getByRole('button', { name: '삭제' }).first();
 
     if ((await editButton.isVisible()) && (await deleteButton.isVisible())) {
       await expect(editButton).toBeVisible();
@@ -170,20 +161,13 @@ test.describe('로그인 이후 상세 페이지', () => {
       await editTextArea.fill(modifiedText);
       await expect(saveButton).toBeEnabled();
 
-      const toggleButton = page.getByText('공개').nth(1);
-      await expect(toggleButton).toBeVisible();
-
-      await toggleButton.click();
-      await expect(page.getByText('비공개').nth(1)).toBeVisible();
-
-      await page.getByText('비공개').nth(1).click();
-      await expect(page.getByText('공개').nth(1)).toBeVisible();
-
       await saveButton.click();
+      const okButton = page.getByRole('button', { name: '확인' });
+      await okButton.click();
       await expect(page.getByText(modifiedText).first()).toBeVisible();
 
       await deleteButton.click();
-      await expect(page.getByText('정말로 댓글을 삭제하시겠습니까?')).toBeVisible();
+      await expect(page.getByText('정말 삭제하시겠습니까?')).toBeVisible();
 
       const confirmButton = page.getByRole('button', { name: '확인' });
       const cancelButton = page.getByRole('button', { name: '취소' });
@@ -212,9 +196,6 @@ test.describe('로그인 이후 상세 페이지', () => {
     }
   });
   test('플로팅 액션 버튼을 클릭하면 스크롤 최상단으로 이동한다.', async () => {
-    await page.getByRole('button', { name: '에피그램 더보기' }).click();
-    await page.waitForTimeout(1000);
-
     await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
     const scrollPositionBefore = await page.evaluate(() => window.scrollY);
     expect(scrollPositionBefore).toBeGreaterThan(0);

@@ -36,6 +36,7 @@ export const Toast: React.FC<ToastProps> = ({ id, title, message, variant, durat
         isVisible ? 'translate-y-0 opacity-100' : 'translate-y-2 opacity-0'
       }`}
       role='alert'
+      data-testid='toast-message'
       style={{ top: '20px' }}
     >
       <div className='flex justify-between'>
