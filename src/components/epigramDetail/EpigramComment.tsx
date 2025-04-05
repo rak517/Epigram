@@ -37,7 +37,6 @@ export default function EpigramComment() {
 
   const { mutate } = usePostComment();
 
-  //왜 라벨 비공개 ? ?
   const { handleEditComment, handleDelete } = useCommentActions();
 
   const [isPublic, setIsPublic] = useState(true);
