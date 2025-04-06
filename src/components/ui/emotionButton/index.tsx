@@ -57,7 +57,12 @@ export default function EmotionButton({ buttonVariant, emotion, emotionVariant, 
   }, [buttonVariant]);
 
   return (
-    <button className={cn(buttonStyles({ isActive: currentButtonVariant, size }), buttonBorderColor, isInteractive && 'size-14 md:size-16 lg:size-24')} onClick={handleClick} disabled={disabled}>
+    <button
+      className={cn(buttonStyles({ isActive: currentButtonVariant, size }), buttonBorderColor, isInteractive && 'size-14 md:size-16 lg:size-24')}
+      onClick={handleClick}
+      disabled={disabled}
+      aria-label={emotion}
+    >
       <Emotion variant={emotionVariant} emotion={emotion} size={size} className={cn(isInteractive && 'size-8 lg:size-12')} />
     </button>
   );

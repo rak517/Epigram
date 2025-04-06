@@ -187,7 +187,7 @@ export interface EmotionProps extends VariantProps<typeof emotionVariants> {
 
 export default function Emotion({ variant, emotion, size, className }: EmotionProps) {
   return (
-    <svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32' fill='none' className={cn(emotionVariants({ variant, size, className }))}>
+    <svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32' fill='none' aria-label={emotion} className={cn(emotionVariants({ variant, size, className }))}>
       {emotionPaths[emotion]}
     </svg>
   );
