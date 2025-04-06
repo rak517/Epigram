@@ -144,7 +144,7 @@ export const useDeleteEpigramFavorite = () => {
 
 export const useGetComments = (epigramId: Epigram['id'], commentsParams: GetCommentsParams) => {
   return useInfiniteQuery({
-    queryKey: ['epigramComments'],
+    queryKey: ['epigramComments', epigramId, commentsParams],
     queryFn: ({ pageParam }) => getComments(epigramId, { ...commentsParams, cursor: pageParam }),
     getNextPageParam: (lastPage) => lastPage.nextCursor,
     initialPageParam: 0,
