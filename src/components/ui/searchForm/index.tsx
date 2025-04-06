@@ -18,7 +18,7 @@ export default function SearchForm({ onSearch }: SearchFormProps) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="max-w-[640px] mx-auto w-full">
+    <form onSubmit={handleSubmit} className="max-w-[640px] w-full mb-6 md:mb-6 lg:mb-10">
       <div className="relative flex items-center border-b-2 sm:border-b-2 md:border-b-2 lg:border-b-4">
         <input
           type="text"

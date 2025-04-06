@@ -1,17 +1,34 @@
 "use client";
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import MainHeader from "@/components/ui/header/MainHeader";
 import SearchForm from '@/components/ui/searchForm';
+import SearchSave from '@/components/ui/searchSave';
 
 export default function SearchPage() {
+
   const [results, setResults] = useState<string[]>([]);
+  const [recentSearches, setRecentSearches] = useState<string[]>([]);
+
+  useEffect(() => {
+    const stored = localStorage.getItem("recentSearches");
+    if (stored) {
+      setRecentSearches(JSON.parse(stored));
+    }
+  }, []);
 
   const handleSearch = (query: string) => {
     console.log("검색어:", query);
-    // 여기에 API 호출 또는 검색 로직을 추가할 수 있습니다.
-    // 현재는 데이터가 없으므로 결과를 빈 배열로 업데이트합니다.
-    setResults([]);
+    setResults([]); // 현재는 결과 없음 처리
+
+    const updated = [query, ...recentSearches.filter(item => item !== query)].slice(0, 10);
+    setRecentSearches(updated);
+    localStorage.setItem("recentSearches", JSON.stringify(updated));
+  };
+
+  const handleClear = () => {
+    setRecentSearches([]);
+    localStorage.removeItem("recentSearches");
   };
 
   return (
@@ -19,6 +36,7 @@ export default function SearchPage() {
 
       <MainHeader />
       <SearchForm onSearch={handleSearch} />
+      <SearchSave searches={recentSearches} onClear={handleClear} />
 
       <div className="max-w-[680px] mx-auto w-full px-5 mt-4">
         {results.length > 0 ? (
