@@ -68,8 +68,8 @@ export default function MyEpigramComments() {
           </div>
         ) : (
           <div className='flex flex-col items-center justify-center gap-12 md:gap-16 lg:gap-20'>
-            {myEpigrams.map((epigram) => (
-              <Link key={epigram.id} href={`/epigrams/${epigram.id}`}>
+            {myEpigrams.map((epigram, index) => (
+              <Link key={epigram.id} href={`/epigrams/${epigram.id}`} data-testid={`epigram-link-${index}`}>
                 <TextCard
                   author={epigram.author}
                   cardContent={epigram.content}
@@ -114,8 +114,8 @@ export default function MyEpigramComments() {
           </div>
         ) : (
           <div>
-            {myComments.map((comment) => (
-              <Link key={comment.id} href={`/epigrams/${comment.epigramId}`}>
+            {myComments.map((comment, index) => (
+              <Link key={comment.id} href={`/epigrams/${comment.epigramId}`} data-testid={`comment-link-${index}`}>
                 <Comment nickname={comment.writer.nickname} isOwnComment={true} content={comment.content} commentTime={getTimeElapsed(comment.createdAt)} profileImage={comment.writer.image} />
               </Link>
             ))}

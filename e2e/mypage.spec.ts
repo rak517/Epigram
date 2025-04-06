@@ -94,6 +94,42 @@ test.describe('마이페이지', () => {
     });
   });
 
+  test('내 에피그램 클릭 시, 해당 에피그램 상세페이지로 이동한다.', async ({ page }) => {
+    const myEpigrams = page.getByTestId('epigram-link-0');
+    await myEpigrams.click();
+
+    {
+      /*id값이 어떤 숫자이든 상관없이, URL 패턴만 맞으면 통과 */
+    }
+    await expect(page).toHaveURL(/\/epigrams\/\d+$/);
+  });
+
+  test('에피그램 둘러보기 버튼 클릭 시, /epigrams 로 이동한다..', async ({ page }) => {
+    const myCommentButton = page.getByRole('button', { name: /내 댓글/i });
+
+    await myCommentButton.click();
+
+    const epigramButton = page.getByRole('button', { name: '에피그램 둘러보기' });
+    await epigramButton.click();
+
+    await expect(page).toHaveURL('/epigrams');
+  });
+
+  test('더보기 버튼 클릭 시, 에피그램이 추가적으로 나타난다.', async ({ page }) => {
+    const epigramsBefore = await page.locator('[data-testid^="epigram-link-"]').count();
+
+    const loadMoreButton = page.getByRole('button', { name: '에피그램 더보기' });
+    await expect(loadMoreButton).toBeVisible();
+
+    await loadMoreButton.click();
+
+    await page.waitForTimeout(1000);
+
+    const epigramsAfter = await page.locator('[data-testid^="epigram-link-"]').count();
+
+    expect(epigramsAfter).toBeGreaterThan(epigramsBefore);
+  });
+
   {
     /*오늘의 감정 클릭까진 했는데 캘린더를 인지하고, 적용시키는 부분이 안됨.(not-found 에러) */
   }
