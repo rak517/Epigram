@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { easeInOut } from 'motion';
 import { useTypingEffect } from '@/hooks/useTypingEffect';
 import dynamic from 'next/dynamic';
+import { EpigramEvents } from '@/utils/analytics';
 
 const MotionDiv = dynamic(() =>
   import('framer-motion').then((mod) => ({
@@ -44,6 +45,10 @@ interface HeroProps {
 
 export default function Hero({ handleScroll }: HeroProps) {
   const typedText = useTypingEffect(HERO_TEXT, TYPING_SPEED);
+  const handleStartClick = () => {
+    EpigramEvents.landing.clickStart();
+  };
+
   return (
     <MotionDiv
       initial='initial'
@@ -60,6 +65,7 @@ export default function Hero({ handleScroll }: HeroProps) {
           variants={childVariants}
           href='/epigrams'
           className='bg-black-500 flex h-12 w-[112px] items-center justify-center rounded-xl px-4 text-lg font-semibold text-blue-100 lg:h-16 lg:w-[286px] lg:text-xl'
+          onClick={handleStartClick}
         >
           시작하기
         </MotionLink>
