@@ -9,10 +9,13 @@ import { debounce } from 'es-toolkit';
 import { MypageContext } from '@/context/MypageProvider';
 
 export default function EmotionChart() {
-  const { userEmotion } = useContext(MypageContext);
+  const { userEmotion, currentDate } = useContext(MypageContext);
 
   const [size, setSize] = useState<'2xs' | 'xs'>('2xs');
   const [chartEmotionSize, setChartEmotionSize] = useState<'2lg' | 'xs'>('xs');
+
+  const year = currentDate?.year() ?? 0;
+  const month = currentDate?.month() ?? 0;
 
   useEffect(() => {
     const updateSize = debounce(() => {
@@ -57,7 +60,10 @@ export default function EmotionChart() {
   let offset = 0;
 
   return (
-    <div className='flex w-[312px] justify-center rounded-lg border border-blue-200 bg-blue-100 px-[38px] py-[22px] md:w-[384px] md:px-[61px] lg:w-[640px] lg:px-[112px]'>
+    <div
+      className='flex w-[312px] justify-center rounded-lg border border-blue-200 bg-blue-100 px-[38px] py-[22px] md:w-[384px] md:px-[61px] lg:w-[640px] lg:px-[112px]'
+      data-testId={`emotion-chart-${year}-${month + 1}`}
+    >
       <div className='flex w-[235px] items-center justify-between md:w-[263px] lg:w-[416px]'>
         <svg width='120' height='120' viewBox='0 0 180 180' className='lg:h-[180px] lg:w-[180px]'>
           {chartDataWithPercent?.map((emotion, index) => {

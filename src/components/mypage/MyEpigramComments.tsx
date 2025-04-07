@@ -63,7 +63,9 @@ export default function MyEpigramComments() {
               에피그램을 작성하고 감정을 공유해보세요.
             </p>
             <Link href={'/addepigram'}>
-              <RoundedButton className='text-black-400 bg-background-100 border border-gray-100 px-[18px] py-3 text-[14px] font-medium lg:text-xl'>에피그램 만들기</RoundedButton>
+              <RoundedButton className='text-black-400 bg-background-100 border border-gray-100 px-[18px] py-3 text-[14px] font-medium lg:text-xl' data-testId='add-epigram'>
+                에피그램 만들기
+              </RoundedButton>
             </Link>
           </div>
         ) : (

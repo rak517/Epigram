@@ -7,8 +7,8 @@ test.describe('마이페이지', () => {
       waitUntil: 'networkidle',
     });
 
-    await page.fill('input[name="email"]', 'e2eTest@test.com');
-    await page.fill('input[name="password"]', 'e2etest123@');
+    await page.fill('input[name="email"]', 'listtest@test.com');
+    await page.fill('input[name="password"]', 'qwer1234');
 
     await page.click('button:text("로그인")');
 
@@ -18,26 +18,6 @@ test.describe('마이페이지', () => {
     await page.waitForTimeout(3000);
 
     await expect(page).toHaveURL('http://localhost:3000/');
-
-    const cookies = await page.context().cookies();
-    const accessTokenCookie = cookies.find((cookie) => cookie.name === 'accessToken');
-
-    if (!accessTokenCookie) {
-      throw new Error('로그인 실패: accessToken을 받을 수 없습니다.');
-    }
-
-    const accessToken = accessTokenCookie.value;
-
-    await page.context().addCookies([
-      {
-        name: 'accessToken',
-        value: accessToken,
-        path: '/',
-        domain: 'localhost',
-        httpOnly: true,
-        secure: false,
-      },
-    ]);
 
     await page.goto('http://localhost:3000/mypage', {
       waitUntil: 'networkidle',
@@ -94,6 +74,66 @@ test.describe('마이페이지', () => {
     });
   });
 
+  test('오늘의 감정 클릭 시, 캘린더에 즉시 적용된다.', async ({ page }) => {
+    const emotions = ['MOVED', 'HAPPY', 'WORRIED', 'SAD', 'ANGRY'];
+    const today = dayjs().date().toString();
+    const dayCell = page.getByText(today).locator('..');
+    for (const emotion of emotions) {
+      await page.getByRole('button', { name: emotion }).click();
+      await page.waitForTimeout(1000);
+
+      const svg = dayCell.locator(`svg[aria-label="${emotion}"]`);
+
+      await expect(svg).toBeVisible({ timeout: 3000 });
+    }
+  });
+
+  test('캘린더에서 prev버튼을 누르면 이전 달로 변경이 되고, 감정 차트도 해당 달로 변경이 된다.', async ({ page }) => {
+    const today = dayjs();
+    const year = today.year();
+    const month = today.month() + 1;
+    // 현재 날짜가 선택됐는지
+    await expect(page.getByText(`${year}년 ${month}월`)).toBeVisible({ timeout: 3000 });
+
+    const prevButton = page.getByAltText('이전 월 선택 이미지');
+    await prevButton.click();
+
+    const prevDate = today.add(-1, 'month');
+    const prevYear = prevDate.year();
+    const prevMonth = prevDate.month() + 1;
+    // 지난 달로 변경됐는지
+    await expect(page.getByText(`${prevYear}년 ${prevMonth}월`)).toBeVisible({ timeout: 3000 });
+
+    // 감정 차트도 변경됐는지
+    const emotionChart = page.getByTestId(`emotion-chart-${prevYear}-${prevMonth}`);
+    await expect(emotionChart).toBeVisible({ timeout: 3000 });
+  });
+
+  test('캘린더에서 next버튼을 누르면 다음 달로 변경이 되고, 감정 차트도 해당 달로 변경이 된다.', async ({ page }) => {
+    const today = dayjs();
+    const year = today.year();
+    const month = today.month() + 1;
+    // 현재 날짜가 선택됐는지
+    await expect(page.getByText(`${year}년 ${month}월`)).toBeVisible({ timeout: 3000 });
+
+    const nextButton = page.getByAltText('이후 월 선택 이미지');
+    await nextButton.click();
+
+    const nextDate = today.add(1, 'month');
+    const nextYear = nextDate.year();
+    const nextMonth = nextDate.month() + 1;
+    // 다음 달로 변경됐는지
+    await expect(page.getByText(`${nextYear}년 ${nextMonth}월`)).toBeVisible({ timeout: 3000 });
+
+    // 감정 차트도 변경됐는지
+    const emotionChart = page.getByTestId(`emotion-chart-${nextYear}-${nextMonth}`);
+    await expect(emotionChart).toBeVisible({ timeout: 3000 });
+  });
+
+  {
+    /*내 에피그램과 내 댓글이 있다면 통과하는 테스트들 */
+  }
+
   test('내 에피그램 클릭 시, 해당 에피그램 상세페이지로 이동한다.', async ({ page }) => {
     const myEpigrams = page.getByTestId('epigram-link-0');
     await myEpigrams.click();
@@ -102,17 +142,6 @@ test.describe('마이페이지', () => {
       /*id값이 어떤 숫자이든 상관없이, URL 패턴만 맞으면 통과 */
     }
     await expect(page).toHaveURL(/\/epigrams\/\d+$/);
-  });
-
-  test('에피그램 둘러보기 버튼 클릭 시, /epigrams 로 이동한다..', async ({ page }) => {
-    const myCommentButton = page.getByRole('button', { name: /내 댓글/i });
-
-    await myCommentButton.click();
-
-    const epigramButton = page.getByRole('button', { name: '에피그램 둘러보기' });
-    await epigramButton.click();
-
-    await expect(page).toHaveURL('/epigrams');
   });
 
   test('더보기 버튼 클릭 시, 에피그램이 추가적으로 나타난다.', async ({ page }) => {
@@ -130,32 +159,52 @@ test.describe('마이페이지', () => {
     expect(epigramsAfter).toBeGreaterThan(epigramsBefore);
   });
 
-  {
-    /*오늘의 감정 클릭까진 했는데 캘린더를 인지하고, 적용시키는 부분이 안됨.(not-found 에러) */
-  }
-  test('오늘의 감정 클릭 시, 캘린더에 즉시 적용된다.', async ({ page }) => {
-    const emotions = ['MOVED', 'HAPPY', 'WORRIED', 'SAD', 'ANGRY'];
-    const today = dayjs().date().toString();
-    for (const emotion of emotions) {
-      const button = page.getByRole('button', { name: emotion });
-      await expect(button).toBeVisible();
-      await button.click();
+  test('내 댓글 클릭 시, 해당 댓글의 에피그램 상세페이지로 이동한다.', async ({ page }) => {
+    const myCommentButton = page.getByRole('button', { name: /내 댓글/i });
+    await myCommentButton.click();
 
-      const cell = page.locator(`div[role="gridcell"]:has-text("${today}") svg[aria-label="${emotion}"]`);
-      await expect(cell).toBeVisible({ timeout: 5000 });
-    }
+    const myComments = page.getByTestId('comment-link-0');
+    await myComments.click();
+
+    await expect(page).toHaveURL(/\/epigrams\/\d+$/);
+  });
+
+  test('더보기 버튼 클릭 시, 댓글이 추가적으로 나타난다.', async ({ page }) => {
+    const myCommentButton = page.getByRole('button', { name: /내 댓글/i });
+    await myCommentButton.click();
+
+    const myCommentsBefore = await page.locator('[data-testid^="comment-link-"]').count();
+
+    const loadMoreButton = page.getByRole('button', { name: '댓글 더보기' });
+    await expect(loadMoreButton).toBeVisible();
+
+    await loadMoreButton.click();
+
+    await page.waitForTimeout(1000);
+
+    const myCommentsAfter = await page.locator('[data-testid^="comment-link-"]').count();
+
+    expect(myCommentsAfter).toBeGreaterThan(myCommentsBefore);
   });
 
   {
-    /* 아래 두 테스트에서 캘린더를 인식시켜서 변경점을 테스트해야하는데 캘릭더 인식하는 부분에서 not found만 나옴  */
+    /*내 에피그램, 내 댓글이 없는 경우, 통과하는 테스트들 */
   }
-  test('캘린더에서 prev버튼을 누르면 이전 달로 변경이 되고, 감정 차트도 해당 달로 변경이 된다.', async ({ page }) => {
-    const prevButton = page.getByAltText('이전 월 선택 이미지');
-    await prevButton.click();
+  test('에피그램 둘러보기 버튼 클릭 시, /epigrams 으로 이동한다.', async ({ page }) => {
+    const myCommentButton = page.getByRole('button', { name: /내 댓글/i });
+
+    await myCommentButton.click();
+
+    const epigramButton = page.getByRole('button', { name: '에피그램 둘러보기' });
+    await epigramButton.click();
+
+    await expect(page).toHaveURL('/epigrams');
   });
 
-  test('캘린더에서 next버튼을 누르면 다음 달로 변경이 되고, 감정 차트도 해당 달로 변경이 된다.', async ({ page }) => {
-    const nextButton = page.getByAltText('이후 월 선택 이미지');
-    await nextButton.click();
+  test('에피그램 만들기 버튼 클릭 시, /addepigram 으로 이동한다.', async ({ page }) => {
+    const addEpigramButton = page.getByTestId('add-epigram');
+    await addEpigramButton.click();
+
+    await expect(page).toHaveURL('/addepigram');
   });
 });
