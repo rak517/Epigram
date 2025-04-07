@@ -5,7 +5,6 @@ import MainHeader from "@/components/ui/header/MainHeader";
 import SearchForm from '@/components/ui/searchForm';
 import SearchSave from '@/components/ui/searchSave';
 import { getEpigrams } from '@/apis/epigram';
-import { Iropke } from '@/fonts';
 import SearchList from '@/components/ui/searchList';
 
 interface Epigram {
