@@ -17,6 +17,7 @@ import { useModalStore } from '@/stores/ModalStore';
 import { useRouter } from 'next/navigation';
 import { getErrorMessage } from '@/utils/network/getErrorMessage';
 import { isAxiosError } from 'axios';
+import { EpigramEvents } from '@/utils/analytics';
 
 export default function SignupForm() {
   const {
@@ -47,6 +48,7 @@ export default function SignupForm() {
     try {
       await signup(signupForm);
       reset();
+      EpigramEvents.auth.signup('email');
       openModal({
         type: 'alert',
         title: '회원가입이 완료되었습니다!',

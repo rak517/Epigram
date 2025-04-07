@@ -15,6 +15,7 @@ import { useLogin } from '@/apis/auth/queries';
 import OpendEye from '@/assets/icons/opend_eye.svg';
 import ClosedEye from '@/assets/icons/closed_eye.svg';
 import Logo from '@/assets/images/logo.png';
+import { EpigramEvents } from '@/utils/analytics';
 
 export default function LoginForm() {
   const {
@@ -41,6 +42,7 @@ export default function LoginForm() {
     try {
       await login(loginForm);
       reset();
+      EpigramEvents.auth.login('email');
       openModal({
         type: 'alert',
         title: '로그인에 성공했습니다!',

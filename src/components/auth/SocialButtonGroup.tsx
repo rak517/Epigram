@@ -3,12 +3,22 @@
 import Image from 'next/image';
 import GoogleLogo from '@/assets/images/logo_google.svg';
 import KakaoLogo from '@/assets/images/logo_kakao.svg';
+import { EpigramEvents } from '@/utils/analytics';
 
 export default function SocialButtonGroup({ endPoint }: { endPoint: '/login' | '/signup' }) {
   const handleSocialLogin = (provider: 'google' | 'kakao') => {
+    const isSignup = endPoint === '/signup';
+
     if (provider === 'kakao') {
       const KAKAO_OAUTH_URL =
         'https://kauth.kakao.com/oauth/authorize?client_id=' + process.env.NEXT_PUBLIC_KAKAO_API_KEY! + '&redirect_uri=' + process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI! + '&response_type=code';
+
+      if (isSignup) {
+        EpigramEvents.auth.signup('kakao');
+      } else {
+        EpigramEvents.auth.login('kakao');
+      }
+
       window.location.href = KAKAO_OAUTH_URL;
     } else {
       const GOOGLE_OAUTH_URL =
@@ -18,6 +28,13 @@ export default function SocialButtonGroup({ endPoint }: { endPoint: '/login' | '
         `response_type=code&` +
         `scope=openid%20profile%20email&` +
         `state=google-login-state`;
+
+      if (isSignup) {
+        EpigramEvents.auth.signup('google');
+      } else {
+        EpigramEvents.auth.login('google');
+      }
+
       window.location.href = GOOGLE_OAUTH_URL;
     }
   };
