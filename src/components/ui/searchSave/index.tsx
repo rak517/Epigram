@@ -1,5 +1,4 @@
 "use client";
-
 import Chip from "../Chip";
 
 interface Props {
@@ -22,7 +21,7 @@ export default function SearchSave({ searches, onClear }: Props) {
       </div>
       {
         searches.length > 0 && (
-          <div className="flex flex-wrap gap-2 sm:gap-2 md:gap-4 lg:gap-4">
+          <div className="flex flex-wrap gap-2 sm:gap-2 md:gap-4 lg:gap-4 mb-6 sm:mb-6 md:mb-7 lg:mb-8">
             {searches.map((keyword, index) => (
               <Chip key={index} label={keyword} />
             ))}
