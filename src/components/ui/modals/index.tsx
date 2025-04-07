@@ -37,7 +37,7 @@ export default function Modal() {
   if (isEmptyModals) return null;
 
   return createPortal(
-    <div className='fixed inset-0 flex items-center justify-center'>
+    <div className='fixed inset-0 z-20 flex items-center justify-center'>
       {modals.map(({ id, content, size }) => (
         <motion.div key={id} className='fixed inset-0 flex items-center justify-center bg-black/40' initial='hidden' animate='show' variants={OVERLAY_VARIANTS} onClick={() => closeModal(id)}>
           <motion.div className={cn(modalVariants({ size }), 'flex flex-col items-center justify-between gap-4 overflow-y-auto')} variants={CONTENT_VARIANTS} onClick={(e) => e.stopPropagation()}>

@@ -32,7 +32,7 @@ export const Toast: React.FC<ToastProps> = ({ id, title, message, variant, durat
 
   return (
     <div
-      className={`fixed right-4 z-50 min-w-[280px] rounded border px-4 py-3 shadow-md transition-all duration-300 ${getVariantClasses()} ${
+      className={`fixed right-4 z-20 min-w-[280px] rounded border px-4 py-3 shadow-md transition-all duration-300 ${getVariantClasses()} ${
         isVisible ? 'translate-y-0 opacity-100' : 'translate-y-2 opacity-0'
       }`}
       role='alert'

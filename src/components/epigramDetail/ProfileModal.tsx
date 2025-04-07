@@ -2,7 +2,7 @@ import { Pretendard } from '@/fonts';
 import Avatar from '../ui/avatars';
 
 interface ProfileModalProps {
-  profileImage: string;
+  profileImage: string | null;
   nickname: string;
 }
 

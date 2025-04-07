@@ -72,7 +72,7 @@ export default function EpigramComment() {
             openModal({
               type: 'custom',
               size: 'sm',
-              content: <ProfileModal profileImage={comment.writer.image || ''} nickname={comment.writer.nickname} />,
+              content: <ProfileModal profileImage={comment.writer.image} nickname={comment.writer.nickname} />,
             });
           };
 

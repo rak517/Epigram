@@ -20,7 +20,7 @@ export default function SideBar({ items, isOpen = false }: SideBarProps) {
   return (
     <>
       {/* 오버레이 */}
-      {isopen && <div className='absolute inset-0 bg-black opacity-60' onClick={toggleSidebar}></div>}
+      {isopen && <div className='absolute inset-0 z-20 bg-black opacity-60' onClick={toggleSidebar}></div>}
 
       {/* 사이드바 */}
       <motion.div
