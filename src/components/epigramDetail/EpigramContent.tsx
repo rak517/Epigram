@@ -13,8 +13,8 @@ import { useModalStore } from '@/stores/ModalStore';
 import { isAxiosError } from 'axios';
 import { useGetUser } from '@/apis/user/queries';
 import { getErrorMessage } from '@/utils/network/getErrorMessage';
-import { CopyCurrentUrl } from '@/utils/copyCurrentUrl';
 import { useToast } from '@/utils/toast/ToastContext';
+import { copyCurrentUrl } from '@/utils/copyCurrentUrl';
 
 export default function EpigramContent() {
   const router = useRouter();
@@ -57,7 +57,10 @@ export default function EpigramContent() {
   }
 
   const handleCopyUrl = () => {
-    CopyCurrentUrl();
+    copyCurrentUrl(
+      (msg: string) => showToast(msg, 'success', 'URL 복사'),
+      (msg: string) => showToast(msg, 'error', '복사 실패'),
+    );
   };
 
   const handleTagClick = (tagName: string) => {
