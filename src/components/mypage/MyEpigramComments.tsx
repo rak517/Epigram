@@ -63,13 +63,15 @@ export default function MyEpigramComments() {
               에피그램을 작성하고 감정을 공유해보세요.
             </p>
             <Link href={'/addepigram'}>
-              <RoundedButton className='text-black-400 bg-background-100 border border-gray-100 px-[18px] py-3 text-[14px] font-medium lg:text-xl'>에피그램 만들기</RoundedButton>
+              <RoundedButton className='text-black-400 bg-background-100 border border-gray-100 px-[18px] py-3 text-[14px] font-medium lg:text-xl' data-testid='add-epigram'>
+                에피그램 만들기
+              </RoundedButton>
             </Link>
           </div>
         ) : (
           <div className='flex flex-col items-center justify-center gap-12 md:gap-16 lg:gap-20'>
-            {myEpigrams.map((epigram) => (
-              <Link key={epigram.id} href={`/epigrams/${epigram.id}`}>
+            {myEpigrams.map((epigram, index) => (
+              <Link key={epigram.id} href={`/epigrams/${epigram.id}`} data-testid={`epigram-link-${index}`}>
                 <TextCard
                   author={epigram.author}
                   cardContent={epigram.content}
@@ -114,8 +116,8 @@ export default function MyEpigramComments() {
           </div>
         ) : (
           <div>
-            {myComments.map((comment) => (
-              <Link key={comment.id} href={`/epigrams/${comment.epigramId}`}>
+            {myComments.map((comment, index) => (
+              <Link key={comment.id} href={`/epigrams/${comment.epigramId}`} data-testid={`comment-link-${index}`}>
                 <Comment nickname={comment.writer.nickname} isOwnComment={true} content={comment.content} commentTime={getTimeElapsed(comment.createdAt)} profileImage={comment.writer.image} />
               </Link>
             ))}
