@@ -5,6 +5,8 @@ import { Pretendard } from '@/fonts';
 import './globals.css';
 import { ToastProvider } from '@/utils/toast/ToastContext';
 import { ToastContainer } from '@/utils/toast/Toast';
+import { GoogleAnalytics, GoogleTagManager } from '@next/third-parties/google';
+import GAtrackPageView from '@/utils/GAtrackPageView';
 
 export default function RootLayout({
   children,
@@ -14,6 +16,8 @@ export default function RootLayout({
   return (
     <html lang='ko'>
       <body className={Pretendard.className}>
+        <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID as string} />
+        <GoogleTagManager gtmId={process.env.NEXT_PUBLIC_GTM_ID as string} />
         <QueryClientProvider>
           <ToastProvider>
             {children}
@@ -21,6 +25,7 @@ export default function RootLayout({
             <Modal />
             <ToastContainer />
           </ToastProvider>
+          <GAtrackPageView />
         </QueryClientProvider>
       </body>
     </html>

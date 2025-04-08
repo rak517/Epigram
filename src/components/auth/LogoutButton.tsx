@@ -5,6 +5,7 @@ import logout from '@/actions/logoutAction';
 import { useActionState, useEffect } from 'react';
 import { useModalStore } from '@/stores/ModalStore';
 import { useRouter } from 'next/navigation';
+import { EpigramEvents } from '@/utils/analytics';
 
 export default function LogoutButton({ className }: { className?: string }) {
   const [state, formAction, pending] = useActionState(logout, null);
@@ -22,6 +23,7 @@ export default function LogoutButton({ className }: { className?: string }) {
           window.location.href = '/login';
         },
       });
+      EpigramEvents.auth.logout();
     } else {
       openModal({
         type: 'alert',
