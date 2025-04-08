@@ -1,6 +1,10 @@
 import { test, expect } from '@playwright/test';
 import dayjs from 'dayjs';
 
+{
+  /*내 에피그램과 내 댓글이 있다면 통과하는 테스트들 */
+}
+
 test.describe('마이페이지', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('http://localhost:3000/login', {
@@ -45,10 +49,12 @@ test.describe('마이페이지', () => {
     await expect(page).toHaveURL('http://localhost:3000/search');
   });
 
-  test('로그아웃 버튼 클릭 시, 로그아웃이 되면서 랜딩페이지로 이동한다.', async ({ page }) => {
+  test('로그아웃 버튼 클릭 시, 로그아웃이 되면서 로그인페이지로 이동한다.', async ({ page }) => {
     const logoutButton = page.getByRole('button', { name: '로그아웃' });
 
     await logoutButton.click();
+    await page.getByRole('button', { name: '확인' }).click();
+    await expect(page).toHaveURL('http://localhost:3000/login');
 
     await page.waitForTimeout(500);
 
@@ -130,10 +136,6 @@ test.describe('마이페이지', () => {
     await expect(emotionChart).toBeVisible({ timeout: 3000 });
   });
 
-  {
-    /*내 에피그램과 내 댓글이 있다면 통과하는 테스트들 */
-  }
-
   test('내 에피그램 클릭 시, 해당 에피그램 상세페이지로 이동한다.', async ({ page }) => {
     const myEpigrams = page.getByTestId('epigram-link-0');
     await myEpigrams.click();
@@ -186,10 +188,37 @@ test.describe('마이페이지', () => {
 
     expect(myCommentsAfter).toBeGreaterThan(myCommentsBefore);
   });
+});
 
-  {
-    /*내 에피그램, 내 댓글이 없는 경우, 통과하는 테스트들 */
-  }
+{
+  /*내 에피그램, 내 댓글이 없는 경우, 통과하는 테스트들 */
+}
+
+test.describe('마이페이지', () => {
+  test.beforeEach(async ({ page }) => {
+    await page.goto('http://localhost:3000/login', {
+      waitUntil: 'networkidle',
+    });
+
+    await page.fill('input[name="email"]', 'jewone2e@test.com');
+    await page.fill('input[name="password"]', 'qwer1234');
+
+    await page.click('button:text("로그인")');
+
+    await page.waitForSelector('button:text("확인")');
+    await page.click('button:text("확인")');
+
+    await page.waitForTimeout(3000);
+
+    await expect(page).toHaveURL('http://localhost:3000/');
+
+    await page.goto('http://localhost:3000/mypage', {
+      waitUntil: 'networkidle',
+    });
+
+    await expect(page).toHaveURL('http://localhost:3000/mypage');
+  });
+
   test('에피그램 둘러보기 버튼 클릭 시, /epigrams 으로 이동한다.', async ({ page }) => {
     const myCommentButton = page.getByRole('button', { name: /내 댓글/i });
 
