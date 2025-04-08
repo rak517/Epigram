@@ -2,6 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import logout from '@/actions/logoutAction';
+import { EpigramEvents } from '@/utils/analytics';
 
 export const useHandleHeaderSelect = () => {
   const router = useRouter();
@@ -11,6 +12,7 @@ export const useHandleHeaderSelect = () => {
       router.push('/mypage');
     } else if (option === '로그아웃') {
       const result = await logout();
+      EpigramEvents.auth.logout();
       if (result.status) {
         router.push('/login');
       } else {
