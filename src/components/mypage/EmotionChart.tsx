@@ -1,32 +1,17 @@
 'use client';
 
-import { useContext, useEffect, useState } from 'react';
+import { useContext } from 'react';
 import EmotionChartData from './EmotionChartData';
 import Emotion from '../ui/emotion';
 import { EMOTION_STATUS, EMOTION_STATUS_KR } from '@/constants/emotions';
 import { Emotion as EmotionType } from '@/apis/emotion-log/types';
-import { debounce } from 'es-toolkit';
 import { MypageContext } from '@/context/MypageProvider';
 
 export default function EmotionChart() {
   const { userEmotion, currentDate } = useContext(MypageContext);
 
-  const [size, setSize] = useState<'2xs' | 'xs'>('2xs');
-  const [chartEmotionSize, setChartEmotionSize] = useState<'2lg' | 'xs'>('xs');
-
   const year = currentDate?.year() ?? 0;
   const month = currentDate?.month() ?? 0;
-
-  useEffect(() => {
-    const updateSize = debounce(() => {
-      setSize(window.innerWidth >= 1024 ? 'xs' : '2xs');
-      setChartEmotionSize(window.innerWidth >= 1024 ? '2lg' : 'xs');
-    }, 100);
-
-    window.addEventListener('resize', updateSize);
-
-    return () => window.removeEventListener('resize', updateSize);
-  }, []);
 
   const emotionColors: { [key: string]: { fill: string; tailwindColor: string } } = {
     MOVED: { fill: 'hsl(41, 95%, 67%)', tailwindColor: 'bg-illust-yellow' },
@@ -96,7 +81,7 @@ export default function EmotionChart() {
             {highestEmotion && (
               <foreignObject x='60' y='60' width='60' height='60'>
                 <div className='flex h-full w-full flex-col items-center justify-center'>
-                  <Emotion emotion={highestEmotion.emotion as EmotionType} size={chartEmotionSize} />
+                  <Emotion emotion={highestEmotion.emotion as EmotionType} className='size-6 lg:size-10' />
                   <p className='text-black-600 text-lg font-bold md:text-xl'>{EMOTION_STATUS_KR[EMOTION_STATUS.indexOf(highestEmotion.emotion as EmotionType)]}</p>
                 </div>
               </foreignObject>
@@ -109,13 +94,7 @@ export default function EmotionChart() {
 
             return (
               <li key={index}>
-                <EmotionChartData
-                  emotion={data.emotion as EmotionType}
-                  emotionColor={emotionColor.tailwindColor}
-                  percent={data.percent}
-                  size={size}
-                  className={index === 0 ? 'text-black-600' : 'text-gray-200'}
-                />
+                <EmotionChartData emotion={data.emotion as EmotionType} emotionColor={emotionColor.tailwindColor} percent={data.percent} className={index === 0 ? 'text-black-600' : 'text-gray-200'} />
               </li>
             );
           })}
