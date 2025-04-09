@@ -35,6 +35,6 @@ export const emotionChartDataSchema = z.object({
   emotion: emotionEnum,
   emotionColor: z.string(),
   percent: z.number(),
-  size: emotionSize,
+  size: emotionSize.optional(),
   className: z.string(),
 });
