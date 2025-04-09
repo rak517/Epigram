@@ -24,7 +24,6 @@
     "dayjs": "^1.11.13",
     "es-toolkit": "^1.32.0",
     "lenis": "^1.2.3",
-    "lodash.debounce": "^4.0.8",
     "motion": "^12.4.10",
     "next": "15.2.1",
     "react": "^19.0.0",
