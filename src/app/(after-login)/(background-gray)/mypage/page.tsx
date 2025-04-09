@@ -47,7 +47,7 @@ export default function MyPage() {
           </div>
         </div>
       </div>
-      <div className='mx-auto w-[360px] pt-14 md:w-[384px] lg:w-[640px] lg:pt-24'>
+      <div className='mx-auto w-[360px] pt-14 pb-[78px] md:w-[384px] md:pb-[102px] lg:w-[640px] lg:pt-24 lg:pb-[156px]'>
         <MyEpigramComments></MyEpigramComments>
       </div>
     </div>
