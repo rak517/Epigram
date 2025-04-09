@@ -36,6 +36,7 @@ const ToggleButton: React.FC<ToggleButtonProps> = ({ isSelected, onToggle, size 
       <button
         onClick={() => onToggle(!isSelected)}
         className={`relative flex items-center px-1 ${sizeClasses[size]} rounded-full ${isSelected ? 'bg-black-600' : 'bg-gray-300'} transition-colors duration-500 ease-in-out`}
+        aria-label={`${label} 토글 버튼`}
       >
         <span className={`absolute rounded-full bg-white ${circleSize[size]} shadow-md transition-transform duration-1000 ease-in-out ${togglePosition[size]}`} />
       </button>
