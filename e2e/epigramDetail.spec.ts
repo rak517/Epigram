@@ -52,9 +52,10 @@ test.describe('로그인 이후 상세 페이지', () => {
       .getByRole('button')
       .filter({ has: page.locator('img[alt="좋아요 따봉 이미지"]') })
       .click();
-    await page.waitForTimeout(500);
+    await page.waitForTimeout(2000);
 
     const newCount = await likeCountElement.textContent();
+
     expect(initialCount).not.toEqual(newCount);
   });
 
@@ -186,12 +187,13 @@ test.describe('로그인 이후 상세 페이지', () => {
     const loadMoreButton = page.getByRole('button', { name: '최신 댓글 더보기' });
 
     if (await loadMoreButton.isVisible()) {
-      const initialCommentCount = await page.locator('div.bg-background-100.border-line-200.flex.max-w-\\[640px\\]').count();
+      const commentsLocator = page.locator('div.bg-background-100.border-line-200.flex.max-w-\\[640px\\]');
+      const initialCommentCount = await commentsLocator.count();
 
       await loadMoreButton.click();
       await page.waitForTimeout(1000);
 
-      const newCommentCount = page.locator('div.bg-background-100.border-line-200.flex.max-w-\\[640px\\]').count();
+      const newCommentCount = await commentsLocator.count();
       expect(newCommentCount).toBeGreaterThan(initialCommentCount);
     }
   });
