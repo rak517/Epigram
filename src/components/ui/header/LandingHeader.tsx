@@ -16,7 +16,7 @@ export interface LandingHeaderProps {
 
 export default function LandingHeader({ showIcon = false }: LandingHeaderProps) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const handleSelect = useHandleHeaderSelect();
+  const handleSelect = useHandleHeaderSelect(); 
 
   useEffect(() => {
     const checkLogin = async () => {
