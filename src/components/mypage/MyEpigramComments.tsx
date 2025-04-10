@@ -55,7 +55,7 @@ export default function MyEpigramComments() {
 
       {buttonTab === 'myEpigram' && myEpigramsData ? (
         myEpigrams.length === 0 ? (
-          <div className='flex flex-col items-center justify-center gap-12 md:gap-16 lg:gap-20'>
+          <div className='flex h-[304px] flex-col items-center justify-center lg:h-[488px]'>
             <Image className='pb-2 md:pb-4 lg:pb-6' src={EmptyIcon} alt='내 에피그램이 없습니다.' />
             <p className='text-black-600 pb-8 text-center text-[14px] font-normal md:pb-10 lg:pb-12 lg:text-[20px]'>
               아직 작성한 에피그램이 없어요!
