@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useRef, useState, useCallback } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 import MainHeader from "@/components/ui/header/MainHeader";
 import SearchForm from "@/components/ui/searchForm";
@@ -22,16 +22,17 @@ interface Epigram {
 
 export default function SearchPage() {
   const router = useRouter();
-  const searchParams = useSearchParams();
 
   const [results, setResults] = useState<Epigram[]>([]);
   const [recentSearches, setRecentSearches] = useState<string[]>([]);
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [cursor, setCursor] = useState<number>(0);
   const [hasMore, setHasMore] = useState<boolean>(false);
+  const [isClient, setIsClient] = useState<boolean>(false); // 클라이언트 여부 체크
+
   const observerRef = useRef<HTMLDivElement | null>(null);
 
-  //결과 더 불러오기
+  // 결과 더 불러오기
   const fetchMore = useCallback(
     async (query: string, currentCursor: number, isNewSearch = false) => {
       try {
@@ -53,7 +54,12 @@ export default function SearchPage() {
     []
   );
 
-  //최근 검색어 불러오기
+  // 클라이언트 여부 체크
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  // 최근 검색어 불러오기
   useEffect(() => {
     const stored = localStorage.getItem("recentSearches");
     if (stored) {
@@ -61,23 +67,26 @@ export default function SearchPage() {
     }
   }, []);
 
-  //새로고침 시 URL에서 검색어 받아서 자동 검색
+  // 새로고침 시 URL에서 검색어 받아서 자동 검색
   useEffect(() => {
-    const q = searchParams.get("q");
+    if (!isClient) return;
+
+    const params = new URLSearchParams(window.location.search);
+    const q = params.get("q");
     if (q) {
       setSearchQuery(q);
       fetchMore(q, 0, true);
     }
-  }, [searchParams, fetchMore]);
+  }, [isClient, fetchMore]);
 
-  //검색 실행 함수
+  // 검색 실행 함수
   const handleSearch = async (query: string) => {
     setSearchQuery(query);
     setCursor(0);
     setResults([]);
 
     // 검색어 URL에 반영
-    const params = new URLSearchParams(searchParams.toString());
+    const params = new URLSearchParams(window.location.search);
     params.set("q", query);
     router.push(`?${params.toString()}`);
 
@@ -89,8 +98,7 @@ export default function SearchPage() {
     await fetchMore(query, 0, true);
   };
 
-
-  //IntersectionObserver로 무한 스크롤
+  // IntersectionObserver로 무한 스크롤
   useEffect(() => {
     if (!hasMore || !searchQuery) return;
 
