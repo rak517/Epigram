@@ -7,7 +7,7 @@ const meta: Meta<typeof LandingHeader> = {
   tags: ['autodocs'],
   parameters: {
     nextjs: {
-      appDirectory: true, // App Router를 모의하기 위한 설정
+      appDirectory: true,
     },
     backgrounds: {
       default: 'homeBackgroundColor',

@@ -15,9 +15,9 @@ export interface LandingHeaderProps {
   router?: { push: (url: string) => void };
 }
 
-export default function LandingHeader({ showIcon = false, router }: LandingHeaderProps) {
+export default function LandingHeader({ showIcon = false }: LandingHeaderProps) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const handleSelect = useHandleHeaderSelect(router); 
+  const handleSelect = useHandleHeaderSelect(); 
 
   useEffect(() => {
     const checkLogin = async () => {
