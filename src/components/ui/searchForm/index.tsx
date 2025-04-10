@@ -1,7 +1,8 @@
 "use client";
-import Image from 'next/image';
+
+import Image from "next/image";
+import { useState, useEffect } from "react";
 import SearchImage from "@/assets/icons/searchIcon.svg";
-import { useState } from 'react';
 
 interface SearchFormProps {
   onSearch: (query: string) => void;
@@ -9,6 +10,15 @@ interface SearchFormProps {
 
 export default function SearchForm({ onSearch }: SearchFormProps) {
   const [search, setSearch] = useState("");
+
+  // 클라이언트에서 URL 쿼리 직접 파싱
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
+      const initialSearch = params.get("q") || "";
+      setSearch(initialSearch);
+    }
+  }, []);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
