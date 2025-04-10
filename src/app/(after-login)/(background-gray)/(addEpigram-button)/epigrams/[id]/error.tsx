@@ -1,6 +1,6 @@
 'use client';
 
-import RoundedButton from '../../../../../../components/ui/buttons/roundedButton';
+import RoundedButton from '@/components/ui/buttons/roundedButton';
 import { useRouter } from 'next/navigation';
 
 export default function Error({ reset }: { error: Error & { digest?: string }; reset: () => void }) {
