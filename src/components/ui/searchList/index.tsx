@@ -1,4 +1,4 @@
-'use client'; // 👈 꼭 필요함!
+'use client';
 
 import { useRouter } from 'next/navigation';
 
