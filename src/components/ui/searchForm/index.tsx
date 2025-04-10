@@ -1,14 +1,21 @@
 "use client";
-import Image from 'next/image';
+import Image from "next/image";
+import { useState, useEffect } from "react";
 import SearchImage from "@/assets/icons/searchIcon.svg";
-import { useState } from 'react';
+import { useSearchParams } from "next/navigation";
 
 interface SearchFormProps {
   onSearch: (query: string) => void;
 }
 
 export default function SearchForm({ onSearch }: SearchFormProps) {
-  const [search, setSearch] = useState("");
+  const searchParams = useSearchParams();
+  const initialSearch = searchParams.get("q") || "";
+  const [search, setSearch] = useState(initialSearch);
+
+  useEffect(() => {
+    setSearch(initialSearch);
+  }, [initialSearch]);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

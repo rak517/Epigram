@@ -1,11 +1,12 @@
 "use client";
-import React from 'react';
-import { useEffect, useRef, useState, useCallback } from 'react';
+import React, { useEffect, useRef, useState, useCallback } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+
 import MainHeader from "@/components/ui/header/MainHeader";
-import SearchForm from '@/components/ui/searchForm';
-import SearchSave from '@/components/ui/searchSave';
-import { getEpigrams } from '@/apis/epigram';
-import SearchList from '@/components/ui/searchList';
+import SearchForm from "@/components/ui/searchForm";
+import SearchSave from "@/components/ui/searchSave";
+import { getEpigrams } from "@/apis/epigram";
+import SearchList from "@/components/ui/searchList";
 
 interface Epigram {
   id: number;
@@ -20,6 +21,9 @@ interface Epigram {
 }
 
 export default function SearchPage() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
   const [results, setResults] = useState<Epigram[]>([]);
   const [recentSearches, setRecentSearches] = useState<string[]>([]);
   const [searchQuery, setSearchQuery] = useState<string>("");
@@ -27,7 +31,29 @@ export default function SearchPage() {
   const [hasMore, setHasMore] = useState<boolean>(false);
   const observerRef = useRef<HTMLDivElement | null>(null);
 
-  // 최근 검색어 불러오기
+  //결과 더 불러오기
+  const fetchMore = useCallback(
+    async (query: string, currentCursor: number, isNewSearch = false) => {
+      try {
+        const response = await getEpigrams({
+          keyword: query,
+          limit: 10,
+          cursor: currentCursor,
+        });
+
+        if (response?.list) {
+          setResults(prev => (isNewSearch ? response.list : [...prev, ...response.list]));
+          setCursor(response.nextCursor ?? 0);
+          setHasMore(response.list.length > 0);
+        }
+      } catch (error) {
+        console.error("무한스크롤 실패:", error);
+      }
+    },
+    []
+  );
+
+  //최근 검색어 불러오기
   useEffect(() => {
     const stored = localStorage.getItem("recentSearches");
     if (stored) {
@@ -35,12 +61,27 @@ export default function SearchPage() {
     }
   }, []);
 
-  // 검색 실행
+  //새로고침 시 URL에서 검색어 받아서 자동 검색
+  useEffect(() => {
+    const q = searchParams.get("q");
+    if (q) {
+      setSearchQuery(q);
+      fetchMore(q, 0, true);
+    }
+  }, [searchParams, fetchMore]);
+
+  //검색 실행 함수
   const handleSearch = async (query: string) => {
     setSearchQuery(query);
     setCursor(0);
     setResults([]);
 
+    // 검색어 URL에 반영
+    const params = new URLSearchParams(searchParams.toString());
+    params.set("q", query);
+    router.push(`?${params.toString()}`);
+
+    // 최근 검색어 업데이트
     const updated = [query, ...recentSearches.filter(item => item !== query)].slice(0, 10);
     setRecentSearches(updated);
     localStorage.setItem("recentSearches", JSON.stringify(updated));
@@ -48,26 +89,8 @@ export default function SearchPage() {
     await fetchMore(query, 0, true);
   };
 
-  // 더 불러오기 함수
-  const fetchMore = useCallback(async (query: string, currentCursor: number, isNewSearch = false) => {
-    try {
-      const response = await getEpigrams({
-        keyword: query,
-        limit: 10,
-        cursor: currentCursor,
-      });
 
-      if (response?.list) {
-        setResults(prev => isNewSearch ? response.list : [...prev, ...response.list]);
-        setCursor(response.nextCursor ?? 0);
-        setHasMore(response.list.length > 0);
-      }
-    } catch (error) {
-      console.error("무한스크롤 실패:", error);
-    }
-  }, []);
-
-  // IntersectionObserver
+  //IntersectionObserver로 무한 스크롤
   useEffect(() => {
     if (!hasMore || !searchQuery) return;
 
@@ -98,7 +121,6 @@ export default function SearchPage() {
       <MainHeader />
       <SearchForm onSearch={handleSearch} />
       <SearchSave searches={recentSearches} onClear={handleClear} />
-
       <SearchList
         results={results}
         keyword={searchQuery}
