@@ -12,11 +12,12 @@ import { useHandleHeaderSelect } from '@/hooks/useHandleHeaderSelect';
 
 export interface LandingHeaderProps {
   showIcon?: boolean;
+  router?: { push: (url: string) => void };
 }
 
-export default function LandingHeader({ showIcon = false }: LandingHeaderProps) {
+export default function LandingHeader({ showIcon = false, router }: LandingHeaderProps) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const handleSelect = useHandleHeaderSelect();
+  const handleSelect = useHandleHeaderSelect(router); 
 
   useEffect(() => {
     const checkLogin = async () => {

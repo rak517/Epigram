@@ -14,6 +14,15 @@ const meta: Meta<typeof MainHeader> = {
         { name: 'homeBackgroundColor', value: '#f5f7fa' },
       ],
     },
+    nextjs: {
+      appDirectory: true, // 'app' 디렉토리를 사용하는 경우 설정
+      navigation: {
+        pathname: '/example-path', // 모의할 경로
+        query: {
+          key: 'value', // 모의할 쿼리 파라미터
+        },
+      },
+    },
   },
   decorators: [
     (Story) => (
