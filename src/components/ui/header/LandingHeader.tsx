@@ -12,7 +12,6 @@ import { useHandleHeaderSelect } from '@/hooks/useHandleHeaderSelect';
 
 export interface LandingHeaderProps {
   showIcon?: boolean;
-  router?: { push: (url: string) => void };
 }
 
 export default function LandingHeader({ showIcon = false }: LandingHeaderProps) {
