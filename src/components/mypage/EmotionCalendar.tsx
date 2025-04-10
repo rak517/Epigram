@@ -43,6 +43,7 @@ export default function EmotionCalendar() {
       return (
         <div
           key={`days-${index}`}
+          data-testid={`calendar-day-${day}`}
           className={cn(TEXT_FLEX_CENTER_ALIGN, ITEM_SIZE, ITEM_TEXT_STYLE, className, isDayInMonth && isToday && 'border-illust-red t text-illust-red rounded-md border-[3px]')}
         >
           {/* 복잡한 조건식이라 주석 남겼습니다. */}

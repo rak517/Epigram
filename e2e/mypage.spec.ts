@@ -83,12 +83,13 @@ test.describe('마이페이지', () => {
   test('오늘의 감정 클릭 시, 캘린더에 즉시 적용된다.', async ({ page }) => {
     const emotions = ['MOVED', 'HAPPY', 'WORRIED', 'SAD', 'ANGRY'];
     const today = dayjs().date().toString();
-    const dayCell = page.getByText(today).locator('..');
+    const dayCell = page.getByTestId(`calendar-day-${today}`);
+
     for (const emotion of emotions) {
       await page.getByRole('button', { name: emotion }).click();
       await page.waitForTimeout(1000);
 
-      const svg = dayCell.locator(`svg[aria-label="${emotion}"]`);
+      const svg = dayCell.locator(`svg[aria-label="${emotion}"]`).first();
 
       await expect(svg).toBeVisible({ timeout: 3000 });
     }
