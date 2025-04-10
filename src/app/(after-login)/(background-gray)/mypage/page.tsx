@@ -30,8 +30,8 @@ export default function MyPage() {
   };
 
   return (
-    <div className='bg-background-100'>
-      <div className='shadow-custom relative mt-16 flex flex-col items-center justify-center rounded-3xl bg-blue-100 px-6 pt-[184px] pb-10 shadow-black md:pb-[63px] lg:pt-[276px] lg:pb-22'>
+    <div className='bg-background-100 pt-[116px] lg:pt-[208px]'>
+      <div className='shadow-custom relative flex flex-col items-center justify-center rounded-3xl bg-blue-100 px-6 pt-[184px] pb-10 shadow-black md:pb-[63px] lg:pt-[276px] lg:pb-22'>
         <div className='absolute top-0 left-1/2 flex -translate-x-1/2 -translate-y-[40px] flex-col items-center justify-center gap-4 lg:-translate-y-[60px] lg:gap-6'>
           <Avatar src={user.image} alt='유저이미지' className='size-20 cursor-pointer border-2 border-blue-300 lg:size-[120px]' onClick={handleAvatarClick}></Avatar>
           <input type='file' className='hidden' onChange={handleChangeImage} accept='image/*' ref={fileInputRef} />
