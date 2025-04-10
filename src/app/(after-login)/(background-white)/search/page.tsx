@@ -75,7 +75,7 @@ export default function SearchPage() {
     const q = params.get("q");
     if (q) {
       setSearchQuery(q);
-      fetchMore(q, 0, true);
+      fetchMore(q, 0, true); 
     }
   }, [isClient, fetchMore]);
 
