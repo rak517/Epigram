@@ -186,12 +186,13 @@ test.describe('로그인 이후 상세 페이지', () => {
     const loadMoreButton = page.getByRole('button', { name: '최신 댓글 더보기' });
 
     if (await loadMoreButton.isVisible()) {
-      const initialCommentCount = await page.locator('div.bg-background-100.border-line-200.flex.max-w-\\[640px\\]').count();
+      const commentsLocator = page.locator('div.bg-background-100.border-line-200.flex.max-w-\\[640px\\]');
+      const initialCommentCount = await commentsLocator.count();
 
       await loadMoreButton.click();
       await page.waitForTimeout(1000);
 
-      const newCommentCount = page.locator('div.bg-background-100.border-line-200.flex.max-w-\\[640px\\]').count();
+      const newCommentCount = await commentsLocator.count();
       expect(newCommentCount).toBeGreaterThan(initialCommentCount);
     }
   });

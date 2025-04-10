@@ -132,6 +132,7 @@ export default function EpigramComment() {
               className='h-[66px] w-[248px] md:h-[80px] md:w-[320px] lg:h-[104px] lg:w-[568px]'
               value={commentText}
               onChange={(e) => setCommentText(e.target.value)}
+              aria-label='댓글입력창'
             />
             <div className='mt-6 flex items-center justify-between'>
               <ToggleButton isSelected={isPublic} onToggle={handleToggle} size='md' label={isPublic ? '공개' : '비공개'} />
