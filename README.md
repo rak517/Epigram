@@ -3,9 +3,18 @@
 </div>
 
 ## 🖐️ 프로젝트 소개
+
 <div align="center">
+  <img src='https://github.com/user-attachments/assets/fdca5e2d-ab90-4164-927f-dc4e878ed21c'/>
+  </br>
+  </br>
   <blockquote>매일매일 짧은 격언, 재치 있는 문구(에피그램)를 공유하고 기록하는 프로젝트
   </blockquote>
+  </br>
+  <h3>
+    지원하는 브라우저는 Chrome, Edge, Firefox, Safari입니다.
+  </h3>
+  </br>
   </br>
 </div>
 
@@ -25,6 +34,38 @@
 
 <div align="center">
   <section>
+    <h3>🍽️ 다른 사람과 다양한 격언 공유</h3>
+    <p>📢 감명깊게 본 글귀를 공유할 수 있습니다.</br>
+    📢 창작한 글귀를 다른 사람과 공유할 수 있습니다.</br>
+    📢 댓글을 달아서 다른 사람과 글귀에 대해 이야기할 수 있습니다.
+    </p>
+    <img src="https://github.com/user-attachments/assets/9d7a1799-fe1a-4f90-b602-3c4d8b3fe624" width="500px"/>
+  </section>
+  </br>
+  <section>
+    <h3>😊 감정 선택 기반 차트</h3>
+    <p>📢 매일매일 선택한 감정을 기반으로 월간 차트를 제공합니다.</br>
+    📢 감정 차트를 보고 과거의 감정을 회고할 수 있습니다.
+    </p>
+    <img src="https://github.com/user-attachments/assets/669948a9-ca1b-438a-a0e5-60f39d0f9156" width="500px"/>
+  </section>
+  </br>
+  <section>
+    <h3>🚗 간편한 소셜 로그인</h3>
+    <p>📢 구글 로그인과 카카오 로그인을 지원합니다.</br>
+    📢 간편하게 로그인하여 센스있는 글귀를 공유해보세요!
+    </p>
+    <img src="https://github.com/user-attachments/assets/38d5f67f-8aaf-4378-8eea-7d4c33b10199" width="500px"/>
+  </section>
+  </br>
+  <section>
+    <h3>⏬아래 링크를 클릭하시면 더 다양한 기능들을 만날 수 있습니다!⏬</h3>
+    <a href="https://dailyepigram.vercel.app">⏩지금 Epigram 사용하러 가보기!⏪</a>
+  </section>
+</div>
+
+<div align="center">
+  <section>
   </section>
   </br>
   <section>
@@ -40,6 +81,11 @@
 <h2 id="진행과정">🔥 Epigram 팀의 경험</h2>
 
 ### 📜 Epigram 팀의 이슈 관리
+- Epigram 팀은 이슈 관리 도구로 Jira를 채택하여 개발했습니다.
+- Github action과 연동하여 Github에서 이슈를 생성하면 Jira에도 이슈가 생성되며, PR을 통해 ISSUE를 Close하면 Jira와 Github의 이슈도 Close됩니다.
+<div align='center'>
+  <img src='https://github.com/user-attachments/assets/de41d1ec-d9db-4907-aaf4-ca0aee928a36' width=200/>
+</div>
 
 ### ✏️ Epigram 팀의 기록
 
@@ -50,18 +96,25 @@
 
 <h2 id="프로젝트구조">🔧 프로젝트 구조</h2>
 
+### 🏢 시스템 아키텍처
+<img src='https://github.com/user-attachments/assets/18589ff2-3b34-4d30-8f96-a3b235103ffd' alt='시스템 아키텍처'/>
+
 ### ⚙️ API 흐름 도식화
+<img src='https://github.com/user-attachments/assets/fb07b16f-72b1-49e6-9f97-85bf0d3298ae' alt='API 흐름도'/>
 
 <div align="center">
 
 </div>
 
+### 📚 스토리북 정적 배포
+<div align="center">
+  <p>⏬아래 링크를 클릭하시면 Epigram의 디자인 시스템을 확인할 수 있습니다.⏬</p>
+  <a href="https://67ca9b694f292a1618ad100a-hkheqbcsen.chromatic.com">⏩Epigram 팀의 스토리북 구경하기⏪</a>
+  </br>
+  </br>
+  <img src='https://github.com/user-attachments/assets/9d21532f-2978-4c31-9252-231487f06a79' />
+</div>
 
-### 🗂️ 디렉토리 구조
-
-```bash
-
-```
 
 ### 💎 주요 기술 스택
 
@@ -140,8 +193,6 @@
   </tbody>
  </table>
 </markdown-accessiblity-table>
-
-
 
 <div align="center">
   <img src="https://capsule-render.vercel.app/api?type=waving&color=F1EFFD&height=200&section=footer&fontSize=80" />
