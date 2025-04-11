@@ -7,6 +7,7 @@ import { useGetTodayEmotionLog, useOptimisticEmotionLog } from '@/apis/emotion-l
 import { Emotion } from '@/apis/emotion-log/types';
 import { useEffect, useState } from 'react';
 import { useGetUser } from '@/apis/user/queries';
+import { isNull } from 'es-toolkit';
 
 export default function DailyEmotion() {
   const { mutate: updateEmotionLog } = useOptimisticEmotionLog();
@@ -38,9 +39,9 @@ export default function DailyEmotion() {
   }, [dailyEmotion]);
 
   return (
-    <section>
-      <AnimatePresence>
-        {!isFetching && !dailyEmotion && (
+    <AnimatePresence>
+      {isNull(dailyEmotion) && !isFetching && (
+        <section>
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0, transition: { duration: 1 } }} className='flex flex-col items-center gap-4 md:gap-8'>
             <h2 className='text-black-600 w-full text-lg font-semibold md:text-2xl'>오늘의 감정은 어떤가요?</h2>
             <div className='flex justify-center gap-2 lg:gap-4'>
@@ -59,8 +60,8 @@ export default function DailyEmotion() {
               ))}
             </div>
           </motion.div>
-        )}
-      </AnimatePresence>
-    </section>
+        </section>
+      )}
+    </AnimatePresence>
   );
 }
