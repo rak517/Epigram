@@ -6,6 +6,9 @@ const meta: Meta<typeof LandingHeader> = {
   component: LandingHeader,
   tags: ['autodocs'],
   parameters: {
+    nextjs: {
+      appDirectory: true,
+    },
     backgrounds: {
       default: 'homeBackgroundColor',
       values: [
@@ -17,7 +20,7 @@ const meta: Meta<typeof LandingHeader> = {
   decorators: [
     (Story) => (
       <div className='bg-[#ffffff]'>
-        <Story></Story>
+        <Story />
       </div>
     ),
   ],

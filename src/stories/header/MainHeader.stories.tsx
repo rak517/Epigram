@@ -14,6 +14,9 @@ const meta: Meta<typeof MainHeader> = {
         { name: 'homeBackgroundColor', value: '#f5f7fa' },
       ],
     },
+    nextjs: {
+      appDirectory: true,
+    },
   },
   decorators: [
     (Story) => (

@@ -8,6 +8,7 @@ test.describe('랜딩 페이지', () => {
     context = await browser.newContext();
     page = await context.newPage();
     await page.goto('/');
+    await page.waitForTimeout(1000);
   });
 
   test.afterEach(async () => {
@@ -29,7 +30,8 @@ test.describe('랜딩 페이지', () => {
   });
 
   test('로그인이 안되어 있으면, 유저 아이콘 클릭 시 로그인 페이지로 이동한다.', async () => {
-    await page.getByAltText('유저 아이콘').click();
+    await page.getByAltText('유저 아이콘').click({ timeout: 3000 });
+    await page.getByText('로그인').click({ timeout: 3000 });
     await expect(page).toHaveURL('http://localhost:3000/login');
   });
 
@@ -58,7 +60,7 @@ test.describe('랜딩 페이지', () => {
   test('하단 화살표 이미지 클릭 시 기능 소개 레이아웃으로 스크롤이 내려간다', async () => {
     const initialScrollY = await page.evaluate(() => window.scrollY);
 
-    await page.getByAltText('더 알아보기').click();
+    await page.getByAltText('아래로 스크롤').click();
 
     await page.waitForTimeout(1000);
 
@@ -74,28 +76,15 @@ test.describe('로그인이 되어있는 랜딩페이지', () => {
 
   test.beforeEach(async ({ browser }) => {
     context = await browser.newContext();
-    await context.addCookies([
-      {
-        name: 'accessToken',
-        value: 'testHeader.testPayload,testSignature',
-        domain: 'localhost',
-        path: '/',
-        httpOnly: true,
-        secure: false,
-        sameSite: 'Lax',
-      },
-      {
-        name: 'refreshToken',
-        value: 'testHeader.testPayload,testSignature',
-        domain: 'localhost',
-        path: '/',
-        httpOnly: true,
-        secure: false,
-        sameSite: 'Lax',
-      },
-    ]);
     page = await context.newPage();
+    await page.goto('/login');
+    await page.waitForTimeout(1000);
+    await page.getByTestId('email-input-login').fill('test5@email.com');
+    await page.getByTestId('password-input-login').fill('password1!');
+    await page.getByRole('button', { name: '로그인' }).click();
+    await page.getByRole('button', { name: '확인' }).click();
     await page.goto('/');
+    await page.waitForTimeout(1000);
   });
 
   test.afterEach(async () => {
@@ -112,7 +101,8 @@ test.describe('로그인이 되어있는 랜딩페이지', () => {
   });
 
   test('로그인이 되어 있으면, 유저 아이콘 클릭 시 마이 페이지로 이동한다', async () => {
-    await page.getByAltText('유저 아이콘').click();
+    await page.getByAltText('유저 아이콘').click({ timeout: 3000 });
+    await page.getByText('마이페이지').click({ timeout: 3000 });
     await expect(page).toHaveURL('http://localhost:3000/mypage');
   });
 

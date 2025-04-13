@@ -1,11 +1,15 @@
 'use client';
 
-import { motion, useScroll, useTransform } from 'framer-motion';
+import dynamic from 'next/dynamic';
+import { useScroll, useTransform } from 'framer-motion';
 import Image, { type StaticImageData } from 'next/image';
-import feature_img_1 from '@/assets/landings/desktop-1.png';
-import feature_img_2 from '@/assets/landings/desktop-2.png';
-import feature_img_3 from '@/assets/landings/desktop-3.png';
+import feature_img_1 from '@/assets/landings/img_Desktop_landing01.svg';
+import feature_img_2 from '@/assets/landings/img_Desktop_landing02.svg';
+import feature_img_3 from '@/assets/landings/img_Desktop_landing03.svg';
 import { Ref, useRef } from 'react';
+import { cn } from '@/utils/cn';
+
+const MotionDiv = dynamic(() => import('framer-motion').then((mod) => mod.motion.div), { ssr: false });
 
 interface FEATURE_CONTENT {
   point: number;
@@ -42,6 +46,12 @@ interface FeatureProps {
   ref?: Ref<HTMLDivElement>;
 }
 
+const getTopPosition = (index: number) => {
+  const BASE_TOP = 10;
+  const INCREMENT = 5;
+  return `${BASE_TOP + index * INCREMENT}rem`;
+};
+
 export default function Feature({ ref }: FeatureProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
@@ -65,11 +75,11 @@ export default function Feature({ ref }: FeatureProps) {
     <section ref={containerRef} className='relative mt-20 grid place-items-center px-5 py-5 md:px-15 lg:px-20'>
       <div className='relative flex w-full max-w-[1200px] flex-col gap-10' ref={ref}>
         {FEATURE_CONTENTS.map((item, index) => (
-          <motion.div
+          <MotionDiv
             key={item.point}
-            className={`sticky overflow-hidden rounded-lg bg-white shadow-lg lg:flex lg:h-[400px] lg:max-w-[1200px] ${item.reverse ? '' : 'lg:flex-row-reverse'}`}
+            className={cn('sticky overflow-hidden rounded-xl bg-white shadow-lg lg:flex lg:h-[400px] lg:max-w-[1200px]', item.reverse ? '' : 'lg:flex-row-reverse')}
             style={{
-              top: `${10 + index * 5}rem`,
+              top: getTopPosition(index),
               scale: scaleFactors[index],
               opacity: opacityFactors[index],
               zIndex: zIndexValues[index],
@@ -80,11 +90,10 @@ export default function Feature({ ref }: FeatureProps) {
               <h3 className='text-black-950 text-2xl font-bold whitespace-pre-wrap lg:text-3xl'>{item.title}</h3>
               {item.description && <p className='text-lg text-blue-600 lg:text-xl'>{item.description}</p>}
             </div>
-
-            <figure className={`${item.imageClassName ?? ''} lg:flex lg:w-[52%] lg:items-end`}>
-              <Image src={item.image || '/placeholder.svg'} alt={item.title} className='h-auto w-full' />
+            <figure className={cn('lg:flex lg:w-[52%] lg:items-end', item.imageClassName)}>
+              <Image src={item.image} alt={item.title} className='h-auto w-full' />
             </figure>
-          </motion.div>
+          </MotionDiv>
         ))}
       </div>
     </section>
