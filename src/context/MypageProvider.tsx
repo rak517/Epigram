@@ -32,7 +32,7 @@ export default function MypageProvider({ children }: PropsWithChildren) {
     enabled: !!user && !!currentDate,
   });
 
-  if (userEmotion !== undefined && user !== undefined) {
-    return <MypageContext.Provider value={{ currentDate, setCurrentDate, userEmotion, user }}>{children}</MypageContext.Provider>;
-  }
+  if (!user || !userEmotion) return <div>로딩 중...</div>;
+
+  return <MypageContext.Provider value={{ currentDate, setCurrentDate, userEmotion, user }}>{children}</MypageContext.Provider>;
 }
