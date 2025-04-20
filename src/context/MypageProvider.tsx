@@ -4,18 +4,20 @@ import { useGetUser } from '@/apis/user/queries';
 import dayjs, { Dayjs } from 'dayjs';
 import { useGetMonthlyEmotionLogs } from '@/apis/emotion-log/queries';
 
+const defaultUser = {
+  image: process.env.NEXT_PUBLIC_DEFAULT_IMAGE_URL ?? '',
+  createdAt: '',
+  updatedAt: '',
+  teamId: '',
+  nickname: '사용자',
+  id: 0,
+};
+
 export const MypageContext = createContext<CreateContext>({
   currentDate: dayjs(),
   setCurrentDate: () => {},
   userEmotion: [],
-  user: {
-    image: '',
-    createdAt: '',
-    updatedAt: '',
-    teamId: '',
-    nickname: '',
-    id: 0,
-  },
+  user: defaultUser,
 });
 
 export default function MypageProvider({ children }: PropsWithChildren) {
@@ -32,7 +34,16 @@ export default function MypageProvider({ children }: PropsWithChildren) {
     enabled: !!user && !!currentDate,
   });
 
-  if (!user || !userEmotion) return <div>로딩 중...</div>;
-
-  return <MypageContext.Provider value={{ currentDate, setCurrentDate, userEmotion, user }}>{children}</MypageContext.Provider>;
+  return (
+    <MypageContext.Provider
+      value={{
+        currentDate,
+        setCurrentDate,
+        userEmotion: userEmotion ?? [],
+        user: user ?? defaultUser,
+      }}
+    >
+      {children}
+    </MypageContext.Provider>
+  );
 }
